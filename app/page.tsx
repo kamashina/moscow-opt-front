@@ -9,7 +9,6 @@ export default function Home() {
   const { data } = useItemServiceGetAllItems();
 
   const { data: categories } = useCategoriesServiceGetAllCategories();
-  console.log(categories);
 
   return (
     <div>

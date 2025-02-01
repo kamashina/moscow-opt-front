@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@mossoft/ui-kit':
-    specifier: ^1.0.26
-    version: 1.0.26(@types/react-dom@19.0.3)(@types/react@19.0.7)(react-dom@19.0.0)(react@19.0.0)
+    specifier: ^1.0.31
+    version: 1.0.31(@hello-pangea/dnd@16.6.0)(@tanstack/react-query@5.64.1)(react-hook-form@7.54.2)(react-number-format@5.4.3)(tailwind-merge@2.6.0)
   '@tailwindcss/line-clamp':
     specifier: ^0.4.4
     version: 0.4.4(tailwindcss@3.4.17)
@@ -56,8 +56,8 @@ dependencies:
 
 devDependencies:
   '@7nohe/openapi-react-query-codegen':
-    specifier: ^1.6.1
-    version: 1.6.1(commander@12.1.0)(glob@10.4.5)(ts-morph@22.0.0)(typescript@5.7.3)
+    specifier: ^1.6.2
+    version: 1.6.2(commander@12.1.0)(glob@10.4.5)(ts-morph@22.0.0)(typescript@5.7.3)
   '@eslint/eslintrc':
     specifier: ^3
     version: 3.2.0
@@ -88,8 +88,8 @@ devDependencies:
 
 packages:
 
-  /@7nohe/openapi-react-query-codegen@1.6.1(commander@12.1.0)(glob@10.4.5)(ts-morph@22.0.0)(typescript@5.7.3):
-    resolution: {integrity: sha512-4e//cSAlSo0urqUwLzGUgB0fkZPlmm2AvVl4t5lEzxvb/MDNmcoE367ddBrGvjACJWMoQGyKTlyntGtoAHDDGA==}
+  /@7nohe/openapi-react-query-codegen@1.6.2(commander@12.1.0)(glob@10.4.5)(ts-morph@22.0.0)(typescript@5.7.3):
+    resolution: {integrity: sha512-hiemrj2XDypRpsqBLjliIIhLxH5NzCsbUW5km7XVRvlC3J+oIc7EBG+LqMSGWj1T6zG1eqFFc+/qXXC3eKPptA==}
     engines: {node: '>=14', pnpm: '>=9'}
     hasBin: true
     peerDependencies:
@@ -1545,20 +1545,20 @@ packages:
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
     dev: true
 
-  /@mossoft/ui-kit@1.0.26(@types/react-dom@19.0.3)(@types/react@19.0.7)(react-dom@19.0.0)(react@19.0.0):
-    resolution: {integrity: sha512-+nc1GopWAA20bjy68X6K9JfdQ9o8tBmIIRAeJOSs5iS9YPD+9HE7RDXDAjfKJdPiwA6XB+/0t0ToLhIQfgTQ7w==}
+  /@mossoft/ui-kit@1.0.31(@hello-pangea/dnd@16.6.0)(@tanstack/react-query@5.64.1)(react-hook-form@7.54.2)(react-number-format@5.4.3)(tailwind-merge@2.6.0):
+    resolution: {integrity: sha512-IC1JU5OxJr7Qsx3Jy5N9jLC5YQzTQzh/r0CIn/Gird81PngfQkyf+Sw727g83kYaf2Pb3gu2Ka3i0vmNGptAEA==}
+    peerDependencies:
+      '@hello-pangea/dnd': ^16.6.0
+      '@tanstack/react-query': ^5.62.7
+      react-hook-form: ^7.53.0
+      react-number-format: ^5.4.2
+      tailwind-merge: ^2.5.2
     dependencies:
       '@hello-pangea/dnd': 16.6.0(@types/react-dom@19.0.3)(@types/react@19.0.7)(react-dom@19.0.0)(react@19.0.0)
       '@tanstack/react-query': 5.64.1(react@19.0.0)
       react-hook-form: 7.54.2(react@19.0.0)
       react-number-format: 5.4.3(react-dom@19.0.0)(react@19.0.0)
       tailwind-merge: 2.6.0
-    transitivePeerDependencies:
-      - '@types/react'
-      - '@types/react-dom'
-      - react
-      - react-dom
-      - react-native
     dev: false
 
   /@next/env@15.1.4:

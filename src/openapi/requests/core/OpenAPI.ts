@@ -40,7 +40,7 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-  BASE: process.env.NEXT_PUBLIC_SERVER_URL!,
+  BASE: process.env.NEXT_PUBLIC_API_URL!,
   CREDENTIALS: "include",
   ENCODE_PATH: undefined,
   HEADERS: undefined,

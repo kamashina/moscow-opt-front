@@ -118,9 +118,19 @@ export type SubCategoryMinResponse = {
 
 export type CategoryResponse = {
     name: string;
+    logo: string;
+    seo: string;
+    isPopular: boolean;
     id: number;
     parentId?: number;
     subCategories: Array<SubCategoryMinResponse>;
+};
+
+export type PopularCategoriesResponse = {
+    name: string;
+    logo: string;
+    seo: string;
+    id: number;
 };
 
 export type CreateCategoryDto = {
@@ -184,6 +194,25 @@ export type ItemsEntityMinInfo = {
     createdAt: string;
 };
 
+export type UpdateItemDto = {
+    description: string;
+    basketOptions: Array<{
+        [key: string]: unknown;
+    }>;
+    seo: string;
+    name: string;
+    fields: {
+        [key: string]: unknown;
+    };
+    countryOfOrigin: string;
+    article: string;
+    brand: string;
+    box: Array<{
+        [key: string]: unknown;
+    }>;
+    images: Array<(string)>;
+};
+
 export type OrganizationResponse = {
     type: {
         [key: string]: unknown;
@@ -192,6 +221,53 @@ export type OrganizationResponse = {
     itn: string;
     psrn: string;
     kpp: string | null;
+};
+
+export type BoxField = {
+    /**
+     * Значение характеристики
+     */
+    value: string;
+    /**
+     * Количество
+     */
+    quantity: number;
+};
+
+export type BoxCharacteristicsResponse = {
+    /**
+     * Название характеристики
+     */
+    name: string;
+    /**
+     * Список характеристик
+     */
+    fields: Array<BoxField>;
+};
+
+export type CardItemResponse = {
+    id: string;
+    name: string;
+    description: string;
+    images: Array<(string)>;
+    countryOfOrigin: string;
+    article: string;
+    brand: string;
+    box: BoxCharacteristicsResponse;
+    price: number;
+    rating: number;
+};
+
+export type CardShopResponse = {
+    id: string;
+    name: string;
+};
+
+export type CardResponse = {
+    id: number;
+    rating: number;
+    preview: CardItemResponse;
+    shop: Array<CardShopResponse>;
 };
 
 export type CreateBrandDto = {
@@ -267,6 +343,10 @@ export type UpdateShopData = {
 
 export type UpdateShopResponse = unknown;
 
+export type GetAllCategoriesData = {
+    isPopular?: boolean;
+};
+
 export type GetAllCategoriesResponse = Array<CategoryResponse>;
 
 export type CreateCategoryData = {
@@ -278,6 +358,8 @@ export type CreateCategoryResponse = unknown;
 export type DeleteAllCategoriesResponse = {
     [key: string]: unknown;
 };
+
+export type GetPopularCategoriesResponse = Array<PopularCategoriesResponse>;
 
 export type CreateSubCategoryData = {
     parentId: number;
@@ -308,6 +390,13 @@ export type CreateItemData = {
 export type CreateItemResponse = unknown;
 
 export type GetAllItemsResponse = Array<ItemsEntityMinInfo>;
+
+export type UpdateItemData = {
+    id: number;
+    requestBody: UpdateItemDto;
+};
+
+export type UpdateItemResponse = ItemsEntityMinInfo;
 
 export type DeleteByIdData = {
     id: number;
@@ -372,9 +461,7 @@ export type GetAllCardsData = {
     q?: string;
 };
 
-export type GetAllCardsResponse = Array<{
-    [key: string]: unknown;
-}>;
+export type GetAllCardsResponse = Array<CardResponse>;
 
 export type CreateBrandData = {
     requestBody: CreateBrandDto;
@@ -522,6 +609,7 @@ export type $OpenApiTs = {
     };
     '/categories': {
         get: {
+            req: GetAllCategoriesData;
             res: {
                 200: Array<CategoryResponse>;
             };
@@ -537,6 +625,13 @@ export type $OpenApiTs = {
                 200: {
                     [key: string]: unknown;
                 };
+            };
+        };
+    };
+    '/categories/popular': {
+        get: {
+            res: {
+                200: Array<PopularCategoriesResponse>;
             };
         };
     };
@@ -578,6 +673,12 @@ export type $OpenApiTs = {
         };
     };
     '/items/{id}': {
+        patch: {
+            req: UpdateItemData;
+            res: {
+                200: ItemsEntityMinInfo;
+            };
+        };
         get: {
             res: {
                 200: unknown;
@@ -660,9 +761,7 @@ export type $OpenApiTs = {
         get: {
             req: GetAllCardsData;
             res: {
-                200: Array<{
-                    [key: string]: unknown;
-                }>;
+                200: Array<CardResponse>;
             };
         };
     };

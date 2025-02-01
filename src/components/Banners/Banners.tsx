@@ -1,16 +1,22 @@
+"use client";
 import { useBannersServiceGetBanners } from "@/src/openapi/queries";
 import { Icon, useScroll } from "@mossoft/ui-kit";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import CustomSkeleton from "../Skeleton/Skeleton";
+import { useBannersServiceGetBannersSuspense } from "@/src/openapi/queries/suspense";
+import { GetBannersResponse } from "@/src/openapi/requests";
 
-const Banners = () => {
+type Props = {
+  banners: GetBannersResponse;
+};
+
+const Banners: FC<Props> = ({ banners }) => {
   const [bannerId, setBannerId] = useState(1);
-  const { data: banners, isLoading } = useBannersServiceGetBanners();
   const [executeScroll, elRef] = useScroll();
   useEffect(executeScroll as any, [bannerId]);
 
-  if (isLoading || !banners?.length) {
+  if (!banners?.length) {
     return <CustomSkeleton />;
   }
 
@@ -31,7 +37,7 @@ const Banners = () => {
 
   return (
     <div className="relative w-full">
-      {banners?.[currentIndex - 1]?.id && window.innerWidth > 768 && (
+      {banners?.[currentIndex - 1]?.id && (
         <div
           className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 rounded-r-[30px] bg-primary cursor-pointer hover:bg-primary-dark-light active:opacity-70"
           onClick={() => handleScroll("left")}
@@ -56,7 +62,7 @@ const Banners = () => {
           </div>
         ))}
       </div>
-      {banners?.[currentIndex + 1]?.id && window.innerWidth > 768 && (
+      {banners?.[currentIndex + 1]?.id && (
         <div
           className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 rounded-r-[30px] bg-primary rotate-180 cursor-pointer hover:bg-primary-dark-light active:opacity-70"
           onClick={() => handleScroll("right")}

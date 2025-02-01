@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { RegisterData, RegisterResponse, SendSmsResponse, LoginData, LoginResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, DeleteByIdData, DeleteByIdResponse, UploadItemsImagesData, UploadItemsImagesResponse, UploadBannerData, UploadBannerResponse, UploadShopImagesData, UploadShopImagesResponse, UploadItemsexcelData, UploadItemsexcelResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAllCardsData, GetAllCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse } from './types.gen';
+import type { RegisterData, RegisterResponse, SendSmsResponse, LoginData, LoginResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, UploadItemsImagesData, UploadItemsImagesResponse, UploadBannerData, UploadBannerResponse, UploadShopImagesData, UploadShopImagesResponse, UploadItemsexcelData, UploadItemsexcelResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAllCardsData, GetAllCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse } from './types.gen';
 
 export class AuthService {
     /**
@@ -237,13 +237,18 @@ export class ShopService {
 
 export class CategoriesService {
     /**
+     * @param data The data for the request.
+     * @param data.isPopular
      * @returns CategoryResponse
      * @throws ApiError
      */
-    public static getAllCategories(): CancelablePromise<GetAllCategoriesResponse> {
+    public static getAllCategories(data: GetAllCategoriesData = {}): CancelablePromise<GetAllCategoriesResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/categories'
+            url: '/categories',
+            query: {
+                isPopular: data.isPopular
+            }
         });
     }
     
@@ -270,6 +275,17 @@ export class CategoriesService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/categories'
+        });
+    }
+    
+    /**
+     * @returns PopularCategoriesResponse
+     * @throws ApiError
+     */
+    public static getPopularCategories(): CancelablePromise<GetPopularCategoriesResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/categories/popular'
         });
     }
     
@@ -358,6 +374,25 @@ export class ItemService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/items'
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns ItemsEntityMinInfo
+     * @throws ApiError
+     */
+    public static updateItem(data: UpdateItemData): CancelablePromise<UpdateItemResponse> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/items/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json'
         });
     }
     
@@ -521,7 +556,7 @@ export class CardsService {
     /**
      * @param data The data for the request.
      * @param data.q
-     * @returns unknown
+     * @returns CardResponse
      * @throws ApiError
      */
     public static getAllCards(data: GetAllCardsData = {}): CancelablePromise<GetAllCardsResponse> {

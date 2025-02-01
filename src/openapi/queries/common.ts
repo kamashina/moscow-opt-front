@@ -1,4 +1,4 @@
-// generated with @7nohe/openapi-react-query-codegen@1.6.1 
+// generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryResult } from "@tanstack/react-query";
 import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FileUploadService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
@@ -35,7 +35,13 @@ export const UseShopServiceGetAllShopsKeyFn = (queryKey?: Array<unknown>) => [us
 export type CategoriesServiceGetAllCategoriesDefaultResponse = Awaited<ReturnType<typeof CategoriesService.getAllCategories>>;
 export type CategoriesServiceGetAllCategoriesQueryResult<TData = CategoriesServiceGetAllCategoriesDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useCategoriesServiceGetAllCategoriesKey = "CategoriesServiceGetAllCategories";
-export const UseCategoriesServiceGetAllCategoriesKeyFn = (queryKey?: Array<unknown>) => [useCategoriesServiceGetAllCategoriesKey, ...(queryKey ?? [])];
+export const UseCategoriesServiceGetAllCategoriesKeyFn = ({ isPopular }: {
+  isPopular?: boolean;
+} = {}, queryKey?: Array<unknown>) => [useCategoriesServiceGetAllCategoriesKey, ...(queryKey ?? [{ isPopular }])];
+export type CategoriesServiceGetPopularCategoriesDefaultResponse = Awaited<ReturnType<typeof CategoriesService.getPopularCategories>>;
+export type CategoriesServiceGetPopularCategoriesQueryResult<TData = CategoriesServiceGetPopularCategoriesDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useCategoriesServiceGetPopularCategoriesKey = "CategoriesServiceGetPopularCategories";
+export const UseCategoriesServiceGetPopularCategoriesKeyFn = (queryKey?: Array<unknown>) => [useCategoriesServiceGetPopularCategoriesKey, ...(queryKey ?? [])];
 export type CategoriesServiceGetSubCategoryByIdDefaultResponse = Awaited<ReturnType<typeof CategoriesService.getSubCategoryById>>;
 export type CategoriesServiceGetSubCategoryByIdQueryResult<TData = CategoriesServiceGetSubCategoryByIdDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useCategoriesServiceGetSubCategoryByIdKey = "CategoriesServiceGetSubCategoryById";
@@ -109,6 +115,7 @@ export type BasketServiceAddItemToBasketMutationResult = Awaited<ReturnType<type
 export type BrandsServiceCreateBrandMutationResult = Awaited<ReturnType<typeof BrandsService.createBrand>>;
 export type UsersServiceChangeUserRoleMutationResult = Awaited<ReturnType<typeof UsersService.changeUserRole>>;
 export type ShopServiceUpdateShopMutationResult = Awaited<ReturnType<typeof ShopService.updateShop>>;
+export type ItemServiceUpdateItemMutationResult = Awaited<ReturnType<typeof ItemService.updateItem>>;
 export type CompaniesServiceDeleteMyCompanyMutationResult = Awaited<ReturnType<typeof CompaniesService.deleteMyCompany>>;
 export type CategoriesServiceDeleteAllCategoriesMutationResult = Awaited<ReturnType<typeof CategoriesService.deleteAllCategories>>;
 export type CategoriesServiceDeleteCategoryByIdMutationResult = Awaited<ReturnType<typeof CategoriesService.deleteCategoryById>>;

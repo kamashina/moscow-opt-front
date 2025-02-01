@@ -1,0 +1,84 @@
+"use client";
+import { Icon, Wrapper } from "@mossoft/ui-kit";
+import Image from "next/image";
+import Link from "next/link";
+import { twMerge } from "tailwind-merge";
+import AppText from "../AppText/AppText";
+import CustomSkeleton from "../Skeleton/Skeleton";
+import { ReactNode } from "react";
+import { getServerImage } from "@/src/constants";
+
+type Props<T> = {
+  label: string;
+  href: string;
+  imageClassName?: string;
+  imageWrapperClassName?: string;
+  renderItem?: (item: T) => ReactNode;
+  data: T;
+};
+
+const PopularWrapper = <T extends any[]>({
+  label,
+  data,
+  href,
+  imageWrapperClassName,
+  imageClassName,
+  renderItem,
+}: Props<T>) => {
+  if (!data?.length) {
+    return <CustomSkeleton height={337} />;
+  }
+
+  return (
+    <Wrapper className="rounded-[30px] w-full">
+      <div className="flex flex-row justify-between">
+        <AppText className="font-medium text-2xl text-black">{label}</AppText>
+        <Link
+          href={href}
+          className="flex flex-row gap-1 bg-primary rounded-[30px] py-2 px-3 items-center hover:opacity-80 active:opacity-60"
+        >
+          <AppText className="font-medium text-white">Смотреть все</AppText>
+          <Icon name="arrow-left" className="w-6 h-6 rotate-180 text-white" />
+        </Link>
+      </div>
+
+      <div
+        className={twMerge(
+          "flex flex-row gap-4 mt-4 w-full overflow-x-auto",
+          imageWrapperClassName
+        )}
+      >
+        {data.map((item) =>
+          renderItem ? (
+            renderItem(item)
+          ) : (
+            <Link
+              key={item.id}
+              className="flex flex-col gap-2 items-center"
+              href={`/categories/${item.id}`}
+            >
+              <div
+                className={twMerge(
+                  "h-[260px] relative w-[260px]",
+                  imageClassName
+                )}
+              >
+                <Image
+                  className="rounded-[30px]"
+                  src={getServerImage(item.logo)}
+                  alt={item.name}
+                  fill
+                  sizes="100%"
+                />
+              </div>
+
+              <AppText>{item.name}</AppText>
+            </Link>
+          )
+        )}
+      </div>
+    </Wrapper>
+  );
+};
+
+export default PopularWrapper;

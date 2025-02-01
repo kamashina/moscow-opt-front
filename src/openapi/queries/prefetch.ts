@@ -1,4 +1,4 @@
-// generated with @7nohe/openapi-react-query-codegen@1.6.1 
+// generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { type QueryClient } from "@tanstack/react-query";
 import { BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
@@ -12,7 +12,10 @@ export const prefetchUseCompaniesServiceGetAllCompanies = (queryClient: QueryCli
 export const prefetchUseCompaniesServiceGetMyCompany = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseCompaniesServiceGetMyCompanyKeyFn(), queryFn: () => CompaniesService.getMyCompany() });
 export const prefetchUseShopServiceGetMyShop = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseShopServiceGetMyShopKeyFn(), queryFn: () => ShopService.getMyShop() });
 export const prefetchUseShopServiceGetAllShops = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseShopServiceGetAllShopsKeyFn(), queryFn: () => ShopService.getAllShops() });
-export const prefetchUseCategoriesServiceGetAllCategories = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseCategoriesServiceGetAllCategoriesKeyFn(), queryFn: () => CategoriesService.getAllCategories() });
+export const prefetchUseCategoriesServiceGetAllCategories = (queryClient: QueryClient, { isPopular }: {
+  isPopular?: boolean;
+} = {}) => queryClient.prefetchQuery({ queryKey: Common.UseCategoriesServiceGetAllCategoriesKeyFn({ isPopular }), queryFn: () => CategoriesService.getAllCategories({ isPopular }) });
+export const prefetchUseCategoriesServiceGetPopularCategories = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseCategoriesServiceGetPopularCategoriesKeyFn(), queryFn: () => CategoriesService.getPopularCategories() });
 export const prefetchUseCategoriesServiceGetSubCategoryById = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseCategoriesServiceGetSubCategoryByIdKeyFn({ id }), queryFn: () => CategoriesService.getSubCategoryById({ id }) });

@@ -10,7 +10,7 @@
     "codegen": "openapi-rq -i http://localhost:3001/swagger/json -o src/openapi -c fetch --operationId"
   },
   "dependencies": {
-    "@mossoft/ui-kit": "^1.0.26",
+    "@mossoft/ui-kit": "^1.0.31",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tanstack/query-sync-storage-persister": "^5.62.7",
     "@tanstack/react-query": "^5.62.7",
@@ -28,7 +28,7 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
-    "@7nohe/openapi-react-query-codegen": "^1.6.1",
+    "@7nohe/openapi-react-query-codegen": "^1.6.2",
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -359,6 +359,15 @@ export const $CategoryResponse = {
         name: {
             type: 'string'
         },
+        logo: {
+            type: 'string'
+        },
+        seo: {
+            type: 'string'
+        },
+        isPopular: {
+            type: 'boolean'
+        },
         id: {
             type: 'number'
         },
@@ -372,7 +381,26 @@ export const $CategoryResponse = {
             }
         }
     },
-    required: ['name', 'id', 'subCategories']
+    required: ['name', 'logo', 'seo', 'isPopular', 'id', 'subCategories']
+} as const;
+
+export const $PopularCategoriesResponse = {
+    type: 'object',
+    properties: {
+        name: {
+            type: 'string'
+        },
+        logo: {
+            type: 'string'
+        },
+        seo: {
+            type: 'string'
+        },
+        id: {
+            type: 'number'
+        }
+    },
+    required: ['name', 'logo', 'seo', 'id']
 } as const;
 
 export const $CreateCategoryDto = {
@@ -549,6 +577,52 @@ export const $ItemsEntityMinInfo = {
     required: ['description', 'countryOfOrigin', 'basketOptions', 'cardId', 'id', 'name', 'images', 'createdAt']
 } as const;
 
+export const $UpdateItemDto = {
+    type: 'object',
+    properties: {
+        description: {
+            type: 'string'
+        },
+        basketOptions: {
+            type: 'array',
+            items: {
+                type: 'object'
+            }
+        },
+        seo: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        },
+        fields: {
+            type: 'object'
+        },
+        countryOfOrigin: {
+            type: 'string'
+        },
+        article: {
+            type: 'string'
+        },
+        brand: {
+            type: 'string'
+        },
+        box: {
+            type: 'array',
+            items: {
+                type: 'object'
+            }
+        },
+        images: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        }
+    },
+    required: ['description', 'basketOptions', 'seo', 'name', 'fields', 'countryOfOrigin', 'article', 'brand', 'box', 'images']
+} as const;
+
 export const $OrganizationResponse = {
     type: 'object',
     properties: {
@@ -570,6 +644,117 @@ export const $OrganizationResponse = {
         }
     },
     required: ['type', 'name', 'itn', 'psrn', 'kpp']
+} as const;
+
+export const $BoxField = {
+    type: 'object',
+    properties: {
+        value: {
+            type: 'string',
+            example: '36',
+            description: 'Значение характеристики'
+        },
+        quantity: {
+            type: 'number',
+            example: 1,
+            description: 'Количество'
+        }
+    },
+    required: ['value', 'quantity']
+} as const;
+
+export const $BoxCharacteristicsResponse = {
+    type: 'object',
+    properties: {
+        name: {
+            type: 'string',
+            example: 'Короб',
+            description: 'Название характеристики'
+        },
+        fields: {
+            description: 'Список характеристик',
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/BoxField'
+            }
+        }
+    },
+    required: ['name', 'fields']
+} as const;
+
+export const $CardItemResponse = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        },
+        description: {
+            type: 'string'
+        },
+        images: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        countryOfOrigin: {
+            type: 'string'
+        },
+        article: {
+            type: 'string'
+        },
+        brand: {
+            type: 'string'
+        },
+        box: {
+            '$ref': '#/components/schemas/BoxCharacteristicsResponse'
+        },
+        price: {
+            type: 'number'
+        },
+        rating: {
+            type: 'number'
+        }
+    },
+    required: ['id', 'name', 'description', 'images', 'countryOfOrigin', 'article', 'brand', 'box', 'price', 'rating']
+} as const;
+
+export const $CardShopResponse = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        }
+    },
+    required: ['id', 'name']
+} as const;
+
+export const $CardResponse = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'number'
+        },
+        rating: {
+            type: 'number'
+        },
+        preview: {
+            '$ref': '#/components/schemas/CardItemResponse'
+        },
+        shop: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/CardShopResponse'
+            }
+        }
+    },
+    required: ['id', 'rating', 'preview', 'shop']
 } as const;
 
 export const $CreateBrandDto = {

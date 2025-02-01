@@ -14,7 +14,6 @@ const onError = async (error: Exception | any) => {
   const redirectUrl = new URLSearchParams(window.location.search).get(
     "redirectUrl"
   );
-
   // if (status === 401 || status === 403) {
   //   try {
   //     const res = await AuthService.refresh();
@@ -28,12 +27,9 @@ const onError = async (error: Exception | any) => {
   //   }
   // }
 };
-const getQueryClient = cache(
-  () =>
-    new QueryClient({
-      queryCache: new QueryCache({ onError }),
-      mutationCache: new MutationCache({ onError }),
-      defaultOptions: { queries: { retry: 0, staleTime: 60 * 1000 } },
-    })
-);
-export default getQueryClient;
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({ onError }),
+  mutationCache: new MutationCache({ onError }),
+  defaultOptions: { queries: { retry: 0, staleTime: 60 * 1000 } },
+});
+export default queryClient;

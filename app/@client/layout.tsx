@@ -1,9 +1,7 @@
 import Header from "@/src/components/Header/Header";
-import React, { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren } from "react";
 
-type Props = {};
-
-const Layout: FC<PropsWithChildren<Props>> = ({ children }) => {
+const Layout: FC<PropsWithChildren> = async ({ children }) => {
   return (
     <div>
       <Header />

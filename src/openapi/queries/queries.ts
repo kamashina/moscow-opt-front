@@ -1,8 +1,8 @@
-// generated with @7nohe/openapi-react-query-codegen@1.6.1 
+// generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseMutationOptions, UseQueryOptions, useMutation, useQuery } from "@tanstack/react-query";
 import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FileUploadService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
-import { CompaniesDto, CreateBrandDto, CreateCategoryDto, CreateItemDto, CreateShopDto, CreateSubCategoryDto, LoginUserDto, RegisterUserDto, UpdateShopDto, UsersPatchDto } from "../requests/types.gen";
+import { CompaniesDto, CreateBrandDto, CreateCategoryDto, CreateItemDto, CreateShopDto, CreateSubCategoryDto, LoginUserDto, RegisterUserDto, UpdateItemDto, UpdateShopDto, UsersPatchDto } from "../requests/types.gen";
 import * as Common from "./common";
 export const useUsersServiceFindAll = <TData = Common.UsersServiceFindAllDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseUsersServiceFindAllKeyFn(queryKey), queryFn: () => UsersService.findAll() as TData, ...options });
 export const useUsersServiceGetMe = <TData = Common.UsersServiceGetMeDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseUsersServiceGetMeKeyFn(queryKey), queryFn: () => UsersService.getMe() as TData, ...options });
@@ -13,7 +13,10 @@ export const useCompaniesServiceGetAllCompanies = <TData = Common.CompaniesServi
 export const useCompaniesServiceGetMyCompany = <TData = Common.CompaniesServiceGetMyCompanyDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCompaniesServiceGetMyCompanyKeyFn(queryKey), queryFn: () => CompaniesService.getMyCompany() as TData, ...options });
 export const useShopServiceGetMyShop = <TData = Common.ShopServiceGetMyShopDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseShopServiceGetMyShopKeyFn(queryKey), queryFn: () => ShopService.getMyShop() as TData, ...options });
 export const useShopServiceGetAllShops = <TData = Common.ShopServiceGetAllShopsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseShopServiceGetAllShopsKeyFn(queryKey), queryFn: () => ShopService.getAllShops() as TData, ...options });
-export const useCategoriesServiceGetAllCategories = <TData = Common.CategoriesServiceGetAllCategoriesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetAllCategoriesKeyFn(queryKey), queryFn: () => CategoriesService.getAllCategories() as TData, ...options });
+export const useCategoriesServiceGetAllCategories = <TData = Common.CategoriesServiceGetAllCategoriesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ isPopular }: {
+  isPopular?: boolean;
+} = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetAllCategoriesKeyFn({ isPopular }, queryKey), queryFn: () => CategoriesService.getAllCategories({ isPopular }) as TData, ...options });
+export const useCategoriesServiceGetPopularCategories = <TData = Common.CategoriesServiceGetPopularCategoriesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetPopularCategoriesKeyFn(queryKey), queryFn: () => CategoriesService.getPopularCategories() as TData, ...options });
 export const useCategoriesServiceGetSubCategoryById = <TData = Common.CategoriesServiceGetSubCategoryByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetSubCategoryByIdKeyFn({ id }, queryKey), queryFn: () => CategoriesService.getSubCategoryById({ id }) as TData, ...options });
@@ -124,6 +127,13 @@ export const useShopServiceUpdateShop = <TData = Common.ShopServiceUpdateShopMut
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
   requestBody: UpdateShopDto;
 }, TContext>({ mutationFn: ({ requestBody }) => ShopService.updateShop({ requestBody }) as unknown as Promise<TData>, ...options });
+export const useItemServiceUpdateItem = <TData = Common.ItemServiceUpdateItemMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  id: number;
+  requestBody: UpdateItemDto;
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+  id: number;
+  requestBody: UpdateItemDto;
+}, TContext>({ mutationFn: ({ id, requestBody }) => ItemService.updateItem({ id, requestBody }) as unknown as Promise<TData>, ...options });
 export const useCompaniesServiceDeleteMyCompany = <TData = Common.CompaniesServiceDeleteMyCompanyMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, void, TContext>, "mutationFn">) => useMutation<TData, TError, void, TContext>({ mutationFn: () => CompaniesService.deleteMyCompany() as unknown as Promise<TData>, ...options });
 export const useCategoriesServiceDeleteAllCategories = <TData = Common.CategoriesServiceDeleteAllCategoriesMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, void, TContext>, "mutationFn">) => useMutation<TData, TError, void, TContext>({ mutationFn: () => CategoriesService.deleteAllCategories() as unknown as Promise<TData>, ...options });
 export const useCategoriesServiceDeleteCategoryById = <TData = Common.CategoriesServiceDeleteCategoryByIdMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
