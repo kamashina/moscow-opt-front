@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryResult } from "@tanstack/react-query";
-import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FileUploadService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
+import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, FileUploadService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
 export type UsersServiceFindAllDefaultResponse = Awaited<ReturnType<typeof UsersService.findAll>>;
 export type UsersServiceFindAllQueryResult<TData = UsersServiceFindAllDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useUsersServiceFindAllKey = "UsersServiceFindAll";
@@ -97,6 +97,10 @@ export type BannersServiceGetBannersDefaultResponse = Awaited<ReturnType<typeof 
 export type BannersServiceGetBannersQueryResult<TData = BannersServiceGetBannersDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useBannersServiceGetBannersKey = "BannersServiceGetBanners";
 export const UseBannersServiceGetBannersKeyFn = (queryKey?: Array<unknown>) => [useBannersServiceGetBannersKey, ...(queryKey ?? [])];
+export type FavoritesServiceGetFavoritesDefaultResponse = Awaited<ReturnType<typeof FavoritesService.getFavorites>>;
+export type FavoritesServiceGetFavoritesQueryResult<TData = FavoritesServiceGetFavoritesDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useFavoritesServiceGetFavoritesKey = "FavoritesServiceGetFavorites";
+export const UseFavoritesServiceGetFavoritesKeyFn = (queryKey?: Array<unknown>) => [useFavoritesServiceGetFavoritesKey, ...(queryKey ?? [])];
 export type AuthServiceRegisterMutationResult = Awaited<ReturnType<typeof AuthService.register>>;
 export type AuthServiceSendSmsMutationResult = Awaited<ReturnType<typeof AuthService.sendSms>>;
 export type AuthServiceLoginMutationResult = Awaited<ReturnType<typeof AuthService.login>>;
@@ -113,6 +117,7 @@ export type FileUploadServiceUploadShopImagesMutationResult = Awaited<ReturnType
 export type FileUploadServiceUploadItemsexcelMutationResult = Awaited<ReturnType<typeof FileUploadService.uploadItemsexcel>>;
 export type BasketServiceAddItemToBasketMutationResult = Awaited<ReturnType<typeof BasketService.addItemToBasket>>;
 export type BrandsServiceCreateBrandMutationResult = Awaited<ReturnType<typeof BrandsService.createBrand>>;
+export type FavoritesServiceChangeFavoriteMutationResult = Awaited<ReturnType<typeof FavoritesService.changeFavorite>>;
 export type UsersServiceChangeUserRoleMutationResult = Awaited<ReturnType<typeof UsersService.changeUserRole>>;
 export type ShopServiceUpdateShopMutationResult = Awaited<ReturnType<typeof ShopService.updateShop>>;
 export type ItemServiceUpdateItemMutationResult = Awaited<ReturnType<typeof ItemService.updateItem>>;

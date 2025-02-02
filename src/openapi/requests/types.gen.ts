@@ -223,27 +223,24 @@ export type OrganizationResponse = {
     kpp: string | null;
 };
 
-export type BoxField = {
+export type BoxResponseDto = {
+    type: 'box_single' | 'box_characteristics';
     /**
-     * Значение характеристики
+     * Опции коробки, структура зависит от типа box
      */
-    value: string;
-    /**
-     * Количество
-     */
-    quantity: number;
+    options: {
+    name?: string;
+    quantity?: string;
+} | {
+    name?: string;
+    fields?: Array<{
+        name?: string;
+        quantity?: string;
+    }>;
+};
 };
 
-export type BoxCharacteristicsResponse = {
-    /**
-     * Название характеристики
-     */
-    name: string;
-    /**
-     * Список характеристик
-     */
-    fields: Array<BoxField>;
-};
+export type type2 = 'box_single' | 'box_characteristics';
 
 export type CardItemResponse = {
     id: string;
@@ -253,7 +250,7 @@ export type CardItemResponse = {
     countryOfOrigin: string;
     article: string;
     brand: string;
-    box: BoxCharacteristicsResponse;
+    box: (BoxResponseDto) | null;
     price: number;
     rating: number;
 };
@@ -265,9 +262,9 @@ export type CardShopResponse = {
 
 export type CardResponse = {
     id: number;
-    rating: number;
     preview: CardItemResponse;
-    shop: Array<CardShopResponse>;
+    shop: CardShopResponse;
+    isFavorite: boolean;
 };
 
 export type CreateBrandDto = {
@@ -487,6 +484,14 @@ export type GetCityByCoordinatesData = {
 export type GetCityByCoordinatesResponse = string;
 
 export type GetBannersResponse = Array<BannerEntities>;
+
+export type GetFavoritesResponse = unknown;
+
+export type ChangeFavoriteData = {
+    cardId: number;
+};
+
+export type ChangeFavoriteResponse = unknown;
 
 export type $OpenApiTs = {
     '/auth/register': {
@@ -803,6 +808,21 @@ export type $OpenApiTs = {
         get: {
             res: {
                 200: Array<BannerEntities>;
+            };
+        };
+    };
+    '/favorites': {
+        get: {
+            res: {
+                200: unknown;
+            };
+        };
+    };
+    '/favorites/{cardId}': {
+        post: {
+            req: ChangeFavoriteData;
+            res: {
+                201: unknown;
             };
         };
     };

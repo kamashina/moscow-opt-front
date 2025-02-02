@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { type QueryClient } from "@tanstack/react-query";
-import { BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
+import { BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
 import * as Common from "./common";
 export const ensureUseUsersServiceFindAllData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseUsersServiceFindAllKeyFn(), queryFn: () => UsersService.findAll() });
 export const ensureUseUsersServiceGetMeData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseUsersServiceGetMeKeyFn(), queryFn: () => UsersService.getMe() });
@@ -38,3 +38,4 @@ export const ensureUseGeolocationServiceGetCityByCoordinatesData = (queryClient:
   lon: number;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseGeolocationServiceGetCityByCoordinatesKeyFn({ lat, lon }), queryFn: () => GeolocationService.getCityByCoordinates({ lat, lon }) });
 export const ensureUseBannersServiceGetBannersData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseBannersServiceGetBannersKeyFn(), queryFn: () => BannersService.getBanners() });
+export const ensureUseFavoritesServiceGetFavoritesData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseFavoritesServiceGetFavoritesKeyFn(), queryFn: () => FavoritesService.getFavorites() });

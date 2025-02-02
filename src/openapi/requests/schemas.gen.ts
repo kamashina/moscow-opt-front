@@ -646,40 +646,53 @@ export const $OrganizationResponse = {
     required: ['type', 'name', 'itn', 'psrn', 'kpp']
 } as const;
 
-export const $BoxField = {
+export const $BoxResponseDto = {
     type: 'object',
     properties: {
-        value: {
+        type: {
             type: 'string',
-            example: '36',
-            description: 'Значение характеристики'
+            enum: ['box_single', 'box_characteristics']
         },
-        quantity: {
-            type: 'number',
-            example: 1,
-            description: 'Количество'
+        options: {
+            description: 'Опции коробки, структура зависит от типа box',
+            oneOf: [
+                {
+                    type: 'object',
+                    properties: {
+                        name: {
+                            type: 'string'
+                        },
+                        quantity: {
+                            type: 'string'
+                        }
+                    }
+                },
+                {
+                    type: 'object',
+                    properties: {
+                        name: {
+                            type: 'string'
+                        },
+                        fields: {
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                properties: {
+                                    name: {
+                                        type: 'string'
+                                    },
+                                    quantity: {
+                                        type: 'string'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
         }
     },
-    required: ['value', 'quantity']
-} as const;
-
-export const $BoxCharacteristicsResponse = {
-    type: 'object',
-    properties: {
-        name: {
-            type: 'string',
-            example: 'Короб',
-            description: 'Название характеристики'
-        },
-        fields: {
-            description: 'Список характеристик',
-            type: 'array',
-            items: {
-                '$ref': '#/components/schemas/BoxField'
-            }
-        }
-    },
-    required: ['name', 'fields']
+    required: ['type', 'options']
 } as const;
 
 export const $CardItemResponse = {
@@ -710,7 +723,12 @@ export const $CardItemResponse = {
             type: 'string'
         },
         box: {
-            '$ref': '#/components/schemas/BoxCharacteristicsResponse'
+            nullable: true,
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/BoxResponseDto'
+                }
+            ]
         },
         price: {
             type: 'number'
@@ -741,20 +759,17 @@ export const $CardResponse = {
         id: {
             type: 'number'
         },
-        rating: {
-            type: 'number'
-        },
         preview: {
             '$ref': '#/components/schemas/CardItemResponse'
         },
         shop: {
-            type: 'array',
-            items: {
-                '$ref': '#/components/schemas/CardShopResponse'
-            }
+            '$ref': '#/components/schemas/CardShopResponse'
+        },
+        isFavorite: {
+            type: 'boolean'
         }
     },
-    required: ['id', 'rating', 'preview', 'shop']
+    required: ['id', 'preview', 'shop', 'isFavorite']
 } as const;
 
 export const $CreateBrandDto = {

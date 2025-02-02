@@ -5,15 +5,12 @@ import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import AppText from "../AppText/AppText";
 import CustomSkeleton from "../Skeleton/Skeleton";
-import { ReactNode } from "react";
-import { getServerImage } from "@/src/constants";
+import { getServerFile } from "@/src/constants";
 
 type Props<T> = {
   label: string;
   href: string;
-  imageClassName?: string;
   imageWrapperClassName?: string;
-  renderItem?: (item: T) => ReactNode;
   data: T;
 };
 
@@ -22,8 +19,6 @@ const PopularWrapper = <T extends any[]>({
   data,
   href,
   imageWrapperClassName,
-  imageClassName,
-  renderItem,
 }: Props<T>) => {
   if (!data?.length) {
     return <CustomSkeleton height={337} />;
@@ -48,34 +43,25 @@ const PopularWrapper = <T extends any[]>({
           imageWrapperClassName
         )}
       >
-        {data.map((item) =>
-          renderItem ? (
-            renderItem(item)
-          ) : (
-            <Link
-              key={item.id}
-              className="flex flex-col gap-2 items-center"
-              href={`/categories/${item.id}`}
-            >
-              <div
-                className={twMerge(
-                  "h-[260px] relative w-[260px]",
-                  imageClassName
-                )}
-              >
-                <Image
-                  className="rounded-[30px]"
-                  src={getServerImage(item.logo)}
-                  alt={item.name}
-                  fill
-                  sizes="100%"
-                />
-              </div>
+        {data.map((item) => (
+          <Link
+            key={item.id}
+            className="flex flex-col gap-2 items-center"
+            href={`/categories/${item.id}`}
+          >
+            <div className="relative  w-[260px] h-[260px]">
+              <Image
+                className="rounded-[30px]"
+                src={getServerFile(item.logo)}
+                alt={item.name}
+                fill
+                sizes="100%"
+              />
+            </div>
 
-              <AppText>{item.name}</AppText>
-            </Link>
-          )
-        )}
+            <AppText>{item.name}</AppText>
+          </Link>
+        ))}
       </div>
     </Wrapper>
   );

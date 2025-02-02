@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { RegisterData, RegisterResponse, SendSmsResponse, LoginData, LoginResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, UploadItemsImagesData, UploadItemsImagesResponse, UploadBannerData, UploadBannerResponse, UploadShopImagesData, UploadShopImagesResponse, UploadItemsexcelData, UploadItemsexcelResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAllCardsData, GetAllCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse } from './types.gen';
+import type { RegisterData, RegisterResponse, SendSmsResponse, LoginData, LoginResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, UploadItemsImagesData, UploadItemsImagesResponse, UploadBannerData, UploadBannerResponse, UploadShopImagesData, UploadShopImagesResponse, UploadItemsexcelData, UploadItemsexcelResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAllCardsData, GetAllCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse, GetFavoritesResponse, ChangeFavoriteData, ChangeFavoriteResponse } from './types.gen';
 
 export class AuthService {
     /**
@@ -657,6 +657,36 @@ export class BannersService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/banners'
+        });
+    }
+    
+}
+
+export class FavoritesService {
+    /**
+     * @returns unknown
+     * @throws ApiError
+     */
+    public static getFavorites(): CancelablePromise<GetFavoritesResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/favorites'
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.cardId
+     * @returns unknown
+     * @throws ApiError
+     */
+    public static changeFavorite(data: ChangeFavoriteData): CancelablePromise<ChangeFavoriteResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/favorites/{cardId}',
+            path: {
+                cardId: data.cardId
+            }
         });
     }
     

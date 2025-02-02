@@ -1,12 +1,8 @@
-import queryClient from "@/src/api/api";
-import Banners from "@/src/components/Banners/Banners";
-import CardList from "@/src/components/Cards/List/CardList";
-import PopularWrapper from "@/src/components/PopularWrapper/PopularWrapper";
+import { getQueryClient } from "@/src/api/api";
 import {
   ensureUseBannersServiceGetBannersData,
   ensureUseCardsServiceGetAllCardsData,
   ensureUseCategoriesServiceGetPopularCategoriesData,
-  ensureUseItemServiceGetAllItemsData,
   ensureUseShopServiceGetAllShopsData,
 } from "@/src/openapi/queries/ensureQueryData";
 import {
@@ -16,7 +12,16 @@ import {
   prefetchUseShopServiceGetAllShops,
 } from "@/src/openapi/queries/prefetch";
 
+import Cards from "./_components/Cards";
+
+import Shops from "./_components/Shops";
+
+import dynamic from "next/dynamic";
+import Categories from "./_components/Categories";
+const Banners = dynamic(() => import("./_components/Banners"), {});
+
 export async function generateMetadata() {
+  const queryClient = getQueryClient();
   await prefetchUseCategoriesServiceGetPopularCategories(queryClient);
   await prefetchUseShopServiceGetAllShops(queryClient);
   await prefetchUseBannersServiceGetBanners(queryClient);
@@ -35,6 +40,9 @@ export async function generateMetadata() {
     .slice(0, 150);
 
   return {
+    prosp: {
+      title: "Купить товары оптом от производителей",
+    },
     title: "Товары оптом от производителя по низким ценам",
     description:
       "Лучшие оптовые магазины с товарами в наличии. Прямые поставки, скидки до 60%, выгодные предложения!",
@@ -69,7 +77,8 @@ export async function generateMetadata() {
   };
 }
 
-const Page = async ({}) => {
+const Page = async () => {
+  const queryClient = getQueryClient();
   const categories = await ensureUseCategoriesServiceGetPopularCategoriesData(
     queryClient
   );
@@ -84,18 +93,13 @@ const Page = async ({}) => {
     <div className="mt-2 flex flex-col gap-2">
       <h1 className="sr-only">Товары оптом по выгодным ценам</h1>
 
-      <Banners banners={banners} />
+      <Banners initialData={banners} />
 
-      <PopularWrapper
-        label="Популярные магазины"
-        href="/"
-        data={shops}
-        imageClassName="w-[155px] h-[155px]"
-      />
+      <Shops initialData={shops} />
 
-      <PopularWrapper label="Популярные категории" href="/" data={categories} />
+      <Categories initialData={categories} />
 
-      <CardList data={cards} />
+      <Cards initialData={cards} />
     </div>
   );
 };

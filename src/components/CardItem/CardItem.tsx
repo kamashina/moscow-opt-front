@@ -1,57 +1,101 @@
-import { CardItemResponse } from "@/src/openapi/requests";
-import Image from "next/image";
-import React from "react";
-import AppText from "../AppText/AppText";
-import { getServerImage } from "@/src/constants";
+import {
+  useCardsServiceGetAllCardsKey,
+  useFavoritesServiceChangeFavorite,
+} from "@/src/openapi/queries";
+import { CardResponse } from "@/src/openapi/requests";
 import { Icon } from "@mossoft/ui-kit";
-import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import { enqueueSnackbar } from "notistack";
+import AppText from "../AppText/AppText";
 import ProductSchema from "../SEO/ProductSchema";
+import { getQueryClient } from "@/src/api/api";
+import { getServerFile } from "@/src/constants";
 
 type Props = {
-  item: CardItemResponse;
+  item: CardResponse;
 };
 
 const CardItem = ({ item }: Props) => {
+  const queryClient = getQueryClient();
+  const { mutateAsync: changeIsFavorite } = useFavoritesServiceChangeFavorite({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [useCardsServiceGetAllCardsKey],
+      });
+    },
+  });
+
+  const handleChangeFavorite = async (
+    e: React.MouseEvent<HTMLInputElement>
+  ) => {
+    e.preventDefault();
+    try {
+      const res = await changeIsFavorite({ cardId: item.id });
+    } catch (e) {
+      enqueueSnackbar("Произошла ошибка", { variant: "error" });
+      console.log(e);
+    }
+  };
+
+  const previewItem = item.preview;
+
   return (
     <>
       <ProductSchema
-        name={item.name}
-        image={process.env.NEXT_PUBLIC_FILES_URL + item.images?.[0]}
+        name={previewItem.name}
+        image={process.env.NEXT_PUBLIC_FILES_URL + previewItem.images?.[0]}
         description={
-          item.description || "Лучшие товары от проверенных поставщиков"
+          previewItem.description || "Лучшие товары от проверенных поставщиков"
         }
-        brand={item.brand}
-        price={item.price}
+        brand={previewItem.brand}
+        price={previewItem.price}
         currency="RUB"
       />
 
-      <div className="flex flex-col gap-1">
+      <Link className="flex flex-col gap-1" href={`/items/${item.id}`}>
         <div className="relative h-[300px] w-full">
+          <div onClick={handleChangeFavorite} className="cursor-pointer">
+            <Icon
+              name="like"
+              className={`w-8 h-8  ${
+                item.isFavorite ? "!text-danger" : "!text-white"
+              } absolute top-3 right-4 z-10`}
+            />
+          </div>
           <Image
             src={
-              item.images[0]
-                ? getServerImage(item.images[0])
+              previewItem.images[0]
+                ? getServerFile(previewItem.images[0])
                 : "/images/itemsPlaceholder.png"
             }
-            alt={item.name}
+            alt={previewItem.name}
             fill
             sizes="100%"
             className="rounded-[30px]"
           />
         </div>
-        <AppText className="font-medium">{item.name}</AppText>
+        <AppText className="font-medium">{previewItem.name}</AppText>
         <div className="flex flex-row justify-between items-center">
           <AppText className="font-medium text-xl text-primary-dark-light">
-            {item.price}₽
+            {previewItem.price}₽
           </AppText>
+
           <div className="flex flex-row items-center gap-1">
             <Icon name="star" className="w-4 h-4 !text-[#F6B51E]" />
             <AppText className="!text-[#F6B51E]">
-              {item.rating.toFixed(1)}
+              {previewItem.rating.toFixed(1)}
             </AppText>
           </div>
         </div>
-      </div>
+        <div className="flex flex-row justify-between">
+          <AppText className="text-primary">{previewItem.box?.type}</AppText>
+          <AppText className="font-normal text-[#808080] text-sm">
+            Арт: {previewItem.id}
+          </AppText>
+          <AppText>{item.shop.name}</AppText>
+        </div>
+      </Link>
     </>
   );
 };

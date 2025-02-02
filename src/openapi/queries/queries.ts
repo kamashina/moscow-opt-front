@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseMutationOptions, UseQueryOptions, useMutation, useQuery } from "@tanstack/react-query";
-import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FileUploadService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
+import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, FileUploadService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
 import { CompaniesDto, CreateBrandDto, CreateCategoryDto, CreateItemDto, CreateShopDto, CreateSubCategoryDto, LoginUserDto, RegisterUserDto, UpdateItemDto, UpdateShopDto, UsersPatchDto } from "../requests/types.gen";
 import * as Common from "./common";
 export const useUsersServiceFindAll = <TData = Common.UsersServiceFindAllDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseUsersServiceFindAllKeyFn(queryKey), queryFn: () => UsersService.findAll() as TData, ...options });
@@ -39,6 +39,7 @@ export const useGeolocationServiceGetCityByCoordinates = <TData = Common.Geoloca
   lon: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseGeolocationServiceGetCityByCoordinatesKeyFn({ lat, lon }, queryKey), queryFn: () => GeolocationService.getCityByCoordinates({ lat, lon }) as TData, ...options });
 export const useBannersServiceGetBanners = <TData = Common.BannersServiceGetBannersDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseBannersServiceGetBannersKeyFn(queryKey), queryFn: () => BannersService.getBanners() as TData, ...options });
+export const useFavoritesServiceGetFavorites = <TData = Common.FavoritesServiceGetFavoritesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseFavoritesServiceGetFavoritesKeyFn(queryKey), queryFn: () => FavoritesService.getFavorites() as TData, ...options });
 export const useAuthServiceRegister = <TData = Common.AuthServiceRegisterMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   requestBody: RegisterUserDto;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
@@ -117,6 +118,11 @@ export const useBrandsServiceCreateBrand = <TData = Common.BrandsServiceCreateBr
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
   requestBody: CreateBrandDto;
 }, TContext>({ mutationFn: ({ requestBody }) => BrandsService.createBrand({ requestBody }) as unknown as Promise<TData>, ...options });
+export const useFavoritesServiceChangeFavorite = <TData = Common.FavoritesServiceChangeFavoriteMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  cardId: number;
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+  cardId: number;
+}, TContext>({ mutationFn: ({ cardId }) => FavoritesService.changeFavorite({ cardId }) as unknown as Promise<TData>, ...options });
 export const useUsersServiceChangeUserRole = <TData = Common.UsersServiceChangeUserRoleMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   requestBody: UsersPatchDto;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {

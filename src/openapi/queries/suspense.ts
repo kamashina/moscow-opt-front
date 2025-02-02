@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
+import { BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
 import * as Common from "./common";
 export const useUsersServiceFindAllSuspense = <TData = Common.UsersServiceFindAllDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseUsersServiceFindAllKeyFn(queryKey), queryFn: () => UsersService.findAll() as TData, ...options });
 export const useUsersServiceGetMeSuspense = <TData = Common.UsersServiceGetMeDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseUsersServiceGetMeKeyFn(queryKey), queryFn: () => UsersService.getMe() as TData, ...options });
@@ -38,3 +38,4 @@ export const useGeolocationServiceGetCityByCoordinatesSuspense = <TData = Common
   lon: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseGeolocationServiceGetCityByCoordinatesKeyFn({ lat, lon }, queryKey), queryFn: () => GeolocationService.getCityByCoordinates({ lat, lon }) as TData, ...options });
 export const useBannersServiceGetBannersSuspense = <TData = Common.BannersServiceGetBannersDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseBannersServiceGetBannersKeyFn(queryKey), queryFn: () => BannersService.getBanners() as TData, ...options });
+export const useFavoritesServiceGetFavoritesSuspense = <TData = Common.FavoritesServiceGetFavoritesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseFavoritesServiceGetFavoritesKeyFn(queryKey), queryFn: () => FavoritesService.getFavorites() as TData, ...options });

@@ -1,5 +1,5 @@
 "use client";
-import { default as queryClient } from "@/src/api/api";
+import { getQueryClient } from "@/src/api/api";
 import ErrorSnackbar from "@/src/components/Snackbars/ErrorSnackbar";
 import SuccessSnackbar from "@/src/components/Snackbars/SuccessSnackbar";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
@@ -10,6 +10,8 @@ import { NuqsAdapter } from "nuqs/adapters/next";
 import { FC, PropsWithChildren, useEffect } from "react";
 
 const Providers: FC<PropsWithChildren> = ({ children }) => {
+  const queryClient = getQueryClient();
+
   useEffect(() => {
     const persister = createSyncStoragePersister({
       storage: typeof window !== "undefined" ? window.localStorage : undefined,

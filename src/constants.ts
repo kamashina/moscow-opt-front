@@ -14,6 +14,6 @@ export const getPersistedStorage = () => {
   return localStorage;
 };
 
-export const getServerImage = (image: string) => {
-  return `${process.env.NEXT_PUBLIC_FILES_URL}${image}`;
+export const getServerFile = (file: string) => {
+  return process.env.NEXT_PUBLIC_FILES_URL + file;
 };
