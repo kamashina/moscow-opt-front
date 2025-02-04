@@ -170,12 +170,13 @@ export type CreateItemDto = {
         [key: string]: unknown;
     };
     countryOfOrigin: string;
-    article: string;
+    article: number;
     brand: string;
     box: Array<{
         [key: string]: unknown;
     }>;
     price: number;
+    sellerArticle: string;
     images: Array<(string)>;
 };
 
@@ -187,6 +188,7 @@ export type ItemsEntityMinInfo = {
     description: string;
     countryOfOrigin: string;
     basketOptions: Array<BasketOptions>;
+    article: number;
     cardId: number;
     id: number;
     name: string;
@@ -205,12 +207,20 @@ export type UpdateItemDto = {
         [key: string]: unknown;
     };
     countryOfOrigin: string;
-    article: string;
+    article: number;
     brand: string;
     box: Array<{
         [key: string]: unknown;
     }>;
     images: Array<(string)>;
+};
+
+export type SuggestionType = 'card' | 'category' | 'subCategory' | 'shop';
+
+export type SearchEntityResponse = {
+    id: number;
+    name: string;
+    suggestionType: SuggestionType;
 };
 
 export type OrganizationResponse = {
@@ -248,7 +258,7 @@ export type CardItemResponse = {
     description: string;
     images: Array<(string)>;
     countryOfOrigin: string;
-    article: string;
+    article: number;
     brand: string;
     box: (BoxResponseDto) | null;
     price: number;
@@ -433,6 +443,12 @@ export type UploadItemsexcelData = {
 };
 
 export type UploadItemsexcelResponse = unknown;
+
+export type SearchData = {
+    query?: string;
+};
+
+export type SearchResponse = Array<SearchEntityResponse>;
 
 export type GetMyBasketResponse = {
     [key: string]: unknown;
@@ -725,6 +741,14 @@ export type $OpenApiTs = {
             req: UploadItemsexcelData;
             res: {
                 201: unknown;
+            };
+        };
+    };
+    '/search/{query}': {
+        get: {
+            req: SearchData;
+            res: {
+                200: Array<SearchEntityResponse>;
             };
         };
     };

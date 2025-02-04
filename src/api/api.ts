@@ -13,13 +13,14 @@ OpenAPI.CREDENTIALS = "include";
 OpenAPI.WITH_CREDENTIALS = true;
 OpenAPI.TOKEN =
   getFromLocalStorage("token") ||
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3RfbmFtZSI6InN0cmluZyIsInBob3RvIjpudWxsLCJsYXN0X25hbWUiOiJzdHJpbmciLCJyb2xlIjoic2VsbGVyIiwibWlkZGxlX25hbWUiOiJzdHJpbmciLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJwaG9uZSI6InN0cmluZyIsImlhdCI6MTczODQ2Nzc4MSwiZXhwIjoxNzM4NTU0MTgxfQ.g8F7l92r9FfnHEvfB-RYdl7ojO_8-2nCOQ10GjF4pNM";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3RfbmFtZSI6InN0cmluZyIsInBob3RvIjpudWxsLCJsYXN0X25hbWUiOiJzdHJpbmciLCJyb2xlIjoic2VsbGVyIiwibWlkZGxlX25hbWUiOiJzdHJpbmciLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJwaG9uZSI6InN0cmluZyIsImlhdCI6MTczODU1OTQ4MywiZXhwIjoxNzM4NjQ1ODgzfQ.U2p96iG2jkTLfyHCdek_614HrkZhK05YPnvlWJ_yKNk";
 
 const onError = async (error: Exception | any) => {
   const status = (error as Exception)?.status;
-  const redirectUrl = new URLSearchParams(window.location.search).get(
-    "redirectUrl"
-  );
+
+  // const redirectUrl = new URLSearchParams(window.location.search).get(
+  //   "redirectUrl"
+  // );
   // if (status === 401 || status === 403) {
   //   try {
   //     const res = await AuthService.refresh();

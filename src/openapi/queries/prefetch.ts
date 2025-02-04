@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { type QueryClient } from "@tanstack/react-query";
-import { BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
+import { BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, GeolocationService, ItemService, MeilisearchService, ShopService, UsersService } from "../requests/services.gen";
 import * as Common from "./common";
 export const prefetchUseUsersServiceFindAll = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseUsersServiceFindAllKeyFn(), queryFn: () => UsersService.findAll() });
 export const prefetchUseUsersServiceGetMe = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseUsersServiceGetMeKeyFn(), queryFn: () => UsersService.getMe() });
@@ -21,6 +21,9 @@ export const prefetchUseCategoriesServiceGetSubCategoryById = (queryClient: Quer
 }) => queryClient.prefetchQuery({ queryKey: Common.UseCategoriesServiceGetSubCategoryByIdKeyFn({ id }), queryFn: () => CategoriesService.getSubCategoryById({ id }) });
 export const prefetchUseItemServiceGetAllItems = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseItemServiceGetAllItemsKeyFn(), queryFn: () => ItemService.getAllItems() });
 export const prefetchUseItemServiceGetById = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseItemServiceGetByIdKeyFn(), queryFn: () => ItemService.getById() });
+export const prefetchUseMeilisearchServiceSearch = (queryClient: QueryClient, { query }: {
+  query?: string;
+} = {}) => queryClient.prefetchQuery({ queryKey: Common.UseMeilisearchServiceSearchKeyFn({ query }), queryFn: () => MeilisearchService.search({ query }) });
 export const prefetchUseBasketServiceGetMyBasket = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseBasketServiceGetMyBasketKeyFn(), queryFn: () => BasketService.getMyBasket() });
 export const prefetchUseBasketServiceGetTotalItemsInBasket = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseBasketServiceGetTotalItemsInBasketKeyFn(), queryFn: () => BasketService.getTotalItemsInBasket() });
 export const prefetchUseDaDataServiceGetParty = (queryClient: QueryClient, { query }: {

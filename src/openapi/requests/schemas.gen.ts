@@ -510,7 +510,7 @@ export const $CreateItemDto = {
             type: 'string'
         },
         article: {
-            type: 'string'
+            type: 'number'
         },
         brand: {
             type: 'string'
@@ -524,6 +524,9 @@ export const $CreateItemDto = {
         price: {
             type: 'number'
         },
+        sellerArticle: {
+            type: 'string'
+        },
         images: {
             type: 'array',
             items: {
@@ -531,7 +534,7 @@ export const $CreateItemDto = {
             }
         }
     },
-    required: ['name', 'fields', 'countryOfOrigin', 'article', 'brand', 'box', 'price', 'images']
+    required: ['name', 'fields', 'countryOfOrigin', 'article', 'brand', 'box', 'price', 'sellerArticle', 'images']
 } as const;
 
 export const $BasketOptions = {
@@ -554,6 +557,9 @@ export const $ItemsEntityMinInfo = {
                 '$ref': '#/components/schemas/BasketOptions'
             }
         },
+        article: {
+            type: 'number'
+        },
         cardId: {
             type: 'number'
         },
@@ -574,7 +580,7 @@ export const $ItemsEntityMinInfo = {
             type: 'string'
         }
     },
-    required: ['description', 'countryOfOrigin', 'basketOptions', 'cardId', 'id', 'name', 'images', 'createdAt']
+    required: ['description', 'countryOfOrigin', 'basketOptions', 'article', 'cardId', 'id', 'name', 'images', 'createdAt']
 } as const;
 
 export const $UpdateItemDto = {
@@ -602,7 +608,7 @@ export const $UpdateItemDto = {
             type: 'string'
         },
         article: {
-            type: 'string'
+            type: 'number'
         },
         brand: {
             type: 'string'
@@ -621,6 +627,31 @@ export const $UpdateItemDto = {
         }
     },
     required: ['description', 'basketOptions', 'seo', 'name', 'fields', 'countryOfOrigin', 'article', 'brand', 'box', 'images']
+} as const;
+
+export const $SuggestionType = {
+    type: 'string',
+    enum: ['card', 'category', 'subCategory', 'shop']
+} as const;
+
+export const $SearchEntityResponse = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'number'
+        },
+        name: {
+            type: 'string'
+        },
+        suggestionType: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/SuggestionType'
+                }
+            ]
+        }
+    },
+    required: ['id', 'name', 'suggestionType']
 } as const;
 
 export const $OrganizationResponse = {
@@ -717,7 +748,7 @@ export const $CardItemResponse = {
             type: 'string'
         },
         article: {
-            type: 'string'
+            type: 'number'
         },
         brand: {
             type: 'string'

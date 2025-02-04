@@ -1,12 +1,13 @@
 "use client";
 import PopularWrapper from "@/src/components/PopularWrapper/PopularWrapper";
 import { useCategoriesServiceGetPopularCategoriesSuspense } from "@/src/openapi/queries/suspense";
+import { GetPopularCategoriesResponse } from "@/src/openapi/requests";
 
-type Props<T> = {
-  initialData: T;
+type Props = {
+  initialData: GetPopularCategoriesResponse;
 };
 
-const Categories = <T extends any[]>({ initialData }: Props<T>) => {
+const Categories = ({ initialData }: Props) => {
   const { data } = useCategoriesServiceGetPopularCategoriesSuspense(undefined, {
     initialData,
   });

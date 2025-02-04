@@ -10,7 +10,7 @@ import { enqueueSnackbar } from "notistack";
 import AppText from "../AppText/AppText";
 import ProductSchema from "../SEO/ProductSchema";
 import { getQueryClient } from "@/src/api/api";
-import { getServerFile } from "@/src/constants";
+import { BOX_TYPES_TRANlSATIONS, getServerFile } from "@/src/constants";
 
 type Props = {
   item: CardResponse;
@@ -76,6 +76,9 @@ const CardItem = ({ item }: Props) => {
           />
         </div>
         <AppText className="font-medium">{previewItem.name}</AppText>
+        <AppText className="font-light text-[#808080] text-xs">
+          RO-{previewItem.article}
+        </AppText>
         <div className="flex flex-row justify-between items-center">
           <AppText className="font-medium text-xl text-primary-dark-light">
             {previewItem.price}₽
@@ -89,9 +92,9 @@ const CardItem = ({ item }: Props) => {
           </div>
         </div>
         <div className="flex flex-row justify-between">
-          <AppText className="text-primary">{previewItem.box?.type}</AppText>
-          <AppText className="font-normal text-[#808080] text-sm">
-            Арт: {previewItem.id}
+          <AppText className="text-primary">
+            {previewItem.box?.type &&
+              BOX_TYPES_TRANlSATIONS[previewItem.box?.type]}
           </AppText>
           <AppText>{item.shop.name}</AppText>
         </div>

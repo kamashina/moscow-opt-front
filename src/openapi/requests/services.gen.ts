@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { RegisterData, RegisterResponse, SendSmsResponse, LoginData, LoginResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, UploadItemsImagesData, UploadItemsImagesResponse, UploadBannerData, UploadBannerResponse, UploadShopImagesData, UploadShopImagesResponse, UploadItemsexcelData, UploadItemsexcelResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAllCardsData, GetAllCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse, GetFavoritesResponse, ChangeFavoriteData, ChangeFavoriteResponse } from './types.gen';
+import type { RegisterData, RegisterResponse, SendSmsResponse, LoginData, LoginResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, UploadItemsImagesData, UploadItemsImagesResponse, UploadBannerData, UploadBannerResponse, UploadShopImagesData, UploadShopImagesResponse, UploadItemsexcelData, UploadItemsexcelResponse, SearchData, SearchResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAllCardsData, GetAllCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse, GetFavoritesResponse, ChangeFavoriteData, ChangeFavoriteResponse } from './types.gen';
 
 export class AuthService {
     /**
@@ -487,6 +487,25 @@ export class FileUploadService {
             },
             formData: data.formData,
             mediaType: 'multipart/form-data'
+        });
+    }
+    
+}
+
+export class MeilisearchService {
+    /**
+     * @param data The data for the request.
+     * @param data.query
+     * @returns SearchEntityResponse
+     * @throws ApiError
+     */
+    public static search(data: SearchData = {}): CancelablePromise<SearchResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/search/{query}',
+            path: {
+                query: data.query
+            }
         });
     }
     

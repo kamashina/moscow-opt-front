@@ -1,13 +1,13 @@
 import Head from "next/head";
 
-interface ProductSchemaProps {
+type ProductSchemaProps = {
   name: string;
   image: string;
   description: string;
   brand?: string;
   price?: number;
   currency?: string;
-}
+};
 
 const ProductSchema = ({
   name,

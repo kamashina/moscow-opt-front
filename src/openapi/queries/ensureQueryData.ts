@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { type QueryClient } from "@tanstack/react-query";
-import { BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
+import { BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, GeolocationService, ItemService, MeilisearchService, ShopService, UsersService } from "../requests/services.gen";
 import * as Common from "./common";
 export const ensureUseUsersServiceFindAllData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseUsersServiceFindAllKeyFn(), queryFn: () => UsersService.findAll() });
 export const ensureUseUsersServiceGetMeData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseUsersServiceGetMeKeyFn(), queryFn: () => UsersService.getMe() });
@@ -21,6 +21,9 @@ export const ensureUseCategoriesServiceGetSubCategoryByIdData = (queryClient: Qu
 }) => queryClient.ensureQueryData({ queryKey: Common.UseCategoriesServiceGetSubCategoryByIdKeyFn({ id }), queryFn: () => CategoriesService.getSubCategoryById({ id }) });
 export const ensureUseItemServiceGetAllItemsData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseItemServiceGetAllItemsKeyFn(), queryFn: () => ItemService.getAllItems() });
 export const ensureUseItemServiceGetByIdData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseItemServiceGetByIdKeyFn(), queryFn: () => ItemService.getById() });
+export const ensureUseMeilisearchServiceSearchData = (queryClient: QueryClient, { query }: {
+  query?: string;
+} = {}) => queryClient.ensureQueryData({ queryKey: Common.UseMeilisearchServiceSearchKeyFn({ query }), queryFn: () => MeilisearchService.search({ query }) });
 export const ensureUseBasketServiceGetMyBasketData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseBasketServiceGetMyBasketKeyFn(), queryFn: () => BasketService.getMyBasket() });
 export const ensureUseBasketServiceGetTotalItemsInBasketData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseBasketServiceGetTotalItemsInBasketKeyFn(), queryFn: () => BasketService.getTotalItemsInBasket() });
 export const ensureUseDaDataServiceGetPartyData = (queryClient: QueryClient, { query }: {

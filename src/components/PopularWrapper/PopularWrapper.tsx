@@ -11,6 +11,7 @@ type Props<T> = {
   label: string;
   href: string;
   imageWrapperClassName?: string;
+  imageClassName?: string;
   data: T;
 };
 
@@ -18,6 +19,7 @@ const PopularWrapper = <T extends any[]>({
   label,
   data,
   href,
+  imageClassName,
   imageWrapperClassName,
 }: Props<T>) => {
   if (!data?.length) {
@@ -49,7 +51,12 @@ const PopularWrapper = <T extends any[]>({
             className="flex flex-col gap-2 items-center"
             href={`/categories/${item.id}`}
           >
-            <div className="relative  w-[260px] h-[260px]">
+            <div
+              className={twMerge(
+                "relative  w-[260px] h-[260px]",
+                imageClassName
+              )}
+            >
               <Image
                 className="rounded-[30px]"
                 src={getServerFile(item.logo)}

@@ -1,7 +1,7 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryResult } from "@tanstack/react-query";
-import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, FileUploadService, GeolocationService, ItemService, ShopService, UsersService } from "../requests/services.gen";
+import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, FileUploadService, GeolocationService, ItemService, MeilisearchService, ShopService, UsersService } from "../requests/services.gen";
 export type UsersServiceFindAllDefaultResponse = Awaited<ReturnType<typeof UsersService.findAll>>;
 export type UsersServiceFindAllQueryResult<TData = UsersServiceFindAllDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useUsersServiceFindAllKey = "UsersServiceFindAll";
@@ -56,6 +56,12 @@ export type ItemServiceGetByIdDefaultResponse = Awaited<ReturnType<typeof ItemSe
 export type ItemServiceGetByIdQueryResult<TData = ItemServiceGetByIdDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useItemServiceGetByIdKey = "ItemServiceGetById";
 export const UseItemServiceGetByIdKeyFn = (queryKey?: Array<unknown>) => [useItemServiceGetByIdKey, ...(queryKey ?? [])];
+export type MeilisearchServiceSearchDefaultResponse = Awaited<ReturnType<typeof MeilisearchService.search>>;
+export type MeilisearchServiceSearchQueryResult<TData = MeilisearchServiceSearchDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useMeilisearchServiceSearchKey = "MeilisearchServiceSearch";
+export const UseMeilisearchServiceSearchKeyFn = ({ query }: {
+  query?: string;
+} = {}, queryKey?: Array<unknown>) => [useMeilisearchServiceSearchKey, ...(queryKey ?? [{ query }])];
 export type BasketServiceGetMyBasketDefaultResponse = Awaited<ReturnType<typeof BasketService.getMyBasket>>;
 export type BasketServiceGetMyBasketQueryResult<TData = BasketServiceGetMyBasketDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useBasketServiceGetMyBasketKey = "BasketServiceGetMyBasket";

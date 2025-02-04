@@ -42,7 +42,7 @@ const Banners: FC<Props> = ({ initialData }) => {
           <Icon name="arrow-left" className="w-10 h-10 !text-white" />
         </div>
       )}
-      <div className="overflow-x-scroll w-full flex flex-row items-center scrollbar-hide rounded-[30px]">
+      <div className="overflow-x-hidden w-full flex flex-row items-center scrollbar-hide rounded-[30px]">
         {data?.map((item) => (
           <div
             ref={bannerId === item.id ? elRef : null}

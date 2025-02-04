@@ -1,3 +1,5 @@
+import { BoxTypes } from "./types";
+
 export const getFromLocalStorage = (key: string) => {
   if (!key || typeof window === "undefined") {
     return "";
@@ -16,4 +18,9 @@ export const getPersistedStorage = () => {
 
 export const getServerFile = (file: string) => {
   return process.env.NEXT_PUBLIC_FILES_URL + file;
+};
+
+export const BOX_TYPES_TRANlSATIONS: Record<BoxTypes, string> = {
+  box_characteristics: "Короб",
+  box_single: "Упаковка",
 };
