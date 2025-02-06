@@ -1,13 +1,12 @@
 "use client";
+import AppText from "@/src/components/AppText/AppText";
+import Location from "@/src/components/Location/Location";
+import Search from "@/src/components/Search/Search";
+import { useUsersServiceGetMe } from "@/src/openapi/queries";
+import { Icon } from "@mossoft/ui-kit";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
-import Location from "@/src/components/Location/Location";
-import { Icon } from "@mossoft/ui-kit";
-import AppText from "@/src/components/AppText/AppText";
-import Search from "@/src/components/Search/Search";
-
-type Props = {};
 
 const HEADER_OPTIONS = [
   { label: "Перейти в магазин", link: "/shop" },
@@ -30,7 +29,7 @@ const RIGHT_NAV_OPTIONS = [
     title: "Корзина",
   },
   {
-    link: "/",
+    link: "/auth",
     iconName: "profile",
     title: "Профиль",
   },
@@ -48,7 +47,12 @@ const LEFT_NAV_OPTIONS = [
   },
 ];
 
+type Props = {};
+
 const Header: FC<Props> = () => {
+  const { data } = useUsersServiceGetMe();
+  console.log(data);
+
   return (
     <>
       <div className="bg-[#EEE]">
@@ -109,7 +113,10 @@ const Header: FC<Props> = () => {
                 <Link
                   title={item.title}
                   key={item.iconName}
-                  href={item.link}
+                  href={{
+                    pathname: "/",
+                    query: { modal: "auth" },
+                  }}
                   className="group rounded-full bg-primary-light p-3 hover:bg-primary active:opacity-70"
                 >
                   <Icon

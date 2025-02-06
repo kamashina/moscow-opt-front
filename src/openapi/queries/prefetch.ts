@@ -1,8 +1,11 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { type QueryClient } from "@tanstack/react-query";
-import { BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, GeolocationService, ItemService, MeilisearchService, ShopService, UsersService } from "../requests/services.gen";
+import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, FiltersService, GeolocationService, ItemService, MeilisearchService, ShopService, UsersService } from "../requests/services.gen";
 import * as Common from "./common";
+export const prefetchUseAuthServiceGetSmsTimer = (queryClient: QueryClient, { phone }: {
+  phone: string;
+}) => queryClient.prefetchQuery({ queryKey: Common.UseAuthServiceGetSmsTimerKeyFn({ phone }), queryFn: () => AuthService.getSmsTimer({ phone }) });
 export const prefetchUseUsersServiceFindAll = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseUsersServiceFindAllKeyFn(), queryFn: () => UsersService.findAll() });
 export const prefetchUseUsersServiceGetMe = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseUsersServiceGetMeKeyFn(), queryFn: () => UsersService.getMe() });
 export const prefetchUseUsersServiceGetById = (queryClient: QueryClient, { id }: {
@@ -10,6 +13,9 @@ export const prefetchUseUsersServiceGetById = (queryClient: QueryClient, { id }:
 }) => queryClient.prefetchQuery({ queryKey: Common.UseUsersServiceGetByIdKeyFn({ id }), queryFn: () => UsersService.getById({ id }) });
 export const prefetchUseCompaniesServiceGetAllCompanies = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseCompaniesServiceGetAllCompaniesKeyFn(), queryFn: () => CompaniesService.getAllCompanies() });
 export const prefetchUseCompaniesServiceGetMyCompany = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseCompaniesServiceGetMyCompanyKeyFn(), queryFn: () => CompaniesService.getMyCompany() });
+export const prefetchUseFiltersServiceGetFiltersBySubCategoryId = (queryClient: QueryClient, { subCategoryId }: {
+  subCategoryId: number;
+}) => queryClient.prefetchQuery({ queryKey: Common.UseFiltersServiceGetFiltersBySubCategoryIdKeyFn({ subCategoryId }), queryFn: () => FiltersService.getFiltersBySubCategoryId({ subCategoryId }) });
 export const prefetchUseShopServiceGetMyShop = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseShopServiceGetMyShopKeyFn(), queryFn: () => ShopService.getMyShop() });
 export const prefetchUseShopServiceGetAllShops = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseShopServiceGetAllShopsKeyFn(), queryFn: () => ShopService.getAllShops() });
 export const prefetchUseCategoriesServiceGetAllCategories = (queryClient: QueryClient, { isPopular }: {

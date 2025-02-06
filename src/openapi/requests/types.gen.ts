@@ -4,9 +4,16 @@ export type RegisterUserDto = {
     email: string;
     password: string;
     phone: string;
-    first_name: string;
-    last_name: string;
-    middle_name: string;
+    full_name: string;
+};
+
+export type GetSmsTimerResponse = {
+    readonly expiresIn: number;
+    readonly message: string;
+};
+
+export type SendSmsDto = {
+    phone: string;
 };
 
 export type AuthResponse = {
@@ -14,9 +21,9 @@ export type AuthResponse = {
     readonly refresh_token: string;
 };
 
-export type LoginUserDto = {
+export type VerifyCodeDto = {
     phone: string;
-    password: string;
+    code: string;
 };
 
 export type Role = 'user' | 'seller';
@@ -24,9 +31,7 @@ export type Role = 'user' | 'seller';
 export type UserEntityWithoutPassword = {
     role: Role;
     id: number;
-    first_name: string;
-    last_name: string;
-    middle_name: string;
+    full_name: string;
     email: string;
     phone: string;
     photo: string | null;
@@ -43,9 +48,7 @@ export type UsersPatchDto = {
     photo: string;
     email: string;
     phone: string;
-    first_name: string;
-    last_name: string;
-    middle_name: string;
+    full_name: string;
 };
 
 export type type = 'INDIVIDUAL' | 'LEGAL';
@@ -288,21 +291,38 @@ export type BannerEntities = {
     seo: string;
 };
 
-export type RegisterData = {
+export type RegisterSmsData = {
     requestBody: RegisterUserDto;
 };
 
-export type RegisterResponse = AuthResponse;
-
-export type SendSmsResponse = unknown;
-
-export type LoginData = {
-    requestBody: LoginUserDto;
+export type RegisterSmsResponse = GetSmsTimerResponse | {
+    [key: string]: unknown;
 };
 
-export type LoginResponse = AuthResponse | unknown;
+export type LoginSmsData = {
+    requestBody: SendSmsDto;
+};
 
-export type RefreshTokenResponse = AuthResponse | unknown;
+export type LoginSmsResponse = GetSmsTimerResponse | {
+    [key: string]: unknown;
+};
+
+export type GetSmsTimerData = {
+    phone: string;
+};
+
+export type GetSmsTimerResponse2 = GetSmsTimerResponse;
+
+export type VerifyCodeData = {
+    requestBody: VerifyCodeDto;
+};
+
+export type VerifyCodeResponse = {
+    access_token?: string;
+    refresh_token?: string;
+} | AuthResponse;
+
+export type RefreshTokenResponse = AuthResponse;
 
 export type LogoutResponse = unknown;
 
@@ -333,6 +353,12 @@ export type GetAllCompaniesResponse = CompaniesResponse;
 export type DeleteMyCompanyResponse = CompaniesResponse;
 
 export type GetMyCompanyResponse = CompaniesResponse;
+
+export type GetFiltersBySubCategoryIdData = {
+    subCategoryId: number;
+};
+
+export type GetFiltersBySubCategoryIdResponse = unknown;
 
 export type GetMyShopResponse = ShopEntity;
 
@@ -510,27 +536,45 @@ export type ChangeFavoriteData = {
 export type ChangeFavoriteResponse = unknown;
 
 export type $OpenApiTs = {
-    '/auth/register': {
+    '/auth/register-sms': {
         post: {
-            req: RegisterData;
+            req: RegisterSmsData;
             res: {
+                200: GetSmsTimerResponse;
+                201: {
+                    [key: string]: unknown;
+                };
+            };
+        };
+    };
+    '/auth/login-sms': {
+        post: {
+            req: LoginSmsData;
+            res: {
+                200: GetSmsTimerResponse;
+                201: {
+                    [key: string]: unknown;
+                };
+            };
+        };
+    };
+    '/auth/get-sms-timer': {
+        get: {
+            req: GetSmsTimerData;
+            res: {
+                200: GetSmsTimerResponse;
+            };
+        };
+    };
+    '/auth/verify-code': {
+        post: {
+            req: VerifyCodeData;
+            res: {
+                200: {
+                    access_token?: string;
+                    refresh_token?: string;
+                };
                 201: AuthResponse;
-            };
-        };
-    };
-    '/auth/send-sms': {
-        post: {
-            res: {
-                201: unknown;
-            };
-        };
-    };
-    '/auth/login': {
-        post: {
-            req: LoginData;
-            res: {
-                200: AuthResponse;
-                201: unknown;
             };
         };
     };
@@ -538,7 +582,7 @@ export type $OpenApiTs = {
         post: {
             res: {
                 200: AuthResponse;
-                201: unknown;
+                201: AuthResponse;
             };
         };
     };
@@ -599,6 +643,14 @@ export type $OpenApiTs = {
         get: {
             res: {
                 200: CompaniesResponse;
+            };
+        };
+    };
+    '/filters/{subCategoryId}': {
+        get: {
+            req: GetFiltersBySubCategoryIdData;
+            res: {
+                200: unknown;
             };
         };
     };

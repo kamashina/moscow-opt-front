@@ -1,9 +1,12 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseMutationOptions, UseQueryOptions, useMutation, useQuery } from "@tanstack/react-query";
-import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, FileUploadService, GeolocationService, ItemService, MeilisearchService, ShopService, UsersService } from "../requests/services.gen";
-import { CompaniesDto, CreateBrandDto, CreateCategoryDto, CreateItemDto, CreateShopDto, CreateSubCategoryDto, LoginUserDto, RegisterUserDto, UpdateItemDto, UpdateShopDto, UsersPatchDto } from "../requests/types.gen";
+import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, FileUploadService, FiltersService, GeolocationService, ItemService, MeilisearchService, ShopService, UsersService } from "../requests/services.gen";
+import { CompaniesDto, CreateBrandDto, CreateCategoryDto, CreateItemDto, CreateShopDto, CreateSubCategoryDto, RegisterUserDto, SendSmsDto, UpdateItemDto, UpdateShopDto, UsersPatchDto, VerifyCodeDto } from "../requests/types.gen";
 import * as Common from "./common";
+export const useAuthServiceGetSmsTimer = <TData = Common.AuthServiceGetSmsTimerDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ phone }: {
+  phone: string;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseAuthServiceGetSmsTimerKeyFn({ phone }, queryKey), queryFn: () => AuthService.getSmsTimer({ phone }) as TData, ...options });
 export const useUsersServiceFindAll = <TData = Common.UsersServiceFindAllDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseUsersServiceFindAllKeyFn(queryKey), queryFn: () => UsersService.findAll() as TData, ...options });
 export const useUsersServiceGetMe = <TData = Common.UsersServiceGetMeDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseUsersServiceGetMeKeyFn(queryKey), queryFn: () => UsersService.getMe() as TData, ...options });
 export const useUsersServiceGetById = <TData = Common.UsersServiceGetByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
@@ -11,6 +14,9 @@ export const useUsersServiceGetById = <TData = Common.UsersServiceGetByIdDefault
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseUsersServiceGetByIdKeyFn({ id }, queryKey), queryFn: () => UsersService.getById({ id }) as TData, ...options });
 export const useCompaniesServiceGetAllCompanies = <TData = Common.CompaniesServiceGetAllCompaniesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCompaniesServiceGetAllCompaniesKeyFn(queryKey), queryFn: () => CompaniesService.getAllCompanies() as TData, ...options });
 export const useCompaniesServiceGetMyCompany = <TData = Common.CompaniesServiceGetMyCompanyDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCompaniesServiceGetMyCompanyKeyFn(queryKey), queryFn: () => CompaniesService.getMyCompany() as TData, ...options });
+export const useFiltersServiceGetFiltersBySubCategoryId = <TData = Common.FiltersServiceGetFiltersBySubCategoryIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ subCategoryId }: {
+  subCategoryId: number;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseFiltersServiceGetFiltersBySubCategoryIdKeyFn({ subCategoryId }, queryKey), queryFn: () => FiltersService.getFiltersBySubCategoryId({ subCategoryId }) as TData, ...options });
 export const useShopServiceGetMyShop = <TData = Common.ShopServiceGetMyShopDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseShopServiceGetMyShopKeyFn(queryKey), queryFn: () => ShopService.getMyShop() as TData, ...options });
 export const useShopServiceGetAllShops = <TData = Common.ShopServiceGetAllShopsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseShopServiceGetAllShopsKeyFn(queryKey), queryFn: () => ShopService.getAllShops() as TData, ...options });
 export const useCategoriesServiceGetAllCategories = <TData = Common.CategoriesServiceGetAllCategoriesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ isPopular }: {
@@ -43,17 +49,21 @@ export const useGeolocationServiceGetCityByCoordinates = <TData = Common.Geoloca
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseGeolocationServiceGetCityByCoordinatesKeyFn({ lat, lon }, queryKey), queryFn: () => GeolocationService.getCityByCoordinates({ lat, lon }) as TData, ...options });
 export const useBannersServiceGetBanners = <TData = Common.BannersServiceGetBannersDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseBannersServiceGetBannersKeyFn(queryKey), queryFn: () => BannersService.getBanners() as TData, ...options });
 export const useFavoritesServiceGetFavorites = <TData = Common.FavoritesServiceGetFavoritesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseFavoritesServiceGetFavoritesKeyFn(queryKey), queryFn: () => FavoritesService.getFavorites() as TData, ...options });
-export const useAuthServiceRegister = <TData = Common.AuthServiceRegisterMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+export const useAuthServiceRegisterSms = <TData = Common.AuthServiceRegisterSmsMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   requestBody: RegisterUserDto;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
   requestBody: RegisterUserDto;
-}, TContext>({ mutationFn: ({ requestBody }) => AuthService.register({ requestBody }) as unknown as Promise<TData>, ...options });
-export const useAuthServiceSendSms = <TData = Common.AuthServiceSendSmsMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, void, TContext>, "mutationFn">) => useMutation<TData, TError, void, TContext>({ mutationFn: () => AuthService.sendSms() as unknown as Promise<TData>, ...options });
-export const useAuthServiceLogin = <TData = Common.AuthServiceLoginMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
-  requestBody: LoginUserDto;
+}, TContext>({ mutationFn: ({ requestBody }) => AuthService.registerSms({ requestBody }) as unknown as Promise<TData>, ...options });
+export const useAuthServiceLoginSms = <TData = Common.AuthServiceLoginSmsMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  requestBody: SendSmsDto;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
-  requestBody: LoginUserDto;
-}, TContext>({ mutationFn: ({ requestBody }) => AuthService.login({ requestBody }) as unknown as Promise<TData>, ...options });
+  requestBody: SendSmsDto;
+}, TContext>({ mutationFn: ({ requestBody }) => AuthService.loginSms({ requestBody }) as unknown as Promise<TData>, ...options });
+export const useAuthServiceVerifyCode = <TData = Common.AuthServiceVerifyCodeMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  requestBody: VerifyCodeDto;
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+  requestBody: VerifyCodeDto;
+}, TContext>({ mutationFn: ({ requestBody }) => AuthService.verifyCode({ requestBody }) as unknown as Promise<TData>, ...options });
 export const useAuthServiceRefreshToken = <TData = Common.AuthServiceRefreshTokenMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, void, TContext>, "mutationFn">) => useMutation<TData, TError, void, TContext>({ mutationFn: () => AuthService.refreshToken() as unknown as Promise<TData>, ...options });
 export const useAuthServiceLogout = <TData = Common.AuthServiceLogoutMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, void, TContext>, "mutationFn">) => useMutation<TData, TError, void, TContext>({ mutationFn: () => AuthService.logout() as unknown as Promise<TData>, ...options });
 export const useCompaniesServiceCreate = <TData = Common.CompaniesServiceCreateMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {

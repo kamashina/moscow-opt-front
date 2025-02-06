@@ -6,34 +6,44 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { getFromLocalStorage } from "../constants";
-import { OpenAPI } from "../openapi/requests";
+import {
+  AuthService,
+  OpenAPI,
+  RefreshTokenResponse,
+} from "../openapi/requests";
 import { Exception } from "../types";
+import { setToken } from "../utils/setToken";
 
 OpenAPI.CREDENTIALS = "include";
 OpenAPI.WITH_CREDENTIALS = true;
-OpenAPI.TOKEN =
-  getFromLocalStorage("token") ||
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3RfbmFtZSI6InN0cmluZyIsInBob3RvIjpudWxsLCJsYXN0X25hbWUiOiJzdHJpbmciLCJyb2xlIjoic2VsbGVyIiwibWlkZGxlX25hbWUiOiJzdHJpbmciLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJwaG9uZSI6InN0cmluZyIsImlhdCI6MTczODU1OTQ4MywiZXhwIjoxNzM4NjQ1ODgzfQ.U2p96iG2jkTLfyHCdek_614HrkZhK05YPnvlWJ_yKNk";
+OpenAPI.TOKEN = getFromLocalStorage("token") || "";
 
-const onError = async (error: Exception | any) => {
-  const status = (error as Exception)?.status;
-
-  // const redirectUrl = new URLSearchParams(window.location.search).get(
-  //   "redirectUrl"
-  // );
-  // if (status === 401 || status === 403) {
-  //   try {
-  //     const res = await AuthService.refresh();
-  //     setToken((res as AuthLoginResponse).access_token);
-  //     window.location.reload();
-  //   } catch (e) {
-  //     const res = await AuthService.logout();
-  //     window.location.replace(
-  //       redirectUrl ? `/signin?redirectUrl=${redirectUrl}` : "/signin"
-  //     );
-  //   }
-  // }
+const onError = async (status: Exception | any) => {
+  if (status === 401 || status === 403) {
+    try {
+      const res = await AuthService.refreshToken();
+      res.access_token && setToken(res.access_token);
+      window.location.reload();
+    } catch (e) {
+      const res = await AuthService.logout();
+    }
+  }
+  return status;
 };
+
+OpenAPI.interceptors.response.use(async (response) => {
+  if (!response?.status) return response;
+  if (response.status >= 400) {
+    onError(response?.status);
+    let errorMessage = response.statusText || `Error ${response.status}`;
+    if (response.data) {
+      errorMessage = String(response.data.message);
+    }
+    return Promise.reject(new Error(errorMessage));
+  }
+
+  return response;
+});
 
 function makeQueryClient() {
   return new QueryClient({

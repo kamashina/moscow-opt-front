@@ -3,46 +3,68 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { RegisterData, RegisterResponse, SendSmsResponse, LoginData, LoginResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, UploadItemsImagesData, UploadItemsImagesResponse, UploadBannerData, UploadBannerResponse, UploadShopImagesData, UploadShopImagesResponse, UploadItemsexcelData, UploadItemsexcelResponse, SearchData, SearchResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAllCardsData, GetAllCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse, GetFavoritesResponse, ChangeFavoriteData, ChangeFavoriteResponse } from './types.gen';
+import type { RegisterSmsData, RegisterSmsResponse, LoginSmsData, LoginSmsResponse, GetSmsTimerData, GetSmsTimerResponse2, VerifyCodeData, VerifyCodeResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetFiltersBySubCategoryIdData, GetFiltersBySubCategoryIdResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, UploadItemsImagesData, UploadItemsImagesResponse, UploadBannerData, UploadBannerResponse, UploadShopImagesData, UploadShopImagesResponse, UploadItemsexcelData, UploadItemsexcelResponse, SearchData, SearchResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAllCardsData, GetAllCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse, GetFavoritesResponse, ChangeFavoriteData, ChangeFavoriteResponse } from './types.gen';
 
 export class AuthService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns AuthResponse
-     * @throws ApiError
-     */
-    public static register(data: RegisterData): CancelablePromise<RegisterResponse> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/auth/register',
-            body: data.requestBody,
-            mediaType: 'application/json'
-        });
-    }
-    
-    /**
+     * @returns GetSmsTimerResponse
      * @returns unknown
      * @throws ApiError
      */
-    public static sendSms(): CancelablePromise<SendSmsResponse> {
+    public static registerSms(data: RegisterSmsData): CancelablePromise<RegisterSmsResponse> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/auth/send-sms'
+            url: '/auth/register-sms',
+            body: data.requestBody,
+            mediaType: 'application/json'
         });
     }
     
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns AuthResponse
+     * @returns GetSmsTimerResponse
      * @returns unknown
      * @throws ApiError
      */
-    public static login(data: LoginData): CancelablePromise<LoginResponse> {
+    public static loginSms(data: LoginSmsData): CancelablePromise<LoginSmsResponse> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/auth/login',
+            url: '/auth/login-sms',
+            body: data.requestBody,
+            mediaType: 'application/json'
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.phone
+     * @returns GetSmsTimerResponse
+     * @throws ApiError
+     */
+    public static getSmsTimer(data: GetSmsTimerData): CancelablePromise<GetSmsTimerResponse2> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/auth/get-sms-timer',
+            query: {
+                phone: data.phone
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns unknown
+     * @returns AuthResponse
+     * @throws ApiError
+     */
+    public static verifyCode(data: VerifyCodeData): CancelablePromise<VerifyCodeResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/auth/verify-code',
             body: data.requestBody,
             mediaType: 'application/json'
         });
@@ -50,7 +72,7 @@ export class AuthService {
     
     /**
      * @returns AuthResponse
-     * @returns unknown
+     * @returns AuthResponse
      * @throws ApiError
      */
     public static refreshToken(): CancelablePromise<RefreshTokenResponse> {
@@ -175,6 +197,25 @@ export class CompaniesService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/companies/my'
+        });
+    }
+    
+}
+
+export class FiltersService {
+    /**
+     * @param data The data for the request.
+     * @param data.subCategoryId
+     * @returns unknown
+     * @throws ApiError
+     */
+    public static getFiltersBySubCategoryId(data: GetFiltersBySubCategoryIdData): CancelablePromise<GetFiltersBySubCategoryIdResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/filters/{subCategoryId}',
+            path: {
+                subCategoryId: data.subCategoryId
+            }
         });
     }
     

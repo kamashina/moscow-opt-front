@@ -14,17 +14,36 @@ export const $RegisterUserDto = {
         phone: {
             type: 'string'
         },
-        first_name: {
-            type: 'string'
-        },
-        last_name: {
-            type: 'string'
-        },
-        middle_name: {
+        full_name: {
             type: 'string'
         }
     },
-    required: ['email', 'password', 'phone', 'first_name', 'last_name', 'middle_name']
+    required: ['email', 'password', 'phone', 'full_name']
+} as const;
+
+export const $GetSmsTimerResponse = {
+    type: 'object',
+    properties: {
+        expiresIn: {
+            type: 'number',
+            readOnly: true
+        },
+        message: {
+            type: 'string',
+            readOnly: true
+        }
+    },
+    required: ['expiresIn', 'message']
+} as const;
+
+export const $SendSmsDto = {
+    type: 'object',
+    properties: {
+        phone: {
+            type: 'string'
+        }
+    },
+    required: ['phone']
 } as const;
 
 export const $AuthResponse = {
@@ -42,18 +61,17 @@ export const $AuthResponse = {
     required: ['access_token', 'refresh_token']
 } as const;
 
-export const $LoginUserDto = {
+export const $VerifyCodeDto = {
     type: 'object',
     properties: {
         phone: {
             type: 'string'
         },
-        password: {
-            type: 'string',
-            minLength: 6
+        code: {
+            type: 'string'
         }
     },
-    required: ['phone', 'password']
+    required: ['phone', 'code']
 } as const;
 
 export const $Role = {
@@ -74,13 +92,7 @@ export const $UserEntityWithoutPassword = {
         id: {
             type: 'number'
         },
-        first_name: {
-            type: 'string'
-        },
-        last_name: {
-            type: 'string'
-        },
-        middle_name: {
+        full_name: {
             type: 'string'
         },
         email: {
@@ -100,7 +112,7 @@ export const $UserEntityWithoutPassword = {
             type: 'object'
         }
     },
-    required: ['role', 'id', 'first_name', 'last_name', 'middle_name', 'email', 'phone', 'photo']
+    required: ['role', 'id', 'full_name', 'email', 'phone', 'photo']
 } as const;
 
 export const $UsersPatchDto = {
@@ -123,17 +135,11 @@ export const $UsersPatchDto = {
         phone: {
             type: 'string'
         },
-        first_name: {
-            type: 'string'
-        },
-        last_name: {
-            type: 'string'
-        },
-        middle_name: {
+        full_name: {
             type: 'string'
         }
     },
-    required: ['role', 'photo', 'email', 'phone', 'first_name', 'last_name', 'middle_name']
+    required: ['role', 'photo', 'email', 'phone', 'full_name']
 } as const;
 
 export const $type = {

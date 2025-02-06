@@ -1,7 +1,13 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { UseQueryResult } from "@tanstack/react-query";
-import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, FileUploadService, GeolocationService, ItemService, MeilisearchService, ShopService, UsersService } from "../requests/services.gen";
+import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, FileUploadService, FiltersService, GeolocationService, ItemService, MeilisearchService, ShopService, UsersService } from "../requests/services.gen";
+export type AuthServiceGetSmsTimerDefaultResponse = Awaited<ReturnType<typeof AuthService.getSmsTimer>>;
+export type AuthServiceGetSmsTimerQueryResult<TData = AuthServiceGetSmsTimerDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useAuthServiceGetSmsTimerKey = "AuthServiceGetSmsTimer";
+export const UseAuthServiceGetSmsTimerKeyFn = ({ phone }: {
+  phone: string;
+}, queryKey?: Array<unknown>) => [useAuthServiceGetSmsTimerKey, ...(queryKey ?? [{ phone }])];
 export type UsersServiceFindAllDefaultResponse = Awaited<ReturnType<typeof UsersService.findAll>>;
 export type UsersServiceFindAllQueryResult<TData = UsersServiceFindAllDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useUsersServiceFindAllKey = "UsersServiceFindAll";
@@ -24,6 +30,12 @@ export type CompaniesServiceGetMyCompanyDefaultResponse = Awaited<ReturnType<typ
 export type CompaniesServiceGetMyCompanyQueryResult<TData = CompaniesServiceGetMyCompanyDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useCompaniesServiceGetMyCompanyKey = "CompaniesServiceGetMyCompany";
 export const UseCompaniesServiceGetMyCompanyKeyFn = (queryKey?: Array<unknown>) => [useCompaniesServiceGetMyCompanyKey, ...(queryKey ?? [])];
+export type FiltersServiceGetFiltersBySubCategoryIdDefaultResponse = Awaited<ReturnType<typeof FiltersService.getFiltersBySubCategoryId>>;
+export type FiltersServiceGetFiltersBySubCategoryIdQueryResult<TData = FiltersServiceGetFiltersBySubCategoryIdDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useFiltersServiceGetFiltersBySubCategoryIdKey = "FiltersServiceGetFiltersBySubCategoryId";
+export const UseFiltersServiceGetFiltersBySubCategoryIdKeyFn = ({ subCategoryId }: {
+  subCategoryId: number;
+}, queryKey?: Array<unknown>) => [useFiltersServiceGetFiltersBySubCategoryIdKey, ...(queryKey ?? [{ subCategoryId }])];
 export type ShopServiceGetMyShopDefaultResponse = Awaited<ReturnType<typeof ShopService.getMyShop>>;
 export type ShopServiceGetMyShopQueryResult<TData = ShopServiceGetMyShopDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useShopServiceGetMyShopKey = "ShopServiceGetMyShop";
@@ -107,9 +119,9 @@ export type FavoritesServiceGetFavoritesDefaultResponse = Awaited<ReturnType<typ
 export type FavoritesServiceGetFavoritesQueryResult<TData = FavoritesServiceGetFavoritesDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useFavoritesServiceGetFavoritesKey = "FavoritesServiceGetFavorites";
 export const UseFavoritesServiceGetFavoritesKeyFn = (queryKey?: Array<unknown>) => [useFavoritesServiceGetFavoritesKey, ...(queryKey ?? [])];
-export type AuthServiceRegisterMutationResult = Awaited<ReturnType<typeof AuthService.register>>;
-export type AuthServiceSendSmsMutationResult = Awaited<ReturnType<typeof AuthService.sendSms>>;
-export type AuthServiceLoginMutationResult = Awaited<ReturnType<typeof AuthService.login>>;
+export type AuthServiceRegisterSmsMutationResult = Awaited<ReturnType<typeof AuthService.registerSms>>;
+export type AuthServiceLoginSmsMutationResult = Awaited<ReturnType<typeof AuthService.loginSms>>;
+export type AuthServiceVerifyCodeMutationResult = Awaited<ReturnType<typeof AuthService.verifyCode>>;
 export type AuthServiceRefreshTokenMutationResult = Awaited<ReturnType<typeof AuthService.refreshToken>>;
 export type AuthServiceLogoutMutationResult = Awaited<ReturnType<typeof AuthService.logout>>;
 export type CompaniesServiceCreateMutationResult = Awaited<ReturnType<typeof CompaniesService.create>>;

@@ -24,3 +24,10 @@ export const BOX_TYPES_TRANlSATIONS: Record<BoxTypes, string> = {
   box_characteristics: "Короб",
   box_single: "Упаковка",
 };
+
+export type AuthTabsTypes = "register" | "login";
+
+export const AUTH_TABS_TRANSLATIONS: Record<AuthTabsTypes, string> = {
+  login: "Вход",
+  register: "Регистрация",
+};

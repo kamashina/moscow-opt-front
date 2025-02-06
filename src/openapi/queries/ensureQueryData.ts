@@ -1,8 +1,11 @@
 // generated with @7nohe/openapi-react-query-codegen@1.6.2 
 
 import { type QueryClient } from "@tanstack/react-query";
-import { BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, GeolocationService, ItemService, MeilisearchService, ShopService, UsersService } from "../requests/services.gen";
+import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, FiltersService, GeolocationService, ItemService, MeilisearchService, ShopService, UsersService } from "../requests/services.gen";
 import * as Common from "./common";
+export const ensureUseAuthServiceGetSmsTimerData = (queryClient: QueryClient, { phone }: {
+  phone: string;
+}) => queryClient.ensureQueryData({ queryKey: Common.UseAuthServiceGetSmsTimerKeyFn({ phone }), queryFn: () => AuthService.getSmsTimer({ phone }) });
 export const ensureUseUsersServiceFindAllData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseUsersServiceFindAllKeyFn(), queryFn: () => UsersService.findAll() });
 export const ensureUseUsersServiceGetMeData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseUsersServiceGetMeKeyFn(), queryFn: () => UsersService.getMe() });
 export const ensureUseUsersServiceGetByIdData = (queryClient: QueryClient, { id }: {
@@ -10,6 +13,9 @@ export const ensureUseUsersServiceGetByIdData = (queryClient: QueryClient, { id 
 }) => queryClient.ensureQueryData({ queryKey: Common.UseUsersServiceGetByIdKeyFn({ id }), queryFn: () => UsersService.getById({ id }) });
 export const ensureUseCompaniesServiceGetAllCompaniesData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseCompaniesServiceGetAllCompaniesKeyFn(), queryFn: () => CompaniesService.getAllCompanies() });
 export const ensureUseCompaniesServiceGetMyCompanyData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseCompaniesServiceGetMyCompanyKeyFn(), queryFn: () => CompaniesService.getMyCompany() });
+export const ensureUseFiltersServiceGetFiltersBySubCategoryIdData = (queryClient: QueryClient, { subCategoryId }: {
+  subCategoryId: number;
+}) => queryClient.ensureQueryData({ queryKey: Common.UseFiltersServiceGetFiltersBySubCategoryIdKeyFn({ subCategoryId }), queryFn: () => FiltersService.getFiltersBySubCategoryId({ subCategoryId }) });
 export const ensureUseShopServiceGetMyShopData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseShopServiceGetMyShopKeyFn(), queryFn: () => ShopService.getMyShop() });
 export const ensureUseShopServiceGetAllShopsData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseShopServiceGetAllShopsKeyFn(), queryFn: () => ShopService.getAllShops() });
 export const ensureUseCategoriesServiceGetAllCategoriesData = (queryClient: QueryClient, { isPopular }: {

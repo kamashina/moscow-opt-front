@@ -36,7 +36,7 @@ const Banners: FC<Props> = ({ initialData }) => {
     <div className="relative w-full">
       {data?.[currentIndex - 1]?.id && (
         <div
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 rounded-r-[30px] bg-primary cursor-pointer hover:bg-primary-dark-light active:opacity-70"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 z-2 rounded-r-[30px] bg-primary cursor-pointer hover:bg-primary-dark-light active:opacity-70"
           onClick={() => handleScroll("left")}
         >
           <Icon name="arrow-left" className="w-10 h-10 !text-white" />
@@ -62,7 +62,7 @@ const Banners: FC<Props> = ({ initialData }) => {
       </div>
       {data?.[currentIndex + 1]?.id && (
         <div
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 rounded-r-[30px] bg-primary rotate-180 cursor-pointer hover:bg-primary-dark-light active:opacity-70"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 z-2 rounded-r-[30px] bg-primary rotate-180 cursor-pointer hover:bg-primary-dark-light active:opacity-70"
           onClick={() => handleScroll("right")}
         >
           <Icon name="arrow-left" className="w-10 h-10 !text-white" />
