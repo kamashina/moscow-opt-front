@@ -664,7 +664,11 @@ export const $OrganizationResponse = {
     type: 'object',
     properties: {
         type: {
-            type: 'object'
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/type'
+                }
+            ]
         },
         name: {
             type: 'string'

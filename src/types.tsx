@@ -1,4 +1,5 @@
 import { ParserBuilder } from "nuqs";
+import { RegisterUserDto } from "./openapi/requests";
 
 export type ModalQueryParams = {
   type: ParserBuilder<
@@ -26,3 +27,4 @@ export type PageParams = {
 export type RolesAccess = "cloud_access" | "bi_access";
 export type Pages = "" | "create" | "users";
 export type BoxTypes = "box_single" | "box_characteristics";
+export type RegisterForm = RegisterUserDto & { password_confirmation: string };

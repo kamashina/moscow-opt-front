@@ -32,9 +32,9 @@ export const ensureUseMeilisearchServiceSearchData = (queryClient: QueryClient, 
 } = {}) => queryClient.ensureQueryData({ queryKey: Common.UseMeilisearchServiceSearchKeyFn({ query }), queryFn: () => MeilisearchService.search({ query }) });
 export const ensureUseBasketServiceGetMyBasketData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseBasketServiceGetMyBasketKeyFn(), queryFn: () => BasketService.getMyBasket() });
 export const ensureUseBasketServiceGetTotalItemsInBasketData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseBasketServiceGetTotalItemsInBasketKeyFn(), queryFn: () => BasketService.getTotalItemsInBasket() });
-export const ensureUseDaDataServiceGetPartyData = (queryClient: QueryClient, { query }: {
-  query: string;
-}) => queryClient.ensureQueryData({ queryKey: Common.UseDaDataServiceGetPartyKeyFn({ query }), queryFn: () => DaDataService.getParty({ query }) });
+export const ensureUseDaDataServiceGetPartyData = (queryClient: QueryClient, { inn }: {
+  inn: string;
+}) => queryClient.ensureQueryData({ queryKey: Common.UseDaDataServiceGetPartyKeyFn({ inn }), queryFn: () => DaDataService.getParty({ inn }) });
 export const ensureUseCardsServiceGetAllCardsData = (queryClient: QueryClient, { q }: {
   q?: string;
 } = {}) => queryClient.ensureQueryData({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q }), queryFn: () => CardsService.getAllCards({ q }) });

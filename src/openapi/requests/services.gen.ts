@@ -596,16 +596,16 @@ export class BasketService {
 export class DaDataService {
     /**
      * @param data The data for the request.
-     * @param data.query
+     * @param data.inn
      * @returns OrganizationResponse
      * @throws ApiError
      */
     public static getParty(data: GetPartyData): CancelablePromise<GetPartyResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/da-data/inn',
-            query: {
-                query: data.query
+            url: '/da-data/{inn}',
+            path: {
+                inn: data.inn
             }
         });
     }

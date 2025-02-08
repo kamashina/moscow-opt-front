@@ -227,9 +227,7 @@ export type SearchEntityResponse = {
 };
 
 export type OrganizationResponse = {
-    type: {
-        [key: string]: unknown;
-    };
+    type: type;
     name: string;
     itn: string;
     psrn: string;
@@ -491,7 +489,7 @@ export type AddItemToBasketResponse = {
 };
 
 export type GetPartyData = {
-    query: string;
+    inn: string;
 };
 
 export type GetPartyResponse = Array<OrganizationResponse>;
@@ -830,7 +828,7 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/da-data/inn': {
+    '/da-data/{inn}': {
         get: {
             req: GetPartyData;
             res: {

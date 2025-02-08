@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@mossoft/ui-kit':
-    specifier: ^1.0.32
-    version: 1.0.32(@hello-pangea/dnd@16.6.0)(@tanstack/react-query@5.64.1)(react-hook-form@7.54.2)(react-number-format@5.4.3)(tailwind-merge@2.6.0)
+    specifier: ^1.0.34
+    version: 1.0.34(@hello-pangea/dnd@16.6.0)(@tanstack/react-query@5.64.1)(react-hook-form@7.54.2)(react-number-format@5.4.3)(tailwind-merge@2.6.0)
   '@tailwindcss/line-clamp':
     specifier: ^0.4.4
     version: 0.4.4(tailwindcss@3.4.17)
@@ -1569,8 +1569,8 @@ packages:
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
     dev: true
 
-  /@mossoft/ui-kit@1.0.32(@hello-pangea/dnd@16.6.0)(@tanstack/react-query@5.64.1)(react-hook-form@7.54.2)(react-number-format@5.4.3)(tailwind-merge@2.6.0):
-    resolution: {integrity: sha512-6ve8oC5jgvJTUNnKT0AAJooEQB6ERyXNxHXzm+D1zuFbRJA1imiSQ/wN5pOd6YIMWg13L/CrUDOjtE8usG+mQQ==}
+  /@mossoft/ui-kit@1.0.34(@hello-pangea/dnd@16.6.0)(@tanstack/react-query@5.64.1)(react-hook-form@7.54.2)(react-number-format@5.4.3)(tailwind-merge@2.6.0):
+    resolution: {integrity: sha512-/mW8WNUuOqPDCRgrmACDfQBTwlaOzlmI/azGwt0AaAah1k9ZEsx1SI11XepJeRktJyqvBsjjYwiRRhq25nN9wQ==}
     peerDependencies:
       '@hello-pangea/dnd': ^16.6.0
       '@tanstack/react-query': ^5.62.7

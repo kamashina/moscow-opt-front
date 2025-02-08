@@ -3,24 +3,23 @@ import {
   useAuthServiceRegisterSms,
 } from "@/src/openapi/queries";
 import { RegisterUserDto } from "@/src/openapi/requests";
-import { Exception } from "@/src/types";
+import { Exception, RegisterForm } from "@/src/types";
 import { Button, Input } from "@mossoft/ui-kit";
 import { enqueueSnackbar } from "notistack";
-import { Controller, FieldValues, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { Controller, FieldValues, UseFormReturn } from "react-hook-form";
 import VerifyCode from "./VerfyCode";
-import { useState, useEffect } from "react";
 
-type Props<T extends FieldValues> = {
+type Props = {
   step: number;
   setStep: (step: number) => void;
-  form: ReturnType<typeof useForm<T>>;
+  form: UseFormReturn<RegisterForm>;
 };
 
-const Register = <T extends FieldValues>({ setStep, step, form }: Props<T>) => {
+const Register = ({ setStep, step, form }: Props) => {
   const { mutateAsync: sendSms, isPending } = useAuthServiceRegisterSms();
-  const { handleSubmit, control, watch } = useForm<
-    RegisterUserDto & { password_confirmation: string }
-  >();
+  const { handleSubmit, control, watch } = form;
+
   const [timer, setTimer] = useState(0);
   const { data: smsTimer, refetch } = useAuthServiceGetSmsTimer(
     {
@@ -33,7 +32,7 @@ const Register = <T extends FieldValues>({ setStep, step, form }: Props<T>) => {
   useEffect(() => {
     if (!watch("phone")) return;
     refetch();
-  }, [step]);
+  }, [step, isPending]);
 
   useEffect(() => {
     if (!smsTimer?.expiresIn) return;

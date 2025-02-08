@@ -85,9 +85,9 @@ export const UseBasketServiceGetTotalItemsInBasketKeyFn = (queryKey?: Array<unkn
 export type DaDataServiceGetPartyDefaultResponse = Awaited<ReturnType<typeof DaDataService.getParty>>;
 export type DaDataServiceGetPartyQueryResult<TData = DaDataServiceGetPartyDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useDaDataServiceGetPartyKey = "DaDataServiceGetParty";
-export const UseDaDataServiceGetPartyKeyFn = ({ query }: {
-  query: string;
-}, queryKey?: Array<unknown>) => [useDaDataServiceGetPartyKey, ...(queryKey ?? [{ query }])];
+export const UseDaDataServiceGetPartyKeyFn = ({ inn }: {
+  inn: string;
+}, queryKey?: Array<unknown>) => [useDaDataServiceGetPartyKey, ...(queryKey ?? [{ inn }])];
 export type CardsServiceGetAllCardsDefaultResponse = Awaited<ReturnType<typeof CardsService.getAllCards>>;
 export type CardsServiceGetAllCardsQueryResult<TData = CardsServiceGetAllCardsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useCardsServiceGetAllCardsKey = "CardsServiceGetAllCards";

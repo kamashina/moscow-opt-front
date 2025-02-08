@@ -32,9 +32,9 @@ export const prefetchUseMeilisearchServiceSearch = (queryClient: QueryClient, { 
 } = {}) => queryClient.prefetchQuery({ queryKey: Common.UseMeilisearchServiceSearchKeyFn({ query }), queryFn: () => MeilisearchService.search({ query }) });
 export const prefetchUseBasketServiceGetMyBasket = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseBasketServiceGetMyBasketKeyFn(), queryFn: () => BasketService.getMyBasket() });
 export const prefetchUseBasketServiceGetTotalItemsInBasket = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseBasketServiceGetTotalItemsInBasketKeyFn(), queryFn: () => BasketService.getTotalItemsInBasket() });
-export const prefetchUseDaDataServiceGetParty = (queryClient: QueryClient, { query }: {
-  query: string;
-}) => queryClient.prefetchQuery({ queryKey: Common.UseDaDataServiceGetPartyKeyFn({ query }), queryFn: () => DaDataService.getParty({ query }) });
+export const prefetchUseDaDataServiceGetParty = (queryClient: QueryClient, { inn }: {
+  inn: string;
+}) => queryClient.prefetchQuery({ queryKey: Common.UseDaDataServiceGetPartyKeyFn({ inn }), queryFn: () => DaDataService.getParty({ inn }) });
 export const prefetchUseCardsServiceGetAllCards = (queryClient: QueryClient, { q }: {
   q?: string;
 } = {}) => queryClient.prefetchQuery({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q }), queryFn: () => CardsService.getAllCards({ q }) });

@@ -14,10 +14,11 @@ export const metadata: Metadata = {
 
 type Props = {
   client: React.ReactNode;
+  seller: React.ReactNode;
   ext: React.ReactNode;
 };
 
-const RootLayout: FC<Props> = async ({ ext, client }) => {
+const RootLayout: FC<Props> = async ({ ext, client, seller }) => {
   const headersList = await headers();
   const host = headersList.get("host");
 
@@ -26,7 +27,8 @@ const RootLayout: FC<Props> = async ({ ext, client }) => {
       <body className={`${montserrat.className}`}>
         <Providers>
           {ext}
-          {host !== "fsadfs" && client}
+          {/* {host === "fsadfs" && client} */}
+          {host !== "fsadfs" && seller}
           {/* {host !== process.env.NEXT_PUBLIC_CLIENT_DOMAIN && client} */}
         </Providers>
       </body>

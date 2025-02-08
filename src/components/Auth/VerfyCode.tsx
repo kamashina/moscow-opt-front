@@ -23,8 +23,8 @@ const VerifyCode = <T extends FieldValues>({
   timer,
 }: Props<T>) => {
   const [modal, setModal] = useQueryState("modal");
-  const { mutateAsync: verifyCode } = useAuthServiceVerifyCode();
-  const { handleSubmit, control } = useForm<VerifyCodeDto>();
+  const { mutateAsync: verifyCode, isPending } = useAuthServiceVerifyCode();
+  const { handleSubmit, control, setError } = useForm<VerifyCodeDto>();
 
   const onSubmit = async (data: { code: string }) => {
     try {
@@ -32,7 +32,7 @@ const VerifyCode = <T extends FieldValues>({
       res.access_token && setToken(res.access_token);
       setModal(null);
     } catch (e) {
-      enqueueSnackbar((e as Exception).message, { variant: "error" });
+      setError("code", { message: (e as Exception).message });
     }
   };
 
@@ -69,6 +69,7 @@ const VerifyCode = <T extends FieldValues>({
       </Button>
       <Button
         onClick={handleSubmit(onSubmit)}
+        disabled={isPending}
         variant="link"
         className="bg-primary h-10 !w-full text-white rounded-[20px] !py-3"
       >

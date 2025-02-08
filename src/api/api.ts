@@ -6,11 +6,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { getFromLocalStorage } from "../constants";
-import {
-  AuthService,
-  OpenAPI,
-  RefreshTokenResponse,
-} from "../openapi/requests";
+import { AuthService, OpenAPI } from "../openapi/requests";
 import { Exception } from "../types";
 import { setToken } from "../utils/setToken";
 

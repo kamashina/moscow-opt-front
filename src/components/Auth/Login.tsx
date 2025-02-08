@@ -4,19 +4,21 @@ import {
 } from "@/src/openapi/queries";
 import { SendSmsDto } from "@/src/openapi/requests";
 import { Exception } from "@/src/types";
-import { Input, Button } from "@mossoft/ui-kit";
+import { Button, Input } from "@mossoft/ui-kit";
 import { enqueueSnackbar } from "notistack";
-import { useForm, Controller } from "react-hook-form";
-import VerifyCode from "./VerfyCode";
 import { useEffect, useState } from "react";
+import { Controller, UseFormReturn } from "react-hook-form";
+import VerifyCode from "./VerfyCode";
+import { useRouter } from "next/navigation";
 
 type Props = {
   step: number;
   setStep: (step: number) => void;
-  form: ReturnType<typeof useForm<SendSmsDto>>;
+  form: UseFormReturn<SendSmsDto>;
 };
 
 const Login = ({ setStep, step, form }: Props) => {
+  const router = useRouter();
   const { mutateAsync: sendSms, isPending } = useAuthServiceLoginSms();
   const { handleSubmit, control, watch } = form;
   const [timer, setTimer] = useState(0);
@@ -31,7 +33,7 @@ const Login = ({ setStep, step, form }: Props) => {
   useEffect(() => {
     if (!watch("phone")) return;
     refetch();
-  }, [step]);
+  }, [step, isPending]);
 
   useEffect(() => {
     if (!smsTimer?.expiresIn) return;
@@ -55,6 +57,7 @@ const Login = ({ setStep, step, form }: Props) => {
 
       const res = await sendSms({ requestBody: data });
       res?.expiresIn && setTimer(+res.expiresIn);
+      router.push("");
       setStep(2);
     } catch (e) {
       enqueueSnackbar((e as Exception).message, { variant: "error" });

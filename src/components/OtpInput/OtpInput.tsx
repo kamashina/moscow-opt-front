@@ -11,14 +11,16 @@ type Props = {
 
 const OtpInput = ({ label, labelClassName, error, ...rest }: Props) => {
   return (
-    <label className={twMerge("", labelClassName)}>
+    <label
+      className={twMerge("flex flex-col w-full items-center", labelClassName)}
+    >
       {label}
       <Otp
         numInputs={5}
         renderSeparator={<span style={{ width: "8px" }}></span>}
         shouldAutoFocus={true}
         inputStyle={{
-          border: "1px solid #0167FF",
+          border: `1px solid ${error ? "#FE4845" : "#0167FF"}`,
           borderRadius: "8px",
           width: "54px",
           height: "54px",
@@ -29,7 +31,10 @@ const OtpInput = ({ label, labelClassName, error, ...rest }: Props) => {
         }}
         {...rest}
       />
-      {error && <AppText className="text-red">{error}</AppText>}
+
+      <AppText className="text-danger mx-auto font-normal text-sm">
+        {error && error}
+      </AppText>
     </label>
   );
 };
