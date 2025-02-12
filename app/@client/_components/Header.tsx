@@ -55,7 +55,7 @@ const Header: FC<Props> = () => {
 
   return (
     <>
-      <div className="bg-[#EEE]">
+      <div className="bg-[#EEE] hidden lg:block">
         <div className="lg:max-w-[1440px] mx-auto flex flex-row justify-between items-center h-10">
           <div className="flex flex-row">
             {HEADER_OPTIONS.map((item) => (
@@ -74,7 +74,7 @@ const Header: FC<Props> = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-b-[30px]">
+      <div className="bg-white rounded-b-[30px] px-2">
         <div className="h-20 flex flex-row items-center lg:max-w-[1440px] mx-auto">
           <Link
             href="/"
@@ -84,28 +84,29 @@ const Header: FC<Props> = () => {
             <Image src="logo.svg" fill alt="logo" />
           </Link>
 
-          <div className="flex flex-row justify-between w-full items-center">
+          <div className="flex-row justify-between w-full items-center flex">
             <div className="flex flex-row gap-4 items-center">
-              {LEFT_NAV_OPTIONS.map((item) => (
-                <Link
-                  title={item.label}
-                  key={item.iconName}
-                  href={item.link}
-                  className="group flex flex-row gap-2 bg-primary-light p-1 pr-4 rounded-[30px] items-center hover:bg-primary active:opacity-70"
-                >
-                  <div className="rounded-full bg-primary p-3 group-hover:bg-primary-dark-light">
-                    <Icon
-                      name={item.iconName}
-                      className="w-5 h-5 !text-white"
-                    />
-                  </div>
-                  <AppText className="text-primary group-hover:text-white">
-                    {item.label}
-                  </AppText>
-                </Link>
-              ))}
-
-              <Search className="lg:min-w-[650px]" />
+              <div className="hidden lg:flex">
+                {LEFT_NAV_OPTIONS.map((item) => (
+                  <Link
+                    title={item.label}
+                    key={item.iconName}
+                    href={item.link}
+                    className="group flex flex-row gap-2 bg-primary-light p-1 pr-4 rounded-[30px] items-center hover:bg-primary active:opacity-70"
+                  >
+                    <div className="rounded-full bg-primary p-3 group-hover:bg-primary-dark-light">
+                      <Icon
+                        name={item.iconName}
+                        className="w-5 h-5 !text-white"
+                      />
+                    </div>
+                    <AppText className="text-primary group-hover:text-white">
+                      {item.label}
+                    </AppText>
+                  </Link>
+                ))}
+              </div>
+              <Search className="lg:min-w-[650px] hidden lg:flex" />
             </div>
 
             <div className="flex flex-row gap-2 items-center">

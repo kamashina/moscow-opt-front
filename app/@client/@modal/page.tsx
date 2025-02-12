@@ -34,29 +34,14 @@ const Page = () => {
   return (
     <Modal isOpen={modal === "auth"} handleClose={() => setModal(null)}>
       <div className="flex flex-col gap-2">
-        {step === 1 ? (
-          <div className="flex flex-col gap-2 p-1 bg-white rounded-[25px]">
-            <AuthTabs tab={tab} setTab={setTab} />
-          </div>
-        ) : (
-          <div className="flex justify-between items-center w-full py-5 px-4 bg-white rounded-[25px]">
-            <div onClick={() => setStep(1)}>
-              <Icon
-                name="arrow-left"
-                className="w-6 h-6 text-primary cursor-pointer"
-              />
-            </div>
-            <AppText className="font-semibold text-lg">
-              {AUTH_TABS_TRANSLATIONS[tab]}
-            </AppText>
-            <div onClick={() => setModal(null)}>
-              <Icon
-                name="close"
-                className="w-6 h-6 text-primary cursor-pointer"
-              />
-            </div>
-          </div>
-        )}
+        <AuthTabs
+          onClose={() => setModal(null)}
+          tab={tab}
+          setTab={setTab}
+          setStep={setStep}
+          step={step}
+        />
+
         <AnimatePresence mode="wait">
           <motion.div
             className="flex flex-col gap-2 p-5 bg-white rounded-[25px]"

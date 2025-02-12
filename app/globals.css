@@ -10,6 +10,22 @@
   height: 100%;
 }
 
+input[type="text"] {
+  border: 1px solid #0167ff;
+  border-radius: 20px;
+  height: 45px;
+}
+input[type="email"] {
+  border: 1px solid #0167ff;
+  border-radius: 20px;
+  height: 45px;
+}
+input[type="password"] {
+  border: 1px solid #0167ff;
+  border-radius: 20px;
+  height: 45px;
+}
+
 body {
   background: #c7d1de;
   scroll-behavior: smooth;

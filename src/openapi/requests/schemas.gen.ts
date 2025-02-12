@@ -46,21 +46,6 @@ export const $SendSmsDto = {
     required: ['phone']
 } as const;
 
-export const $AuthResponse = {
-    type: 'object',
-    properties: {
-        access_token: {
-            type: 'string',
-            readOnly: true
-        },
-        refresh_token: {
-            type: 'string',
-            readOnly: true
-        }
-    },
-    required: ['access_token', 'refresh_token']
-} as const;
-
 export const $VerifyCodeDto = {
     type: 'object',
     properties: {
@@ -72,6 +57,78 @@ export const $VerifyCodeDto = {
         }
     },
     required: ['phone', 'code']
+} as const;
+
+export const $companyStatus = {
+    type: 'string',
+    enum: ['pending', 'approved', 'rejected', 'blocked']
+} as const;
+
+export const $VerifyCompanyResponse = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'number'
+        },
+        name: {
+            type: 'string'
+        },
+        status: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/companyStatus'
+                }
+            ]
+        }
+    },
+    required: ['id', 'name', 'status']
+} as const;
+
+export const $AuthResponse = {
+    type: 'object',
+    properties: {
+        access_token: {
+            type: 'string'
+        },
+        refresh_token: {
+            type: 'string'
+        },
+        id: {
+            type: 'number'
+        },
+        full_name: {
+            type: 'string'
+        },
+        photo: {
+            type: 'string'
+        },
+        role: {
+            type: 'string'
+        },
+        email: {
+            type: 'string'
+        },
+        phone: {
+            type: 'string'
+        },
+        company: {
+            '$ref': '#/components/schemas/VerifyCompanyResponse'
+        }
+    },
+    required: ['access_token', 'refresh_token', 'id', 'full_name', 'photo', 'role', 'email', 'phone', 'company']
+} as const;
+
+export const $RefreshReponse = {
+    type: 'object',
+    properties: {
+        access_token: {
+            type: 'string'
+        },
+        refresh_token: {
+            type: 'string'
+        }
+    },
+    required: ['access_token', 'refresh_token']
 } as const;
 
 export const $Role = {
@@ -169,20 +226,26 @@ export const $CompaniesDto = {
                 }
             ]
         },
+        management_name: {
+            type: 'string'
+        },
+        full_with_opf: {
+            type: 'string'
+        },
         name: {
             type: 'string'
         },
         itn: {
-            type: 'number'
+            type: 'string'
         },
         psrnsp: {
-            type: 'number'
+            type: 'string'
         },
         kpp: {
-            type: 'number'
+            type: 'string'
         }
     },
-    required: ['type', 'taxation', 'name', 'itn', 'psrnsp', 'kpp']
+    required: ['type', 'taxation', 'management_name', 'full_with_opf', 'name', 'itn', 'psrnsp', 'kpp']
 } as const;
 
 export const $CompaniesResponse = {
@@ -195,13 +258,13 @@ export const $CompaniesResponse = {
             type: 'string'
         },
         itn: {
-            type: 'number'
+            type: 'string'
         },
         psrnsp: {
-            type: 'number'
+            type: 'string'
         },
         kpp: {
-            type: 'number'
+            type: 'string'
         },
         type: {
             allOf: [
@@ -216,9 +279,16 @@ export const $CompaniesResponse = {
                     '$ref': '#/components/schemas/taxation'
                 }
             ]
+        },
+        status: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/companyStatus'
+                }
+            ]
         }
     },
-    required: ['id', 'name', 'itn', 'psrnsp', 'kpp', 'type', 'taxation']
+    required: ['id', 'name', 'itn', 'psrnsp', 'kpp', 'type', 'taxation', 'status']
 } as const;
 
 export const $rate = {
@@ -676,7 +746,7 @@ export const $OrganizationResponse = {
         itn: {
             type: 'string'
         },
-        psrn: {
+        psrnsp: {
             type: 'string'
         },
         kpp: {
@@ -684,7 +754,7 @@ export const $OrganizationResponse = {
             nullable: true
         }
     },
-    required: ['type', 'name', 'itn', 'psrn', 'kpp']
+    required: ['type', 'name', 'itn', 'psrnsp', 'kpp']
 } as const;
 
 export const $BoxResponseDto = {

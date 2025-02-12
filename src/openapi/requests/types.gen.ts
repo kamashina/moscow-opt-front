@@ -16,14 +16,34 @@ export type SendSmsDto = {
     phone: string;
 };
 
-export type AuthResponse = {
-    readonly access_token: string;
-    readonly refresh_token: string;
-};
-
 export type VerifyCodeDto = {
     phone: string;
     code: string;
+};
+
+export type companyStatus = 'pending' | 'approved' | 'rejected' | 'blocked';
+
+export type VerifyCompanyResponse = {
+    id: number;
+    name: string;
+    status: companyStatus;
+};
+
+export type AuthResponse = {
+    access_token: string;
+    refresh_token: string;
+    id: number;
+    full_name: string;
+    photo: string;
+    role: string;
+    email: string;
+    phone: string;
+    company: VerifyCompanyResponse;
+};
+
+export type RefreshReponse = {
+    access_token: string;
+    refresh_token: string;
 };
 
 export type Role = 'user' | 'seller';
@@ -58,20 +78,23 @@ export type taxation = 'IE_without_VAT' | 'IE_with_VAT' | 'IE_Professional_Incom
 export type CompaniesDto = {
     type: type;
     taxation: taxation;
+    management_name: string;
+    full_with_opf: string;
     name: string;
-    itn: number;
-    psrnsp: number;
-    kpp: number;
+    itn: string;
+    psrnsp: string;
+    kpp: string;
 };
 
 export type CompaniesResponse = {
     id: number;
     name: string;
-    itn: number;
-    psrnsp: number;
-    kpp: number;
+    itn: string;
+    psrnsp: string;
+    kpp: string;
     type: type;
     taxation: taxation;
+    status: companyStatus;
 };
 
 export type rate = 'low' | 'medium' | 'hight';
@@ -230,7 +253,7 @@ export type OrganizationResponse = {
     type: type;
     name: string;
     itn: string;
-    psrn: string;
+    psrnsp: string;
     kpp: string | null;
 };
 
@@ -315,12 +338,9 @@ export type VerifyCodeData = {
     requestBody: VerifyCodeDto;
 };
 
-export type VerifyCodeResponse = {
-    access_token?: string;
-    refresh_token?: string;
-} | AuthResponse;
+export type VerifyCodeResponse = AuthResponse;
 
-export type RefreshTokenResponse = AuthResponse;
+export type RefreshTokenResponse = RefreshReponse;
 
 export type LogoutResponse = unknown;
 
@@ -568,10 +588,6 @@ export type $OpenApiTs = {
         post: {
             req: VerifyCodeData;
             res: {
-                200: {
-                    access_token?: string;
-                    refresh_token?: string;
-                };
                 201: AuthResponse;
             };
         };
@@ -579,8 +595,7 @@ export type $OpenApiTs = {
     '/auth/refresh': {
         post: {
             res: {
-                200: AuthResponse;
-                201: AuthResponse;
+                201: RefreshReponse;
             };
         };
     };
@@ -828,7 +843,7 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/da-data/{inn}': {
+    '/da-data': {
         get: {
             req: GetPartyData;
             res: {

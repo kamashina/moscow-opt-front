@@ -5,19 +5,20 @@ import {
 import { SendSmsDto } from "@/src/openapi/requests";
 import { Exception } from "@/src/types";
 import { Button, Input } from "@mossoft/ui-kit";
+import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 import VerifyCode from "./VerfyCode";
-import { useRouter } from "next/navigation";
 
 type Props = {
   step: number;
   setStep: (step: number) => void;
   form: UseFormReturn<SendSmsDto>;
+  type?: "seller" | "client";
 };
 
-const Login = ({ setStep, step, form }: Props) => {
+const Login = ({ setStep, step, form, type = "client" }: Props) => {
   const router = useRouter();
   const { mutateAsync: sendSms, isPending } = useAuthServiceLoginSms();
   const { handleSubmit, control, watch } = form;
@@ -68,6 +69,7 @@ const Login = ({ setStep, step, form }: Props) => {
     return (
       <VerifyCode
         timer={timer}
+        type={type}
         phone={watch("phone")}
         setStep={setStep}
         step={step}
@@ -102,7 +104,7 @@ const Login = ({ setStep, step, form }: Props) => {
         variant="link"
         disabled={isPending}
         onClick={handleSubmit(onSubmit)}
-        className="bg-primary h-10 !w-full text-white rounded-[20px] text-base !py-3"
+        className="bg-primary h-10 !w-full text-white mt-5 rounded-[20px] text-base !py-3"
       >
         Отправить смс-код
       </Button>

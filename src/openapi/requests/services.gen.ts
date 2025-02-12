@@ -57,7 +57,6 @@ export class AuthService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns unknown
      * @returns AuthResponse
      * @throws ApiError
      */
@@ -71,8 +70,7 @@ export class AuthService {
     }
     
     /**
-     * @returns AuthResponse
-     * @returns AuthResponse
+     * @returns RefreshReponse
      * @throws ApiError
      */
     public static refreshToken(): CancelablePromise<RefreshTokenResponse> {
@@ -603,8 +601,8 @@ export class DaDataService {
     public static getParty(data: GetPartyData): CancelablePromise<GetPartyResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/da-data/{inn}',
-            path: {
+            url: '/da-data',
+            query: {
                 inn: data.inn
             }
         });

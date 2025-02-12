@@ -1,4 +1,5 @@
-import { BoxTypes } from "./types";
+import { taxation, type } from "./openapi/requests";
+import { BoxTypes, CompanyTaxations, IETaxations } from "./types";
 
 export const getFromLocalStorage = (key: string) => {
   if (!key || typeof window === "undefined") {
@@ -25,11 +26,37 @@ export const BOX_TYPES_TRANlSATIONS: Record<BoxTypes, string> = {
   box_single: "Упаковка",
 };
 
+export const createOptionsFromTranslations = (translation: {
+  [key in any]: string;
+}) => {
+  return Object.keys(translation).map((key) => ({
+    label: translation[key as keyof typeof translation],
+    value: key,
+  }));
+};
+
 export type AuthTabsTypes = "register" | "login";
 
 export const AUTH_TABS_TRANSLATIONS: Record<AuthTabsTypes, string> = {
   login: "Вход",
   register: "Регистрация",
+};
+
+export const COMPANY_TYPES_TRANSLATIONS: Record<type, string> = {
+  INDIVIDUAL: "ИП",
+  LEGAL: "ООО",
+};
+
+export const COMPANY_TAXATION_TRANSLATIONS: Record<CompanyTaxations, string> = {
+  company_with_VAT: "ООО с НДС",
+  company_without_VAT: "ООО без НДС",
+};
+
+export const IE_TAXATION_TRANSTLATIONS: Record<IETaxations, string> = {
+  IE_Professional_Income_Tax: "ИП на НДП",
+  IE_with_VAT: "ИП с НДС",
+  IE_without_VAT: "ИП без НДС",
+  self_employed: "Самозанятый",
 };
 
 export const TAB_VARIANT_REGISTRATION = {

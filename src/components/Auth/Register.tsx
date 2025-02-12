@@ -14,9 +14,10 @@ type Props = {
   step: number;
   setStep: (step: number) => void;
   form: UseFormReturn<RegisterForm>;
+  type?: "seller" | "client";
 };
 
-const Register = ({ setStep, step, form }: Props) => {
+const Register = ({ setStep, step, form, type = "client" }: Props) => {
   const { mutateAsync: sendSms, isPending } = useAuthServiceRegisterSms();
   const { handleSubmit, control, watch } = form;
 
@@ -70,6 +71,7 @@ const Register = ({ setStep, step, form }: Props) => {
       <VerifyCode
         timer={timer}
         phone={watch("phone")}
+        type={type}
         setStep={setStep}
         step={step}
         refetchSms={handleSubmit(onSubmit)}
@@ -79,7 +81,7 @@ const Register = ({ setStep, step, form }: Props) => {
 
   return (
     <div>
-      <div className="flex flex-col gap-2 w-full">
+      <div className="flex flex-col gap-3 w-full">
         <Controller
           control={control}
           name="full_name"
@@ -193,7 +195,7 @@ const Register = ({ setStep, step, form }: Props) => {
           variant="link"
           disabled={isPending}
           onClick={handleSubmit(onSubmit)}
-          className="bg-primary h-10 !w-full text-white rounded-[20px] text-base !py-3"
+          className="bg-primary h-10 !w-full text-white rounded-[20px] text-base mt-3 !py-3"
         >
           Отправить смс-код
         </Button>

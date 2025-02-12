@@ -1,7 +1,8 @@
 "use client";
-import { FC, PropsWithChildren, useEffect, useState } from "react";
+import { Icon } from "@mossoft/ui-kit";
+import Image from "next/image";
+import { FC, PropsWithChildren, useEffect } from "react";
 import Modal from "react-modal";
-import AppText from "../AppText/AppText";
 
 type Props = {
   isOpen: boolean;
@@ -15,8 +16,6 @@ const ModalWindow: FC<PropsWithChildren<Props>> = ({
   handleClose,
   children,
 }) => {
-  const [isClosing, setIsClosing] = useState<boolean>(false);
-
   useEffect(() => {
     const body = document.body;
     if (isOpen) {
@@ -30,20 +29,17 @@ const ModalWindow: FC<PropsWithChildren<Props>> = ({
   }, [isOpen]);
 
   const startClose = () => {
-    setIsClosing(true);
     handleClose();
     const body = document.body;
     body.style.overflow = "auto";
-
-    setIsClosing(false);
   };
 
   return (
     <>
       <Modal
         isOpen={isOpen}
-        className="static border-none w-full max-w-[400px]"
-        overlayClassName="fixed z-[1000] top-0 left-0 w-full h-full backdrop-blur-[5px] bg-[#36363652] flex py-5 md:py-0 overflow-y-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-transparent items-center justify-center px-3 md:p-4"
+        className="static border-none w-full lg:max-w-[400px]"
+        overlayClassName="fixed z-[1000] top-0 bg-[#DDD] left-0 w-full h-full lg:backdrop-blur-[5px] lg:bg-[#36363652] flex lg:py-5 md:py-0 overflow-y-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-transparent lg:items-center lg:justify-center lg:px-3 md:p-4"
         onRequestClose={startClose}
         ariaHideApp={false}
       >

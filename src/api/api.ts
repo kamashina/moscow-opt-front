@@ -19,8 +19,9 @@ const onError = async (status: Exception | any) => {
     try {
       const res = await AuthService.refreshToken();
       res.access_token && setToken(res.access_token);
-      window.location.reload();
     } catch (e) {
+      window.location.hostname.includes("localhost") &&
+        window.location.replace("/auth");
       const res = await AuthService.logout();
     }
   }
@@ -29,12 +30,18 @@ const onError = async (status: Exception | any) => {
 
 OpenAPI.interceptors.response.use(async (response) => {
   if (!response?.status) return response;
+
   if (response.status >= 400) {
-    onError(response?.status);
+    // onError(response?.status);
     let errorMessage = response.statusText || `Error ${response.status}`;
-    if (response.data) {
-      errorMessage = String(response.data.message);
-    }
+
+    try {
+      const jsonData = await response.json();
+      if (jsonData?.message) {
+        errorMessage = String(jsonData.message);
+      }
+    } catch {}
+
     return Promise.reject(new Error(errorMessage));
   }
 

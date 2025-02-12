@@ -23,6 +23,13 @@ export type Exception = {
 export type PageParams = {
   params: { id: string };
 };
+export type IETaxations =
+  | "IE_without_VAT"
+  | "IE_with_VAT"
+  | "IE_Professional_Income_Tax"
+  | "self_employed";
+
+export type CompanyTaxations = "company_without_VAT" | "company_with_VAT";
 
 export type RolesAccess = "cloud_access" | "bi_access";
 export type Pages = "" | "create" | "users";

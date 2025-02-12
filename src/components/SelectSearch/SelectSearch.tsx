@@ -1,54 +1,46 @@
-import { ErrorText, Icon, useDebounce } from "@mossoft/ui-kit";
-import {
-  InputHTMLAttributes,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { ControllerRenderProps, FieldError } from "react-hook-form";
+import { InputHTMLAttributes, useEffect, useRef, useState } from "react";
+import { ErrorText, Icon, Loader, useDebounce } from "@mossoft/ui-kit";
+import { FieldError } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import AppText from "../AppText/AppText";
 
-type InputAttributes = InputHTMLAttributes<HTMLInputElement>;
-
-type Options<T> = {
+type Option<T> = {
   label: string;
   value: T;
   icon?: string;
 };
 
 type Props<T> = {
-  options: Options<T>[];
-  field?: ControllerRenderProps<any, any>;
+  options: Option<T>[];
+  onSelectOption?: (value: any) => void;
   className?: string;
-  parentClassName?: string;
-  listClassname?: string;
   onChange: (value: T | null) => void;
   value: T | undefined | null;
   placeholder?: string;
+  label: string;
+  isLoading: boolean;
   onSearch: (value: string) => void;
   error?: FieldError | undefined;
-  trigger?: ReactNode;
-} & Omit<InputAttributes, "value">;
+} & InputHTMLAttributes<HTMLInputElement>;
 
 const SelectSearch = <T,>({
   options,
-  field,
+  isLoading,
+  label,
   onChange,
   className,
   value,
-  parentClassName,
+  onSelectOption,
   onSearch,
-  listClassname,
-  trigger,
   error,
+  disabled,
   ...inputProps
 }: Props<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search, 100);
+  const debouncedSearch = useDebounce(search, 300);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     onSearch(debouncedSearch);
@@ -57,8 +49,8 @@ const SelectSearch = <T,>({
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        inputRef.current &&
-        !inputRef.current.contains(event.target as Node)
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
       }
@@ -67,28 +59,32 @@ const SelectSearch = <T,>({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSelect = (val: T) => {
-    field?.onChange(val === value ? null : val);
+  const handleSelect = (option: Option<T>) => {
+    const { label, value, icon, ...rest } = option;
+    onChange(option.value === value ? null : option.value);
+    onSelectOption?.(rest);
     setIsOpen(false);
   };
 
-  const sortedAndFilteredOptions = options.filter((option) =>
-    option.label.toLowerCase().includes(debouncedSearch.toLowerCase())
-  );
-
   return (
-    <div ref={inputRef} className="relative">
-      <div className="relativeh-fit w-full cursor-pointer relative">
+    <div className="relative w-full" ref={dropdownRef}>
+      <label className="block">{label}</label>
+      <div className="relative w-full">
         <input
-          //   ref={inputRef}
           className={twMerge(
-            `border-[1px] border-primary border-solid w-full p-2 h-[45px] rounded-[20px] focus:outline-none cursor-pointer`,
+            `${isOpen ? "border-[2px]" : "border-[1px]"} ${
+              disabled
+                ? "bg-primary-light cursor-not-allowed"
+                : "cursor-pointer"
+            } border-primary border-solid w-full p-2 h-[45px] rounded-[20px] focus:outline-none`,
             className
           )}
+          ref={inputRef}
           onFocus={() => setIsOpen(true)}
-          //   {...inputProps}
           onChange={(e) => setSearch(e.target.value)}
           value={search}
+          disabled={disabled}
+          {...inputProps}
         />
         <Icon
           name="arrow-down"
@@ -97,29 +93,43 @@ const SelectSearch = <T,>({
       </div>
 
       {isOpen && (
-        <div className="absolute mt-2 top-19 z-10 w-full py-2 max-h-60 px-2 bg-white shadow-[1px_1px_11px_0_rgb(174_178_191)] rounded-[20px] overflow-auto scrollbar-none">
+        <div className="absolute mt-2 top-19 z-50 w-full py-2 max-h-60 px-2 bg-white shadow-[1px_1px_11px_0_rgb(174_178_191)] rounded-[20px] overflow-auto scrollbar-none">
           <ul className="flex flex-col gap-1">
-            {sortedAndFilteredOptions.length ? (
-              sortedAndFilteredOptions?.map((option) => (
+            {options.length && !isLoading ? (
+              options.map((option, i) => (
                 <li
-                  onClick={() => handleSelect(option.value)}
-                  key={+option.value}
-                  className="rounded-[12px] px-2 py-2 cursor-pointer h-[40px] hover:bg-primary-light"
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    handleSelect(option);
+                  }}
+                  key={i}
+                  className="rounded-[12px] p-2 cursor-pointer h-[40px] hover:bg-primary-light"
                 >
                   <AppText className="text-left text-base text-dark-gray">
                     {option.label}
                   </AppText>
                 </li>
               ))
+            ) : isLoading ? (
+              <div className="h-[40px] mx-auto items-center flex">
+                <Loader />
+              </div>
             ) : (
-              <AppText className="mx-auto h-[40px] text-light-gray text-base">
-                Ничего не найдено
-              </AppText>
+              <div className="h-[40px] mx-auto items-center flex">
+                <AppText className="text-light-gray text-base">
+                  Ничего не найдено
+                </AppText>
+              </div>
             )}
           </ul>
         </div>
       )}
-      <ErrorText error={error} />
+
+      {error && Object.keys(error)?.length && (
+        <div className="absolute w-full items-center flex justify-center flex-row">
+          <ErrorText error={error} />
+        </div>
+      )}
     </div>
   );
 };

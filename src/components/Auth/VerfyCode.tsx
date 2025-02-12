@@ -1,11 +1,11 @@
 import AppText from "@/src/components/AppText/AppText";
 import OtpInput from "@/src/components/OtpInput/OtpInput";
 import { useAuthServiceVerifyCode } from "@/src/openapi/queries";
-import { AuthService, VerifyCodeDto } from "@/src/openapi/requests";
+import { VerifyCodeDto } from "@/src/openapi/requests";
 import { Exception } from "@/src/types";
 import { setToken } from "@/src/utils/setToken";
 import { Button } from "@mossoft/ui-kit";
-import { enqueueSnackbar } from "notistack";
+import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { Controller, FieldValues, useForm } from "react-hook-form";
 
@@ -15,13 +15,16 @@ type Props<T extends FieldValues> = {
   refetchSms: () => void;
   phone: string;
   timer: number;
+  type: "seller" | "client";
 };
 
 const VerifyCode = <T extends FieldValues>({
   refetchSms,
   phone,
+  type = "client",
   timer,
 }: Props<T>) => {
+  const router = useRouter();
   const [modal, setModal] = useQueryState("modal");
   const { mutateAsync: verifyCode, isPending } = useAuthServiceVerifyCode();
   const { handleSubmit, control, setError } = useForm<VerifyCodeDto>();
@@ -29,7 +32,15 @@ const VerifyCode = <T extends FieldValues>({
   const onSubmit = async (data: { code: string }) => {
     try {
       const res = await verifyCode({ requestBody: { ...data, phone } });
-      res.access_token && setToken(res.access_token);
+
+      setToken(res?.access_token);
+      if (type === "seller") {
+        res?.company?.status === "approved"
+          ? router.push("/")
+          : router.push("/company/create");
+        return;
+      }
+
       setModal(null);
     } catch (e) {
       setError("code", { message: (e as Exception).message });
