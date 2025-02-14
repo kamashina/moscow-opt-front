@@ -1,3 +1,4 @@
+"use client";
 import { useMeilisearchServiceSearch } from "@/src/openapi/queries";
 import { SearchEntityResponse, SuggestionType } from "@/src/openapi/requests";
 import { Icon, useDebounce } from "@mossoft/ui-kit";

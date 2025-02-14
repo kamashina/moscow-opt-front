@@ -6,7 +6,7 @@ type Props = { wrapperClassName?: string } & SkeletonProps;
 
 const CustomSkeleton: FC<Props> = ({ wrapperClassName, ...rest }) => {
   return (
-    <div className="relative w-full mt-2">
+    <div className="relative w-full">
       <Skeleton
         width="100%"
         count={1}

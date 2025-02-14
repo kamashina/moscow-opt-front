@@ -6,6 +6,7 @@ import Banners from "./_components/Banners";
 import Categories from "./_components/Categories";
 import { generatePageMetadata } from "./_helpers/generateMetaData";
 import { Metadata } from "next";
+import Info from "./_components/Info";
 
 export const metadata: Metadata = await generatePageMetadata({
   title: "Товары оптом от производителя по низким ценам",
@@ -25,8 +26,9 @@ const Page = async () => {
       <h1 className="sr-only">Товары оптом по выгодным ценам</h1>
 
       <Banners initialData={banners} />
-      <Categories initialData={categories} />
       <Shops initialData={shops} />
+      <Info />
+      <Categories initialData={categories} />
       <Cards initialData={cards} />
     </div>
   );

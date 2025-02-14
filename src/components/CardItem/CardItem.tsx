@@ -10,7 +10,11 @@ import { enqueueSnackbar } from "notistack";
 import AppText from "../AppText/AppText";
 import ProductSchema from "../SEO/ProductSchema";
 import { getQueryClient } from "@/src/api/api";
-import { BOX_TYPES_TRANlSATIONS, getServerFile } from "@/src/constants";
+import {
+  BOX_TYPES_TRANlSATIONS,
+  getServerFile,
+  priceSeparator,
+} from "@/src/constants";
 
 type Props = {
   item: CardResponse;
@@ -53,7 +57,7 @@ const CardItem = ({ item }: Props) => {
         currency="RUB"
       />
 
-      <Link className="flex flex-col gap-1" href={`/items/${item.id}`}>
+      <Link className="flex flex-col" href={`/items/${item.id}`}>
         <div className="relative h-[300px] w-full">
           <div onClick={handleChangeFavorite} className="cursor-pointer">
             <Icon
@@ -72,31 +76,42 @@ const CardItem = ({ item }: Props) => {
             alt={previewItem.name}
             fill
             sizes="100%"
-            className="rounded-[30px]"
+            className="rounded-[25px]"
           />
         </div>
-        <AppText className="font-medium">{previewItem.name}</AppText>
-        <AppText className="font-light text-[#808080] text-xs">
-          RO-{previewItem.article}
-        </AppText>
-        <div className="flex flex-row justify-between items-center">
-          <AppText className="font-medium text-xl text-primary-dark-light">
-            {previewItem.price}₽
-          </AppText>
 
-          <div className="flex flex-row items-center gap-1">
-            <Icon name="star" className="w-4 h-4 !text-[#F6B51E]" />
-            <AppText className="!text-[#F6B51E]">
-              {previewItem.rating.toFixed(1)}
+        <div className="mt-1">
+          <div className="flex flex-row justify-between">
+            <div className="px-2 py-1 bg-primary-light rounded-3xl flex items-center">
+              <AppText className="text-primary text-xs">
+                {previewItem.box?.type &&
+                  BOX_TYPES_TRANlSATIONS[previewItem.box?.type]}
+              </AppText>
+            </div>
+
+            <div className="flex px-2 py-1 flex-row items-center bg-primary rounded-3xl">
+              <Icon name="star" className="w-4 h-4 !text-white" />
+              <AppText className="!text-white text-sm">
+                {previewItem.rating.toFixed(1)}
+              </AppText>
+            </div>
+          </div>
+
+          <div className="flex flex-row justify-between items-center">
+            <AppText className="font-semibold text-xl text-primary">
+              {priceSeparator(previewItem.price)}₽
             </AppText>
           </div>
-        </div>
-        <div className="flex flex-row justify-between">
-          <AppText className="text-primary">
-            {previewItem.box?.type &&
-              BOX_TYPES_TRANlSATIONS[previewItem.box?.type]}
-          </AppText>
-          <AppText>{item.shop.name}</AppText>
+          <AppText className="font-medium">{previewItem.name}</AppText>
+
+          <div className="flex flex-row justify-between items-center">
+            <AppText className="text-sm text-light-gray">
+              {item.shop.name}
+            </AppText>
+            <AppText className="text-sm text-light-gray">
+              RO-{previewItem.article}
+            </AppText>
+          </div>
         </div>
       </Link>
     </>

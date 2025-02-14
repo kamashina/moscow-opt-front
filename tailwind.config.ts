@@ -11,8 +11,8 @@ const config: Config = {
 
   theme: {
     colors: {
-      primary: "#0167FF",
-      "primary-light": "#CDE1FF",
+      primary: "#5246FE",
+      "primary-light": "#DCDAFF",
       "primary-dark-light": "#3685FC",
       light: "#F2F7FF",
       "light-gray": "#B7B7B7",

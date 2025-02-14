@@ -24,15 +24,11 @@ const RootLayout: FC<Props> = async ({ ext, client, seller }) => {
 
   return (
     <html lang="ru">
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-      />
       <body className={`${montserrat.className}`}>
         <Providers>
           {ext}
-          {/* {host !== "fsadfs" && client} */}
-          {host !== "fsadfs" && seller}
+          {host !== "fsadfs" && client}
+          {/* {host !== "fsadfs" && seller} */}
           {/* {host !== process.env.NEXT_PUBLIC_CLIENT_DOMAIN && client} */}
         </Providers>
       </body>

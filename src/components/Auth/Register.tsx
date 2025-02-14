@@ -112,7 +112,7 @@ const Register = ({ setStep, step, form, type = "client" }: Props) => {
             required: "Заполните поле",
             pattern: {
               value: /^\d{10}$/,
-              message: "Введите корректный номер в формате +7XXXXXXXXXX",
+              message: "Неверный формат",
             },
           }}
           control={control}
@@ -154,11 +154,6 @@ const Register = ({ setStep, step, form, type = "client" }: Props) => {
             minLength: {
               value: 8,
               message: "Пароль должен содержать минимум 8 символов",
-            },
-            pattern: {
-              value: /^(?=.*[A-Z])(?=.*\d).{8,}$/,
-              message:
-                "Пароль должен содержать хотя бы одну заглавную букву и цифру",
             },
           }}
           render={(inputField) => (

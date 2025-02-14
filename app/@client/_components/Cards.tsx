@@ -18,12 +18,12 @@ const Card: FC<Props> = ({ initialData }) => {
   });
 
   return (
-    <Wrapper className="rounded-[30px] w-full">
+    <Wrapper className="rounded-[25px] w-full">
       <div className="flex flex-row justify-between mb-4">
         <AppText className="font-medium text-2xl text-black">Новинки</AppText>
         <Link
           href="/catalog"
-          className="flex flex-row gap-1 bg-primary rounded-[30px] py-2 px-3 items-center hover:opacity-80 active:opacity-60"
+          className="flex flex-row gap-1 bg-primary rounded-[25px] py-2 px-3 items-center hover:opacity-80 active:opacity-60"
         >
           <AppText className="font-medium text-white">Смотреть все</AppText>
           <Icon name="arrow-left" className="w-6 h-6 rotate-180 text-white" />

@@ -11,17 +11,17 @@
 }
 
 input[type="text"] {
-  border: 1px solid #0167ff;
+  border: 1px solid #5246fe;
   border-radius: 20px;
   height: 45px;
 }
 input[type="email"] {
-  border: 1px solid #0167ff;
+  border: 1px solid #5246fe;
   border-radius: 20px;
   height: 45px;
 }
 input[type="password"] {
-  border: 1px solid #0167ff;
+  border: 1px solid #5246fe;
   border-radius: 20px;
   height: 45px;
 }

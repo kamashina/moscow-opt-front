@@ -1,14 +1,14 @@
-"use client";
+import { getQueryClient } from "@/src/api/api";
 import AppText from "@/src/components/AppText/AppText";
+import ClientIcon from "@/src/components/ClientIcon/ClientIcon";
+import Drawer from "@/src/components/Drawer/Drawer";
 import Location from "@/src/components/Location/Location";
 import Search from "@/src/components/Search/Search";
-import { useUsersServiceGetMe } from "@/src/openapi/queries";
-import { Icon } from "@mossoft/ui-kit";
+import { ensureUseCategoriesServiceGetAllCategoriesData } from "@/src/openapi/queries/ensureQueryData";
 import Image from "next/image";
 import Link from "next/link";
-import { FC } from "react";
 
-const HEADER_OPTIONS = [
+const TOP_HEADER_OPTIONS = [
   { label: "Перейти в магазин", link: "/shop" },
   { label: "О нас", link: "/about" },
   { label: "Статьи", link: "/articles" },
@@ -34,36 +34,50 @@ const RIGHT_NAV_OPTIONS = [
     title: "Профиль",
   },
 ];
-const LEFT_NAV_OPTIONS = [
-  {
-    link: "/",
-    iconName: "catalog",
-    label: "Каталог",
-  },
-  {
-    link: "/",
-    iconName: "shops",
-    label: "Магазины",
-  },
-];
 
-type Props = {};
+const Header = async () => {
+  const queryClient = getQueryClient();
+  const initialCategories =
+    await ensureUseCategoriesServiceGetAllCategoriesData(queryClient);
 
-const Header: FC<Props> = () => {
-  const { data } = useUsersServiceGetMe();
-  console.log(data);
+  const LEFT_NAV_OPTIONS = [
+    {
+      link: "/",
+      iconName: "catalog",
+      label: "Каталог",
+      renderItem: () => <Drawer initialData={initialCategories} />,
+    },
+    {
+      link: "/",
+      iconName: "shops",
+      label: "Магазины",
+      renderItem: () => (
+        <Link
+          href="/"
+          className="group flex flex-row gap-2 bg-primary-light p-1 pr-4 rounded-[25px] items-center hover:bg-primary active:opacity-70"
+        >
+          <div className="rounded-full bg-white p-3 group-hover:bg-white">
+            <ClientIcon name="shops" className="w-5 h-5 !text-primary" />
+          </div>
+          <AppText className="text-primary group-hover:text-white">
+            Магазины
+          </AppText>
+        </Link>
+      ),
+    },
+  ];
 
   return (
     <>
-      <div className="bg-[#EEE] hidden lg:block">
+      <div className="bg-[#EEE] relative z-[1000] hidden lg:block">
         <div className="lg:max-w-[1440px] mx-auto flex flex-row justify-between items-center h-10">
           <div className="flex flex-row">
-            {HEADER_OPTIONS.map((item) => (
+            {TOP_HEADER_OPTIONS.map((item) => (
               <Link
                 title={item.label}
                 key={item.link}
                 href={item.link}
-                className="hover:bg-primary hover:text-white rounded-[30px] py-1 px-3 font-normal text-sm"
+                className="hover:bg-primary hover:text-white rounded-[25px] py-1 px-3 font-normal text-sm"
               >
                 {item.label}
               </Link>
@@ -74,7 +88,7 @@ const Header: FC<Props> = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-b-[30px] px-2">
+      <div className="relative px-0 lg:sticky bg-white z-[1000] top-0 rounded-b-[25px] lg:px-2 backdrop-blur-[1px] shadow-lg">
         <div className="h-20 flex flex-row items-center lg:max-w-[1440px] mx-auto">
           <Link
             href="/"
@@ -86,24 +100,11 @@ const Header: FC<Props> = () => {
 
           <div className="flex-row justify-between w-full items-center flex">
             <div className="flex flex-row gap-4 items-center">
-              <div className="hidden lg:flex">
+              <div className="hidden lg:flex gap-3">
                 {LEFT_NAV_OPTIONS.map((item) => (
-                  <Link
-                    title={item.label}
-                    key={item.iconName}
-                    href={item.link}
-                    className="group flex flex-row gap-2 bg-primary-light p-1 pr-4 rounded-[30px] items-center hover:bg-primary active:opacity-70"
-                  >
-                    <div className="rounded-full bg-primary p-3 group-hover:bg-primary-dark-light">
-                      <Icon
-                        name={item.iconName}
-                        className="w-5 h-5 !text-white"
-                      />
-                    </div>
-                    <AppText className="text-primary group-hover:text-white">
-                      {item.label}
-                    </AppText>
-                  </Link>
+                  <div key={item.label}>
+                    {item.renderItem ? item.renderItem() : <></>}
+                  </div>
                 ))}
               </div>
               <Search className="lg:min-w-[650px] hidden lg:flex" />
@@ -120,7 +121,7 @@ const Header: FC<Props> = () => {
                   }}
                   className="group rounded-full bg-primary-light p-3 hover:bg-primary active:opacity-70"
                 >
-                  <Icon
+                  <ClientIcon
                     name={item.iconName}
                     className="!text-primary group-hover:!text-white w-5 h-5"
                   />

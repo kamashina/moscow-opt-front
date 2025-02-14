@@ -86,7 +86,7 @@ const Login = ({ setStep, step, form, type = "client" }: Props) => {
           required: "Заполните поле",
           pattern: {
             value: /^\d{10}$/,
-            message: "Введите корректный номер в формате +7XXXXXXXXXX",
+            message: "Неверный формат",
           },
         }}
         control={control}

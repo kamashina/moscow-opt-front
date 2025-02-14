@@ -1,3 +1,4 @@
+"use client";
 import { Icon } from "@mossoft/ui-kit";
 import { useEffect, useState } from "react";
 import AppText from "../AppText/AppText";
@@ -27,7 +28,7 @@ const Location = () => {
   }, []);
 
   return (
-    <div className="flex flex-row gap-2 items-center bg-primary py-1 px-3 rounded-[30px]">
+    <div className="flex flex-row gap-2 items-center bg-primary py-1 px-3 rounded-[25px]">
       <Icon name="location" className="w-4 h-4 !text-white" />
       <AppText className="text-white font-normal text-sm">{data || ""}</AppText>
     </div>

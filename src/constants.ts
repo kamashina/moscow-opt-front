@@ -22,8 +22,8 @@ export const getServerFile = (file: string) => {
 };
 
 export const BOX_TYPES_TRANlSATIONS: Record<BoxTypes, string> = {
-  box_characteristics: "Короб",
-  box_single: "Упаковка",
+  box_characteristics: "Коробка",
+  box_single: "Поштучно",
 };
 
 export const createOptionsFromTranslations = (translation: {
@@ -34,6 +34,9 @@ export const createOptionsFromTranslations = (translation: {
     value: key,
   }));
 };
+
+export const priceSeparator = (price: number) =>
+  price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
 export type AuthTabsTypes = "register" | "login";
 

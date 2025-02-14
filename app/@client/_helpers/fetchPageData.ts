@@ -9,6 +9,7 @@ import {
   prefetchUseShopServiceGetAllShops,
   prefetchUseBannersServiceGetBanners,
   prefetchUseCardsServiceGetAllCards,
+  prefetchUseCategoriesServiceGetAllCategories,
 } from "@/src/openapi/queries/prefetch";
 import { QueryClient } from "@tanstack/react-query";
 
@@ -17,6 +18,7 @@ export async function fetchPageData(queryClient: QueryClient) {
   await prefetchUseShopServiceGetAllShops(queryClient);
   await prefetchUseBannersServiceGetBanners(queryClient);
   await prefetchUseCardsServiceGetAllCards(queryClient);
+  await prefetchUseCategoriesServiceGetAllCategories(queryClient);
 
   const [categories, cards, banners, shops] = await Promise.all([
     ensureUseCategoriesServiceGetPopularCategoriesData(queryClient),
