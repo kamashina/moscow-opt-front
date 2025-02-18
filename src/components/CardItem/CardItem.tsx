@@ -1,27 +1,26 @@
+import { getQueryClient } from "@/src/api/api";
+import { BOX_TYPES_TRANlSATIONS, priceSeparator } from "@/src/constants";
 import {
   useCardsServiceGetAllCardsKey,
   useFavoritesServiceChangeFavorite,
 } from "@/src/openapi/queries";
 import { CardResponse } from "@/src/openapi/requests";
 import { Icon } from "@mossoft/ui-kit";
-import Image from "next/image";
 import Link from "next/link";
-import { enqueueSnackbar } from "notistack";
 import AppText from "../AppText/AppText";
+import HoverSlider from "../HoverSlider/HoverSlider";
 import ProductSchema from "../SEO/ProductSchema";
-import { getQueryClient } from "@/src/api/api";
-import {
-  BOX_TYPES_TRANlSATIONS,
-  getServerFile,
-  priceSeparator,
-} from "@/src/constants";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/src/store/auth";
 
 type Props = {
   item: CardResponse;
 };
 
 const CardItem = ({ item }: Props) => {
+  const router = useRouter();
   const queryClient = getQueryClient();
+  const { isAuthenticated, clearUser } = useAuthStore();
   const { mutateAsync: changeIsFavorite } = useFavoritesServiceChangeFavorite({
     onSuccess: async () => {
       await queryClient.invalidateQueries({
@@ -37,8 +36,7 @@ const CardItem = ({ item }: Props) => {
     try {
       const res = await changeIsFavorite({ cardId: item.id });
     } catch (e) {
-      enqueueSnackbar("Произошла ошибка", { variant: "error" });
-      console.log(e);
+      !isAuthenticated && router.push("?modal=auth", { scroll: false });
     }
   };
 
@@ -67,16 +65,8 @@ const CardItem = ({ item }: Props) => {
               } absolute top-3 right-4 z-10`}
             />
           </div>
-          <Image
-            src={
-              previewItem.images[0]
-                ? getServerFile(previewItem.images[0])
-                : "/images/itemsPlaceholder.png"
-            }
-            alt={previewItem.name}
-            fill
-            sizes="100%"
-            className="rounded-[25px]"
+          <HoverSlider
+            images={previewItem.images || ["/images/itemsPlaceholder.png"]}
           />
         </div>
 

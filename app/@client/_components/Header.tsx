@@ -1,10 +1,11 @@
 import { getQueryClient } from "@/src/api/api";
 import AppText from "@/src/components/AppText/AppText";
+import CategoriesDrawer from "@/src/components/CategoriesDrawer/CategoriesDrawer";
 import ClientIcon from "@/src/components/ClientIcon/ClientIcon";
-import Drawer from "@/src/components/Drawer/Drawer";
 import Location from "@/src/components/Location/Location";
+import ProfileIcon from "@/src/components/ProfileIcon/ProfileIcon";
 import Search from "@/src/components/Search/Search";
-import { ensureUseCategoriesServiceGetAllCategoriesData } from "@/src/openapi/queries/ensureQueryData";
+import { prefetchUseCategoriesServiceGetAllCategories } from "@/src/openapi/queries/prefetch";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -17,55 +18,37 @@ const TOP_HEADER_OPTIONS = [
   { label: "Поддержка", link: "/support" },
 ];
 
-const RIGHT_NAV_OPTIONS = [
+const LEFT_NAV_OPTIONS = [
   {
     link: "/",
-    iconName: "like",
-    title: "Избранное",
+    iconName: "catalog",
+    label: "Каталог",
+    renderItem: () => <CategoriesDrawer />,
   },
   {
     link: "/",
-    iconName: "basket",
-    title: "Корзина",
-  },
-  {
-    link: "/auth",
-    iconName: "profile",
-    title: "Профиль",
+    iconName: "shops",
+    label: "Магазины",
+    renderItem: () => (
+      <Link
+        href="/"
+        className="group flex flex-row gap-2 bg-primary-light p-1 pr-4 rounded-[25px] items-center hover:bg-primary active:opacity-70"
+      >
+        <div className="rounded-full bg-white p-3 group-hover:bg-white">
+          <ClientIcon name="shops" className="w-5 h-5 !text-primary" />
+        </div>
+        <AppText className="text-primary group-hover:text-white">
+          Магазины
+        </AppText>
+      </Link>
+    ),
   },
 ];
 
 const Header = async () => {
   const queryClient = getQueryClient();
-  const initialCategories =
-    await ensureUseCategoriesServiceGetAllCategoriesData(queryClient);
 
-  const LEFT_NAV_OPTIONS = [
-    {
-      link: "/",
-      iconName: "catalog",
-      label: "Каталог",
-      renderItem: () => <Drawer initialData={initialCategories} />,
-    },
-    {
-      link: "/",
-      iconName: "shops",
-      label: "Магазины",
-      renderItem: () => (
-        <Link
-          href="/"
-          className="group flex flex-row gap-2 bg-primary-light p-1 pr-4 rounded-[25px] items-center hover:bg-primary active:opacity-70"
-        >
-          <div className="rounded-full bg-white p-3 group-hover:bg-white">
-            <ClientIcon name="shops" className="w-5 h-5 !text-primary" />
-          </div>
-          <AppText className="text-primary group-hover:text-white">
-            Магазины
-          </AppText>
-        </Link>
-      ),
-    },
-  ];
+  await prefetchUseCategoriesServiceGetAllCategories(queryClient);
 
   return (
     <>
@@ -111,22 +94,25 @@ const Header = async () => {
             </div>
 
             <div className="flex flex-row gap-2 items-center">
-              {RIGHT_NAV_OPTIONS.map((item) => (
-                <Link
-                  title={item.title}
-                  key={item.iconName}
-                  href={{
-                    pathname: "/",
-                    query: { modal: "auth" },
-                  }}
-                  className="group rounded-full bg-primary-light p-3 hover:bg-primary active:opacity-70"
-                >
-                  <ClientIcon
-                    name={item.iconName}
-                    className="!text-primary group-hover:!text-white w-5 h-5"
-                  />
-                </Link>
-              ))}
+              <div
+                title="Избранное"
+                className="group rounded-full bg-primary-light p-3 hover:bg-primary active:opacity-70"
+              >
+                <ClientIcon
+                  name="like"
+                  className="!text-primary group-hover:!text-white w-5 h-5"
+                />
+              </div>
+              <div
+                title="Корзина"
+                className="group rounded-full bg-primary-light p-3 hover:bg-primary active:opacity-70"
+              >
+                <ClientIcon
+                  name="basket"
+                  className="!text-primary group-hover:!text-white w-5 h-5"
+                />
+              </div>
+              <ProfileIcon />
             </div>
           </div>
         </div>

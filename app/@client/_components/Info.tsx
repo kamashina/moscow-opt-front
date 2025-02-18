@@ -1,9 +1,5 @@
-"use client";
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
-type Props = {};
 
 const BANNER_OPTIONS = [
   {
@@ -21,26 +17,8 @@ const BANNER_OPTIONS = [
 ];
 
 const Info = () => {
-  const [bannerId, setBannerId] = useState(1);
-
-  //   const currentIndex = data?.findIndex((item) => item.id === bannerId);
-
-  //   const handleScroll = (position: "left" | "right") => {
-  //     if (!data?.length) return;
-
-  //     if (position === "left") {
-  //       setBannerId(data[currentIndex - 1].id);
-  //       return;
-  //     }
-  //     if (position === "right") {
-  //       setBannerId(data[currentIndex + 1].id);
-  //       return;
-  //     }
-  //   };
-
   return (
     <div>
-      {/* import sellerBanner from "././../../public/images/seller_info_banner.svg"; */}
       <div className="flex flex-row gap-2">
         {BANNER_OPTIONS.map((item) => (
           <Link

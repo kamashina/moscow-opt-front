@@ -9,6 +9,12 @@ export const getFromLocalStorage = (key: string) => {
   return localStorage.getItem(key);
 };
 
+export const getInitials = (fullName: string) => {
+  if (!fullName) return "";
+  const parts = fullName.trim().split(/\s+/);
+  return parts.length >= 2 ? `${parts[0][0]}${parts[1][0]}` : "";
+};
+
 export const getPersistedStorage = () => {
   if (typeof window === "undefined") {
     return null;

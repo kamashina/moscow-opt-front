@@ -1,28 +1,20 @@
 "use client";
-import { GetAllCategoriesResponse } from "@/src/openapi/requests";
+import { Icon } from "@mossoft/ui-kit";
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 import { FC, useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 import { useCategoriesServiceGetAllCategories } from "../../openapi/queries/queries";
 import AppText from "../AppText/AppText";
-import ClientIcon from "../ClientIcon/ClientIcon";
-import { Icon } from "@mossoft/ui-kit";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 
-type Props = {
-  initialData: GetAllCategoriesResponse;
-};
+type Props = {};
 
-const Drawer: FC<Props> = ({ initialData }) => {
+const CategoriesDrawer: FC<Props> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const prevHeaderOffset = useRef(true);
 
-  const { data: categories } = useCategoriesServiceGetAllCategories(
-    undefined,
-    undefined,
-    { initialData, enabled: isOpen }
-  );
+  const { data: categories } = useCategoriesServiceGetAllCategories();
 
   useEffect(() => {
     setCategoryId(null);
@@ -41,7 +33,7 @@ const Drawer: FC<Props> = ({ initialData }) => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isOpen]);
 
   const modalHeight = `h-[calc(100vh-${prevHeaderOffset.current ? 40 : 0}px)]`;
 
@@ -72,7 +64,7 @@ const Drawer: FC<Props> = ({ initialData }) => {
         {isOpen && (
           <Modal
             isOpen={isOpen}
-            className="z-1 border-none w-full h-full max-w-[520px] overflow-hidden"
+            className="z-20 border-none w-full h-full max-w-[520px] overflow-hidden"
             overlayClassName={`fixed inset-0 bg-[#0000004D] backdrop-blur-[1px] flex items-start`}
             shouldCloseOnOverlayClick={true}
             ariaHideApp={false}
@@ -93,10 +85,10 @@ const Drawer: FC<Props> = ({ initialData }) => {
                 {categories?.map((category) => (
                   <motion.div
                     key={category.id}
-                    onMouseOver={() => setCategoryId(category.id)}
-                    onClick={() => setCategoryId(category.id)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onMouseOver={() => setCategoryId(category.id)}
+                    onClick={() => setCategoryId(category.id)}
                     className={`${
                       categoryId === category.id ? "bg-primary-light" : ""
                     } flex px-2 items-center py-2 flex-row gap-2 hover:bg-primary-light cursor-pointer rounded-[10px]`}
@@ -143,4 +135,4 @@ const Drawer: FC<Props> = ({ initialData }) => {
   );
 };
 
-export default Drawer;
+export default CategoriesDrawer;

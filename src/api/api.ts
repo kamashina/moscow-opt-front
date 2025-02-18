@@ -14,14 +14,25 @@ OpenAPI.CREDENTIALS = "include";
 OpenAPI.WITH_CREDENTIALS = true;
 OpenAPI.TOKEN = getFromLocalStorage("token") || "";
 
+function makeQueryClient() {
+  return new QueryClient({
+    queryCache: new QueryCache({ onError }),
+    mutationCache: new MutationCache({ onError }),
+    defaultOptions: {
+      queries: { retry: 1, staleTime: 60 * 1000, gcTime: 1000 * 60 * 60 * 24 },
+    },
+  });
+}
+
 const onError = async (status: Exception | any) => {
   if (status === 401 || status === 403) {
     try {
       const res = await AuthService.refreshToken();
-      res.access_token && setToken(res.access_token);
+      setToken(res.access_token);
+
+      OpenAPI.TOKEN = res.access_token;
+      getQueryClient().resetQueries();
     } catch (e) {
-      window.location.hostname.includes("localhost") &&
-        window.location.replace("/auth");
       const res = await AuthService.logout();
     }
   }
@@ -32,7 +43,7 @@ OpenAPI.interceptors.response.use(async (response) => {
   if (!response?.status) return response;
 
   if (response.status >= 400) {
-    // onError(response?.status);
+    onError(response?.status);
     let errorMessage = response.statusText || `Error ${response.status}`;
 
     try {
@@ -42,29 +53,11 @@ OpenAPI.interceptors.response.use(async (response) => {
       }
     } catch {}
 
-    return Promise.reject(new Error(errorMessage));
+    return Promise.reject(new Error("dsf"));
   }
 
   return response;
 });
-
-function makeQueryClient() {
-  return new QueryClient({
-    queryCache: new QueryCache({ onError }),
-    mutationCache: new MutationCache({ onError }),
-    defaultOptions: {
-      queries: {
-        retry: 0,
-        staleTime: 60 * 1000,
-      },
-      dehydrate: {
-        shouldDehydrateQuery: (query) =>
-          defaultShouldDehydrateQuery(query) ||
-          query.state.status === "pending",
-      },
-    },
-  });
-}
 
 let browserQueryClient: QueryClient | undefined = undefined;
 

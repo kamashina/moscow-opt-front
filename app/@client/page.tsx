@@ -17,9 +17,7 @@ export const metadata: Metadata = await generatePageMetadata({
 const Page = async () => {
   const queryClient = getQueryClient();
 
-  const { categories, cards, banners, shops } = await fetchPageData(
-    queryClient
-  );
+  const { categories, banners, shops } = await fetchPageData(queryClient);
 
   return (
     <div className="mt-2 flex flex-col gap-2">
@@ -29,7 +27,7 @@ const Page = async () => {
       <Shops initialData={shops} />
       <Info />
       <Categories initialData={categories} />
-      <Cards initialData={cards} />
+      <Cards />
     </div>
   );
 };

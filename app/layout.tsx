@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { headers } from "next/headers";
-import { FC } from "react";
 import "./globals.css";
 import Providers from "./providers";
 
@@ -18,7 +17,7 @@ type Props = {
   ext: React.ReactNode;
 };
 
-const RootLayout: FC<Props> = async ({ ext, client, seller }) => {
+const RootLayout = async ({ ext, client, seller }: Props) => {
   const headersList = await headers();
   const host = headersList.get("host");
 

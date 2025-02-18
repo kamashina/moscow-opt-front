@@ -5,7 +5,6 @@ import {
 import { SendSmsDto } from "@/src/openapi/requests";
 import { Exception } from "@/src/types";
 import { Button, Input } from "@mossoft/ui-kit";
-import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
@@ -19,7 +18,6 @@ type Props = {
 };
 
 const Login = ({ setStep, step, form, type = "client" }: Props) => {
-  const router = useRouter();
   const { mutateAsync: sendSms, isPending } = useAuthServiceLoginSms();
   const { handleSubmit, control, watch } = form;
   const [timer, setTimer] = useState(0);
@@ -58,7 +56,6 @@ const Login = ({ setStep, step, form, type = "client" }: Props) => {
 
       const res = await sendSms({ requestBody: data });
       res?.expiresIn && setTimer(+res.expiresIn);
-      router.push("");
       setStep(2);
     } catch (e) {
       enqueueSnackbar((e as Exception).message, { variant: "error" });
@@ -93,6 +90,7 @@ const Login = ({ setStep, step, form, type = "client" }: Props) => {
         render={(inputFields) => (
           <Input
             type="text"
+            autoFocus
             format="+7 (###) ### ## ##"
             label="Номер телефона"
             placeholder="Введите номер"

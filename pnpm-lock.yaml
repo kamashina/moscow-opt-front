@@ -23,6 +23,12 @@ dependencies:
   framer-motion:
     specifier: ^12.3.0
     version: 12.3.0(react-dom@19.0.0)(react@19.0.0)
+  keen-slider:
+    specifier: ^6.8.6
+    version: 6.8.6
+  lz-string:
+    specifier: ^1.5.0
+    version: 1.5.0
   next:
     specifier: 15.1.6
     version: 15.1.6(@babel/core@7.26.0)(react-dom@19.0.0)(react@19.0.0)
@@ -4215,6 +4221,10 @@ packages:
       object.values: 1.2.1
     dev: true
 
+  /keen-slider@6.8.6:
+    resolution: {integrity: sha512-dcEQ7GDBpCjUQA8XZeWh3oBBLLmyn8aoeIQFGL/NTVkoEOsmlnXqA4QykUm/SncolAZYGsEk/PfUhLZ7mwMM2w==}
+    dev: false
+
   /keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
     dependencies:
@@ -4309,6 +4319,11 @@ packages:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
     dependencies:
       yallist: 3.1.1
+    dev: false
+
+  /lz-string@1.5.0:
+    resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
+    hasBin: true
     dev: false
 
   /magic-string@0.25.9:

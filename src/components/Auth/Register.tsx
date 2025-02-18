@@ -22,6 +22,7 @@ const Register = ({ setStep, step, form, type = "client" }: Props) => {
   const { handleSubmit, control, watch } = form;
 
   const [timer, setTimer] = useState(0);
+
   const { data: smsTimer, refetch } = useAuthServiceGetSmsTimer(
     {
       phone: watch("phone"),

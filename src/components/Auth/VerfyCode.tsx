@@ -1,7 +1,9 @@
+import { getQueryClient } from "@/src/api/api";
 import AppText from "@/src/components/AppText/AppText";
 import OtpInput from "@/src/components/OtpInput/OtpInput";
 import { useAuthServiceVerifyCode } from "@/src/openapi/queries";
 import { VerifyCodeDto } from "@/src/openapi/requests";
+import { useAuthStore } from "@/src/store/auth";
 import { Exception } from "@/src/types";
 import { setToken } from "@/src/utils/setToken";
 import { Button } from "@mossoft/ui-kit";
@@ -24,24 +26,30 @@ const VerifyCode = <T extends FieldValues>({
   type = "client",
   timer,
 }: Props<T>) => {
+  const queryClient = getQueryClient();
   const router = useRouter();
+  const { setUserCredentials } = useAuthStore();
   const [modal, setModal] = useQueryState("modal");
   const { mutateAsync: verifyCode, isPending } = useAuthServiceVerifyCode();
   const { handleSubmit, control, setError } = useForm<VerifyCodeDto>();
 
   const onSubmit = async (data: { code: string }) => {
     try {
-      const res = await verifyCode({ requestBody: { ...data, phone } });
-
-      setToken(res?.access_token);
+      const user = await verifyCode({ requestBody: { ...data, phone } });
+      setToken(user.access_token);
+      queryClient.resetQueries();
+      setUserCredentials({
+        access_token: user.access_token,
+        isAuthenticated: true,
+      });
       if (type === "seller") {
-        res?.company?.status === "approved"
+        user?.company?.status === "approved"
           ? router.push("/")
           : router.push("/company/create");
         return;
       }
 
-      setModal(null);
+      setModal(null, { scroll: false });
     } catch (e) {
       setError("code", { message: (e as Exception).message });
     }
