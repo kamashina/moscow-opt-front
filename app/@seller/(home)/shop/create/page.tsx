@@ -1,11 +1,12 @@
 import React from "react";
+import ShopForm from "./_components/ShopForm";
 
 type Props = {};
 
-const Page = (props: Props) => {
+const Page = async (props: Props) => {
   return (
     <div>
-      <div>Page</div>
+      <ShopForm />
     </div>
   );
 };

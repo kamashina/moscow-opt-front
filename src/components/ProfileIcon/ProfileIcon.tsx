@@ -3,7 +3,6 @@ import { getQueryClient } from "@/src/api/api";
 import { getInitials } from "@/src/constants";
 import {
   useAuthServiceLogout,
-  useCardsServiceGetAllCardsKey,
   useUsersServiceGetMe,
   useUsersServiceGetMeKey,
 } from "@/src/openapi/queries";
@@ -13,7 +12,7 @@ import { Button } from "@mossoft/ui-kit";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FC, use, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import AppText from "../AppText/AppText";
 import ClientIcon from "../ClientIcon/ClientIcon";
 
@@ -24,9 +23,7 @@ const ProfileIcon: FC<Props> = () => {
   const queryClient = getQueryClient();
   const { mutateAsync: logout } = useAuthServiceLogout({
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: [useUsersServiceGetMeKey, useCardsServiceGetAllCardsKey],
-      });
+      queryClient.setQueriesData({ queryKey: [useUsersServiceGetMeKey] }, null);
     },
   });
   const { isAuthenticated, clearUser } = useAuthStore();
@@ -42,7 +39,7 @@ const ProfileIcon: FC<Props> = () => {
       clearUser();
       await logout();
       setToken("");
-      setShowTooltip(false);
+      window.location.replace("/");
     } catch (e) {}
   };
 

@@ -35,6 +35,9 @@ export const prefetchUseBasketServiceGetTotalItemsInBasket = (queryClient: Query
 export const prefetchUseDaDataServiceGetParty = (queryClient: QueryClient, { inn }: {
   inn: string;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseDaDataServiceGetPartyKeyFn({ inn }), queryFn: () => DaDataService.getParty({ inn }) });
+export const prefetchUseDaDataServiceGetAddress = (queryClient: QueryClient, { q }: {
+  q: string;
+}) => queryClient.prefetchQuery({ queryKey: Common.UseDaDataServiceGetAddressKeyFn({ q }), queryFn: () => DaDataService.getAddress({ q }) });
 export const prefetchUseCardsServiceGetAllCards = (queryClient: QueryClient, { q }: {
   q?: string;
 } = {}) => queryClient.prefetchQuery({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q }), queryFn: () => CardsService.getAllCards({ q }) });

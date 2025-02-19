@@ -1,5 +1,4 @@
 import {
-  defaultShouldDehydrateQuery,
   isServer,
   MutationCache,
   QueryCache,
@@ -53,7 +52,7 @@ OpenAPI.interceptors.response.use(async (response) => {
       }
     } catch {}
 
-    return Promise.reject(new Error("dsf"));
+    return Promise.reject(new Error(errorMessage));
   }
 
   return response;

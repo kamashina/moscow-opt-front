@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { RegisterSmsData, RegisterSmsResponse, LoginSmsData, LoginSmsResponse, GetSmsTimerData, GetSmsTimerResponse2, VerifyCodeData, VerifyCodeResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetFiltersBySubCategoryIdData, GetFiltersBySubCategoryIdResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, UploadItemsImagesData, UploadItemsImagesResponse, UploadBannerData, UploadBannerResponse, UploadShopImagesData, UploadShopImagesResponse, UploadItemsexcelData, UploadItemsexcelResponse, SearchData, SearchResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAllCardsData, GetAllCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse, GetFavoritesResponse, ChangeFavoriteData, ChangeFavoriteResponse } from './types.gen';
+import type { RegisterSmsData, RegisterSmsResponse, LoginSmsData, LoginSmsResponse, GetSmsTimerData, GetSmsTimerResponse2, VerifyCodeData, VerifyCodeResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetFiltersBySubCategoryIdData, GetFiltersBySubCategoryIdResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, UploadItemsImagesData, UploadItemsImagesResponse, UploadBannerData, UploadBannerResponse, UploadShopBannerData, UploadShopBannerResponse, UploadShopImagesData, UploadShopImagesResponse, UploadItemsexcelData, UploadItemsexcelResponse, SearchData, SearchResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAddressData, GetAddressResponse, GetAllCardsData, GetAllCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse, GetFavoritesResponse, ChangeFavoriteData, ChangeFavoriteResponse } from './types.gen';
 
 export class AuthService {
     /**
@@ -498,7 +498,22 @@ export class FileUploadService {
     /**
      * @param data The data for the request.
      * @param data.formData
-     * @returns unknown
+     * @returns FileResponse
+     * @throws ApiError
+     */
+    public static uploadShopBanner(data: UploadShopBannerData): CancelablePromise<UploadShopBannerResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/file-upload/shops/banner',
+            formData: data.formData,
+            mediaType: 'multipart/form-data'
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.formData
+     * @returns FileResponse
      * @throws ApiError
      */
     public static uploadShopImages(data: UploadShopImagesData): CancelablePromise<UploadShopImagesResponse> {
@@ -604,6 +619,22 @@ export class DaDataService {
             url: '/da-data',
             query: {
                 inn: data.inn
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.q
+     * @returns AddressResponse
+     * @throws ApiError
+     */
+    public static getAddress(data: GetAddressData): CancelablePromise<GetAddressResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/da-data/address',
+            query: {
+                q: data.q
             }
         });
     }

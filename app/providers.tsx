@@ -1,5 +1,6 @@
 "use client";
 import { getQueryClient } from "@/src/api/api";
+import { createIDBPersister } from "@/src/api/persister";
 import ErrorSnackbar from "@/src/components/Snackbars/ErrorSnackbar";
 import SuccessSnackbar from "@/src/components/Snackbars/SuccessSnackbar";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
@@ -19,7 +20,7 @@ const Providers: FC<PropsWithChildren> = ({ children }) => {
 
     persistQueryClient({
       queryClient,
-      persister,
+      persister: createIDBPersister(),
       maxAge: 24 * 60 * 60 * 1000,
     });
   }, []);

@@ -35,6 +35,9 @@ export const useBasketServiceGetTotalItemsInBasketSuspense = <TData = Common.Bas
 export const useDaDataServiceGetPartySuspense = <TData = Common.DaDataServiceGetPartyDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ inn }: {
   inn: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseDaDataServiceGetPartyKeyFn({ inn }, queryKey), queryFn: () => DaDataService.getParty({ inn }) as TData, ...options });
+export const useDaDataServiceGetAddressSuspense = <TData = Common.DaDataServiceGetAddressDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
+  q: string;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseDaDataServiceGetAddressKeyFn({ q }, queryKey), queryFn: () => DaDataService.getAddress({ q }) as TData, ...options });
 export const useCardsServiceGetAllCardsSuspense = <TData = Common.CardsServiceGetAllCardsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
   q?: string;
 } = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q }, queryKey), queryFn: () => CardsService.getAllCards({ q }) as TData, ...options });

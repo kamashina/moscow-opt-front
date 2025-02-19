@@ -11,13 +11,14 @@ const config: Config = {
 
   theme: {
     colors: {
-      primary: "#5246FE",
-      "primary-light": "#DCDAFF",
+      primary: "#14A2B8",
+      "primary-light": "#D2EBF0",
       "primary-dark-light": "#3685FC",
       light: "#F2F7FF",
       "light-gray": "#B7B7B7",
       "dark-gray": "#00000080",
       dark: "#151F2B",
+      gray: "#B0B0B0",
       "dark-light": "#00000099",
       danger: "#FE4845",
       success: "#39CD3F",

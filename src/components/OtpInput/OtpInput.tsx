@@ -20,7 +20,7 @@ const OtpInput = ({ label, labelClassName, error, ...rest }: Props) => {
         renderSeparator={<span style={{ width: "8px" }}></span>}
         shouldAutoFocus={true}
         inputStyle={{
-          border: `1px solid ${error ? "#FE4845" : "#0167FF"}`,
+          border: `1px solid ${error ? "#FE4845" : "#14A2B8"}`,
           borderRadius: "8px",
           width: "54px",
           height: "54px",

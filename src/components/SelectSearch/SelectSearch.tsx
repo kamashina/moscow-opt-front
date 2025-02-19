@@ -38,6 +38,7 @@ const SelectSearch = <T,>({
 }: Props<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
+
   const debouncedSearch = useDebounce(search, 300);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -61,8 +62,9 @@ const SelectSearch = <T,>({
 
   const handleSelect = (option: Option<T>) => {
     const { label, value, icon, ...rest } = option;
-    onChange(option.value === value ? null : option.value);
+    // onChange(option.value === value ? null : option.value);
     onSelectOption?.(rest);
+    setSearch(label);
     setIsOpen(false);
   };
 

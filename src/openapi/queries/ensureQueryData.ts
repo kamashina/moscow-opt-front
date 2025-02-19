@@ -35,6 +35,9 @@ export const ensureUseBasketServiceGetTotalItemsInBasketData = (queryClient: Que
 export const ensureUseDaDataServiceGetPartyData = (queryClient: QueryClient, { inn }: {
   inn: string;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseDaDataServiceGetPartyKeyFn({ inn }), queryFn: () => DaDataService.getParty({ inn }) });
+export const ensureUseDaDataServiceGetAddressData = (queryClient: QueryClient, { q }: {
+  q: string;
+}) => queryClient.ensureQueryData({ queryKey: Common.UseDaDataServiceGetAddressKeyFn({ q }), queryFn: () => DaDataService.getAddress({ q }) });
 export const ensureUseCardsServiceGetAllCardsData = (queryClient: QueryClient, { q }: {
   q?: string;
 } = {}) => queryClient.ensureQueryData({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q }), queryFn: () => CardsService.getAllCards({ q }) });

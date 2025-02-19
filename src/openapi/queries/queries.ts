@@ -36,6 +36,9 @@ export const useBasketServiceGetTotalItemsInBasket = <TData = Common.BasketServi
 export const useDaDataServiceGetParty = <TData = Common.DaDataServiceGetPartyDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ inn }: {
   inn: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseDaDataServiceGetPartyKeyFn({ inn }, queryKey), queryFn: () => DaDataService.getParty({ inn }) as TData, ...options });
+export const useDaDataServiceGetAddress = <TData = Common.DaDataServiceGetAddressDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
+  q: string;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseDaDataServiceGetAddressKeyFn({ q }, queryKey), queryFn: () => DaDataService.getAddress({ q }) as TData, ...options });
 export const useCardsServiceGetAllCards = <TData = Common.CardsServiceGetAllCardsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
   q?: string;
 } = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q }, queryKey), queryFn: () => CardsService.getAllCards({ q }) as TData, ...options });
@@ -109,6 +112,11 @@ export const useFileUploadServiceUploadBanner = <TData = Common.FileUploadServic
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
   formData: { file?: Blob | File; };
 }, TContext>({ mutationFn: ({ formData }) => FileUploadService.uploadBanner({ formData }) as unknown as Promise<TData>, ...options });
+export const useFileUploadServiceUploadShopBanner = <TData = Common.FileUploadServiceUploadShopBannerMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  formData: { file?: Blob | File; };
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+  formData: { file?: Blob | File; };
+}, TContext>({ mutationFn: ({ formData }) => FileUploadService.uploadShopBanner({ formData }) as unknown as Promise<TData>, ...options });
 export const useFileUploadServiceUploadShopImages = <TData = Common.FileUploadServiceUploadShopImagesMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   formData: { image?: Blob | File; };
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {

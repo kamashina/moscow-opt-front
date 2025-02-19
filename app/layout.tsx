@@ -26,8 +26,8 @@ const RootLayout = async ({ ext, client, seller }: Props) => {
       <body className={`${montserrat.className}`}>
         <Providers>
           {ext}
-          {host !== "fsadfs" && client}
-          {/* {host !== "fsadfs" && seller} */}
+          {/* {host !== "fsadfs" && client} */}
+          {host !== "fsadfs" && seller}
           {/* {host !== process.env.NEXT_PUBLIC_CLIENT_DOMAIN && client} */}
         </Providers>
       </body>

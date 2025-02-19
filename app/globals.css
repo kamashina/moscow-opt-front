@@ -11,19 +11,35 @@
 }
 
 input[type="text"] {
-  border: 1px solid #5246fe;
+  border: 1px solid #14a2b8;
   border-radius: 20px;
   height: 45px;
 }
 input[type="email"] {
-  border: 1px solid #5246fe;
+  border: 1px solid #14a2b8;
   border-radius: 20px;
   height: 45px;
 }
 input[type="password"] {
-  border: 1px solid #5246fe;
+  border: 1px solid #14a2b8;
   border-radius: 20px;
   height: 45px;
+}
+
+.ql-container {
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+.ql-editor {
+  min-height: 12em;
+  max-height: 12em;
+}
+
+.ql-toolbar {
+  background-color: #efefef !important;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom: 0px solid #b0b0b0 !important;
 }
 
 body {

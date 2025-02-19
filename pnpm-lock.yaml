@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@mossoft/ui-kit':
-    specifier: ^1.0.44
-    version: 1.0.44(@hello-pangea/dnd@16.6.0)(@tanstack/react-query@5.64.1)(react-hook-form@7.54.2)(react-number-format@5.4.3)(tailwind-merge@2.6.0)
+    specifier: ^1.0.52
+    version: 1.0.52(@types/react-dom@19.0.3)(@types/react@19.0.7)(react-dom@19.0.0)(react@19.0.0)
   '@tailwindcss/line-clamp':
     specifier: ^0.4.4
     version: 0.4.4(tailwindcss@3.4.17)
@@ -23,12 +23,12 @@ dependencies:
   framer-motion:
     specifier: ^12.3.0
     version: 12.3.0(react-dom@19.0.0)(react@19.0.0)
+  idb-keyval:
+    specifier: ^6.2.1
+    version: 6.2.1
   keen-slider:
     specifier: ^6.8.6
     version: 6.8.6
-  lz-string:
-    specifier: ^1.5.0
-    version: 1.5.0
   next:
     specifier: 15.1.6
     version: 15.1.6(@babel/core@7.26.0)(react-dom@19.0.0)(react@19.0.0)
@@ -62,6 +62,9 @@ dependencies:
   react-otp-input:
     specifier: ^3.1.1
     version: 3.1.1(react-dom@19.0.0)(react@19.0.0)
+  react-quill-new:
+    specifier: ^3.3.3
+    version: 3.3.3(quill-delta@5.1.0)(react-dom@19.0.0)(react@19.0.0)
   socket.io:
     specifier: ^4.8.1
     version: 4.8.1
@@ -1572,20 +1575,20 @@ packages:
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
     dev: true
 
-  /@mossoft/ui-kit@1.0.44(@hello-pangea/dnd@16.6.0)(@tanstack/react-query@5.64.1)(react-hook-form@7.54.2)(react-number-format@5.4.3)(tailwind-merge@2.6.0):
-    resolution: {integrity: sha512-w+hKAWUFiYuoi4drDkRUs7wpK+h5c+s4TGM/BjUcV/OGIoRHE8n5lHqZXpBMLhgJr8HSVdDHHgpoI6JIBmnH5g==}
-    peerDependencies:
-      '@hello-pangea/dnd': ^16.6.0
-      '@tanstack/react-query': ^5.62.7
-      react-hook-form: ^7.53.0
-      react-number-format: ^5.4.2
-      tailwind-merge: ^2.5.2
+  /@mossoft/ui-kit@1.0.52(@types/react-dom@19.0.3)(@types/react@19.0.7)(react-dom@19.0.0)(react@19.0.0):
+    resolution: {integrity: sha512-E/1za9hjxH0kRMvwJeq7BI3xGnSq/GFb9gv8GFVGQZVHVv8fcjoq4G6QjkJThrdAKdOFOHbMa7r6BilUgCdoWA==}
     dependencies:
       '@hello-pangea/dnd': 16.6.0(@types/react-dom@19.0.3)(@types/react@19.0.7)(react-dom@19.0.0)(react@19.0.0)
       '@tanstack/react-query': 5.64.1(react@19.0.0)
       react-hook-form: 7.54.2(react@19.0.0)
       react-number-format: 5.4.3(react-dom@19.0.0)(react@19.0.0)
       tailwind-merge: 2.6.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+      - react
+      - react-dom
+      - react-native
     dev: false
 
   /@next/env@15.1.6:
@@ -3405,6 +3408,10 @@ packages:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
 
+  /eventemitter3@5.0.1:
+    resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
+    dev: false
+
   /events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
@@ -3431,6 +3438,10 @@ packages:
 
   /fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
+
+  /fast-diff@1.3.0:
+    resolution: {integrity: sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==}
+    dev: false
 
   /fast-glob@3.3.1:
     resolution: {integrity: sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==}
@@ -3823,6 +3834,10 @@ packages:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
     dev: true
+
+  /idb-keyval@6.2.1:
+    resolution: {integrity: sha512-8Sb3veuYCyrZL+VBt9LJfZjLUPWVvqn8tG28VqYNFCo43KHcKuq+b4EiXGeuaLAQWL2YmyDgMp2aSpH9JHsEQg==}
+    dev: false
 
   /idb@7.1.1:
     resolution: {integrity: sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==}
@@ -4290,8 +4305,21 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash-es@4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+    dev: false
+
+  /lodash.clonedeep@4.5.0:
+    resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
+    dev: false
+
   /lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
+    dev: false
+
+  /lodash.isequal@4.5.0:
+    resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
     dev: false
 
   /lodash.merge@4.6.2:
@@ -4319,11 +4347,6 @@ packages:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
     dependencies:
       yallist: 3.1.1
-    dev: false
-
-  /lz-string@1.5.0:
-    resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
-    hasBin: true
     dev: false
 
   /magic-string@0.25.9:
@@ -4763,6 +4786,10 @@ packages:
   /package-json-from-dist@1.0.1:
     resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
 
+  /parchment@3.0.0:
+    resolution: {integrity: sha512-HUrJFQ/StvgmXRcQ1ftY6VEZUq3jA2t9ncFN4F84J/vN0/FPpQF+8FKXb3l6fLces6q0uOHj6NJn+2xvZnxO6A==}
+    dev: false
+
   /parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
@@ -4970,6 +4997,25 @@ packages:
   /queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
+  /quill-delta@5.1.0:
+    resolution: {integrity: sha512-X74oCeRI4/p0ucjb5Ma8adTXd9Scumz367kkMK5V/IatcX6A0vlgLgKbzXWy5nZmCGeNJm2oQX0d2Eqj+ZIlCA==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
+      fast-diff: 1.3.0
+      lodash.clonedeep: 4.5.0
+      lodash.isequal: 4.5.0
+    dev: false
+
+  /quill@2.0.3:
+    resolution: {integrity: sha512-xEYQBqfYx/sfb33VJiKnSJp8ehloavImQ2A6564GAbqG55PGw1dAWUn1MUbQB62t0azawUS2CZZhWCjO8gRvTw==}
+    engines: {npm: '>=8.2.3'}
+    dependencies:
+      eventemitter3: 5.0.1
+      lodash-es: 4.17.21
+      parchment: 3.0.0
+      quill-delta: 5.1.0
+    dev: false
+
   /raf-schd@4.0.3:
     resolution: {integrity: sha512-tQkJl2GRWh83ui2DiPTJz9wEiMN20syf+5oKfB03yYP7ioZcJwsIK8FjrtLwH1m7C7e+Tt2yYBlrOpdT+dyeIQ==}
     dev: false
@@ -5067,6 +5113,20 @@ packages:
       react: '>=16.8.6 || ^17.0.0 || ^18.0.0'
       react-dom: '>=16.8.6 || ^17.0.0 || ^18.0.0'
     dependencies:
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    dev: false
+
+  /react-quill-new@3.3.3(quill-delta@5.1.0)(react-dom@19.0.0)(react@19.0.0):
+    resolution: {integrity: sha512-jxbm1QUJlkuGUpc9/GUgGw5USLHdp43H0M7AufqS3V+zRLng9uqLeVBGjXYqEbUKi8QVOM4SClSV3F7kVNj68w==}
+    peerDependencies:
+      quill-delta: ^5.1.0
+      react: ^16 || ^17 || ^18 || ^19
+      react-dom: ^16 || ^17 || ^18 || ^19
+    dependencies:
+      lodash: 4.17.21
+      quill: 2.0.3
+      quill-delta: 5.1.0
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
     dev: false

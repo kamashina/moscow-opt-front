@@ -88,6 +88,12 @@ export const useDaDataServiceGetPartyKey = "DaDataServiceGetParty";
 export const UseDaDataServiceGetPartyKeyFn = ({ inn }: {
   inn: string;
 }, queryKey?: Array<unknown>) => [useDaDataServiceGetPartyKey, ...(queryKey ?? [{ inn }])];
+export type DaDataServiceGetAddressDefaultResponse = Awaited<ReturnType<typeof DaDataService.getAddress>>;
+export type DaDataServiceGetAddressQueryResult<TData = DaDataServiceGetAddressDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useDaDataServiceGetAddressKey = "DaDataServiceGetAddress";
+export const UseDaDataServiceGetAddressKeyFn = ({ q }: {
+  q: string;
+}, queryKey?: Array<unknown>) => [useDaDataServiceGetAddressKey, ...(queryKey ?? [{ q }])];
 export type CardsServiceGetAllCardsDefaultResponse = Awaited<ReturnType<typeof CardsService.getAllCards>>;
 export type CardsServiceGetAllCardsQueryResult<TData = CardsServiceGetAllCardsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useCardsServiceGetAllCardsKey = "CardsServiceGetAllCards";
@@ -131,6 +137,7 @@ export type CategoriesServiceCreateSubCategoryMutationResult = Awaited<ReturnTyp
 export type ItemServiceCreateItemMutationResult = Awaited<ReturnType<typeof ItemService.createItem>>;
 export type FileUploadServiceUploadItemsImagesMutationResult = Awaited<ReturnType<typeof FileUploadService.uploadItemsImages>>;
 export type FileUploadServiceUploadBannerMutationResult = Awaited<ReturnType<typeof FileUploadService.uploadBanner>>;
+export type FileUploadServiceUploadShopBannerMutationResult = Awaited<ReturnType<typeof FileUploadService.uploadShopBanner>>;
 export type FileUploadServiceUploadShopImagesMutationResult = Awaited<ReturnType<typeof FileUploadService.uploadShopImages>>;
 export type FileUploadServiceUploadItemsexcelMutationResult = Awaited<ReturnType<typeof FileUploadService.uploadItemsexcel>>;
 export type BasketServiceAddItemToBasketMutationResult = Awaited<ReturnType<typeof BasketService.addItemToBasket>>;

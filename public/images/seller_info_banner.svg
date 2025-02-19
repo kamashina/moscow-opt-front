@@ -31,8 +31,8 @@
 <use xlink:href="#image1_433_3057" transform="scale(0.001 0.00134188)"/>
 </pattern>
 <linearGradient id="paint0_linear_433_3057" x1="357.5" y1="0" x2="357.5" y2="300" gradientUnits="userSpaceOnUse">
-<stop stop-color="#5246FE"/>
-<stop offset="1" stop-color="#4237D5"/>
+<stop offset="0.23" stop-color="#17A2B8"/>
+<stop offset="1" stop-color="#6057DC"/>
 </linearGradient>
 <clipPath id="clip0_433_3057">
 <rect x="715" y="300" width="715" height="300" rx="30" transform="rotate(180 715 300)" fill="white"/>

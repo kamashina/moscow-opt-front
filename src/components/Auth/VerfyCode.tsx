@@ -1,7 +1,11 @@
 import { getQueryClient } from "@/src/api/api";
 import AppText from "@/src/components/AppText/AppText";
 import OtpInput from "@/src/components/OtpInput/OtpInput";
-import { useAuthServiceVerifyCode } from "@/src/openapi/queries";
+import {
+  useAuthServiceVerifyCode,
+  useCardsServiceGetAllCardsKey,
+  useUsersServiceGetMeKey,
+} from "@/src/openapi/queries";
 import { VerifyCodeDto } from "@/src/openapi/requests";
 import { useAuthStore } from "@/src/store/auth";
 import { Exception } from "@/src/types";
@@ -9,9 +13,9 @@ import { setToken } from "@/src/utils/setToken";
 import { Button } from "@mossoft/ui-kit";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { Controller, FieldValues, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
-type Props<T extends FieldValues> = {
+type Props<> = {
   step: number;
   setStep: (step: number) => void;
   refetchSms: () => void;
@@ -20,12 +24,7 @@ type Props<T extends FieldValues> = {
   type: "seller" | "client";
 };
 
-const VerifyCode = <T extends FieldValues>({
-  refetchSms,
-  phone,
-  type = "client",
-  timer,
-}: Props<T>) => {
+const VerifyCode = ({ refetchSms, phone, type = "client", timer }: Props) => {
   const queryClient = getQueryClient();
   const router = useRouter();
   const { setUserCredentials } = useAuthStore();
@@ -36,13 +35,16 @@ const VerifyCode = <T extends FieldValues>({
   const onSubmit = async (data: { code: string }) => {
     try {
       const user = await verifyCode({ requestBody: { ...data, phone } });
+
       setToken(user.access_token);
-      queryClient.resetQueries();
+      queryClient.invalidateQueries();
       setUserCredentials({
         access_token: user.access_token,
         isAuthenticated: true,
       });
+
       if (type === "seller") {
+        await queryClient.resetQueries();
         user?.company?.status === "approved"
           ? router.push("/")
           : router.push("/company/create");

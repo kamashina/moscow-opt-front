@@ -248,6 +248,40 @@ export const $CompaniesDto = {
     required: ['type', 'taxation', 'management_name', 'full_with_opf', 'name', 'itn', 'psrnsp', 'kpp']
 } as const;
 
+export const $rate = {
+    type: 'string',
+    enum: ['no', 'low', 'medium', 'hight']
+} as const;
+
+export const $ShopEntityMinInfo = {
+    type: 'object',
+    properties: {
+        rate: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/rate'
+                }
+            ]
+        },
+        address: {
+            type: 'string'
+        },
+        logo: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        },
+        description: {
+            type: 'string'
+        },
+        id: {
+            type: 'number'
+        }
+    },
+    required: ['rate', 'address', 'logo', 'name', 'description', 'id']
+} as const;
+
 export const $CompaniesResponse = {
     type: 'object',
     properties: {
@@ -280,6 +314,9 @@ export const $CompaniesResponse = {
                 }
             ]
         },
+        shop: {
+            '$ref': '#/components/schemas/ShopEntityMinInfo'
+        },
         status: {
             allOf: [
                 {
@@ -289,11 +326,6 @@ export const $CompaniesResponse = {
         }
     },
     required: ['id', 'name', 'itn', 'psrnsp', 'kpp', 'type', 'taxation', 'status']
-} as const;
-
-export const $rate = {
-    type: 'string',
-    enum: ['low', 'medium', 'hight']
 } as const;
 
 export const $ShopEntity = {
@@ -337,35 +369,6 @@ export const $ShopEntity = {
     required: ['rate', 'address', 'description', 'id', 'logo', 'name', 'company']
 } as const;
 
-export const $ShopEntityMinInfo = {
-    type: 'object',
-    properties: {
-        rate: {
-            allOf: [
-                {
-                    '$ref': '#/components/schemas/rate'
-                }
-            ]
-        },
-        address: {
-            type: 'string'
-        },
-        logo: {
-            type: 'string'
-        },
-        name: {
-            type: 'string'
-        },
-        description: {
-            type: 'string'
-        },
-        id: {
-            type: 'number'
-        }
-    },
-    required: ['rate', 'address', 'logo', 'name', 'description', 'id']
-} as const;
-
 export const $CreateShopDto = {
     type: 'object',
     properties: {
@@ -387,6 +390,9 @@ export const $CreateShopDto = {
             type: 'string'
         },
         logo: {
+            type: 'string'
+        },
+        banner: {
             type: 'string'
         }
     },
@@ -705,6 +711,19 @@ export const $UpdateItemDto = {
     required: ['description', 'basketOptions', 'seo', 'name', 'fields', 'countryOfOrigin', 'article', 'brand', 'box', 'images']
 } as const;
 
+export const $FileResponse = {
+    type: 'object',
+    properties: {
+        message: {
+            type: 'string'
+        },
+        imagePath: {
+            type: 'string'
+        }
+    },
+    required: ['message', 'imagePath']
+} as const;
+
 export const $SuggestionType = {
     type: 'string',
     enum: ['card', 'category', 'subCategory', 'shop']
@@ -755,6 +774,25 @@ export const $OrganizationResponse = {
         }
     },
     required: ['type', 'name', 'itn', 'psrnsp', 'kpp']
+} as const;
+
+export const $AddressResponse = {
+    type: 'object',
+    properties: {
+        result: {
+            type: 'string'
+        },
+        postal_code: {
+            type: 'string'
+        },
+        region_with_type: {
+            type: 'string'
+        },
+        region: {
+            type: 'string'
+        }
+    },
+    required: ['result', 'postal_code', 'region_with_type', 'region']
 } as const;
 
 export const $BoxResponseDto = {
