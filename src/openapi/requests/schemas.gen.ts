@@ -136,6 +136,31 @@ export const $Role = {
     enum: ['user', 'seller']
 } as const;
 
+export const $rate = {
+    type: 'string',
+    enum: ['no', 'low', 'medium', 'hight']
+} as const;
+
+export const $ShopEntityToken = {
+    type: 'object',
+    properties: {
+        rate: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/rate'
+                }
+            ]
+        },
+        id: {
+            type: 'number'
+        },
+        name: {
+            type: 'string'
+        }
+    },
+    required: ['rate', 'id', 'name']
+} as const;
+
 export const $UserEntityWithoutPassword = {
     type: 'object',
     properties: {
@@ -163,7 +188,7 @@ export const $UserEntityWithoutPassword = {
             nullable: true
         },
         shop: {
-            type: 'object'
+            '$ref': '#/components/schemas/ShopEntityToken'
         },
         companies: {
             type: 'object'
@@ -246,11 +271,6 @@ export const $CompaniesDto = {
         }
     },
     required: ['type', 'taxation', 'management_name', 'full_with_opf', 'name', 'itn', 'psrnsp', 'kpp']
-} as const;
-
-export const $rate = {
-    type: 'string',
-    enum: ['no', 'low', 'medium', 'hight']
 } as const;
 
 export const $ShopEntityMinInfo = {
@@ -550,6 +570,19 @@ export const $CreateSubCategoryDto = {
     required: ['name', 'excelTemplatePath', 'seo']
 } as const;
 
+export const $FieldsSchema = {
+    type: 'object',
+    properties: {
+        key: {
+            type: 'string'
+        },
+        type: {
+            type: 'string'
+        }
+    },
+    required: ['key', 'type']
+} as const;
+
 export const $SubCategoryResponse = {
     type: 'object',
     properties: {
@@ -568,7 +601,7 @@ export const $SubCategoryResponse = {
         fieldsSchema: {
             type: 'array',
             items: {
-                type: 'string'
+                '$ref': '#/components/schemas/FieldsSchema'
             }
         },
         seo: {
@@ -576,6 +609,35 @@ export const $SubCategoryResponse = {
         }
     },
     required: ['parentId', 'id', 'name', 'excelTemplatePath', 'fieldsSchema', 'seo']
+} as const;
+
+export const $ExportExcelRequestDto = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            description: 'Данные для экспорта',
+            items: {
+                type: 'object',
+                additionalProperties: {
+                    type: 'string'
+                }
+            },
+            example: [
+                {
+                    'Название': 'Шуруповерт',
+                    'Цена': '500',
+                    'Бренд': 'Makita'
+                },
+                {
+                    'Название': 'Дрель',
+                    'Цена': '1000',
+                    'Бренд': 'Bosch'
+                }
+            ]
+        }
+    },
+    required: ['data']
 } as const;
 
 export const $CreateItemDto = {
@@ -624,6 +686,11 @@ export const $BasketOptions = {
     properties: {}
 } as const;
 
+export const $itemStatus = {
+    type: 'string',
+    enum: ['draft', 'active', 'reject']
+} as const;
+
 export const $ItemsEntityMinInfo = {
     type: 'object',
     properties: {
@@ -648,7 +715,28 @@ export const $ItemsEntityMinInfo = {
         id: {
             type: 'number'
         },
+        rating: {
+            type: 'number'
+        },
+        price: {
+            type: 'number'
+        },
+        discountStepQuantity: {
+            type: 'number'
+        },
+        discountPerStep: {
+            type: 'number'
+        },
+        maxDiscount: {
+            type: 'number'
+        },
         name: {
+            type: 'string'
+        },
+        brand: {
+            type: 'string'
+        },
+        sellerArticle: {
             type: 'string'
         },
         images: {
@@ -657,12 +745,102 @@ export const $ItemsEntityMinInfo = {
                 type: 'string'
             }
         },
+        status: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/itemStatus'
+                }
+            ]
+        },
         createdAt: {
             format: 'date-time',
             type: 'string'
         }
     },
-    required: ['description', 'countryOfOrigin', 'basketOptions', 'article', 'cardId', 'id', 'name', 'images', 'createdAt']
+    required: ['description', 'countryOfOrigin', 'basketOptions', 'article', 'cardId', 'id', 'rating', 'price', 'discountStepQuantity', 'discountPerStep', 'maxDiscount', 'name', 'brand', 'sellerArticle', 'images', 'status', 'createdAt']
+} as const;
+
+export const $ItemsEntityMinInfoByShop = {
+    type: 'object',
+    properties: {
+        description: {
+            type: 'string'
+        },
+        countryOfOrigin: {
+            type: 'string'
+        },
+        article: {
+            type: 'number'
+        },
+        cardId: {
+            type: 'number'
+        },
+        id: {
+            type: 'number'
+        },
+        rating: {
+            type: 'number'
+        },
+        price: {
+            type: 'number'
+        },
+        discountStepQuantity: {
+            type: 'number'
+        },
+        discountPerStep: {
+            type: 'number'
+        },
+        maxDiscount: {
+            type: 'number'
+        },
+        name: {
+            type: 'string'
+        },
+        brand: {
+            type: 'string'
+        },
+        sellerArticle: {
+            type: 'string'
+        },
+        images: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        status: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/itemStatus'
+                }
+            ]
+        },
+        createdAt: {
+            format: 'date-time',
+            type: 'string'
+        }
+    },
+    required: ['description', 'countryOfOrigin', 'article', 'cardId', 'id', 'rating', 'price', 'discountStepQuantity', 'discountPerStep', 'maxDiscount', 'name', 'brand', 'sellerArticle', 'images', 'status', 'createdAt']
+} as const;
+
+export const $ItemsEntityBulkData = {
+    type: 'object',
+    properties: {
+        tableData: {
+            type: 'object'
+        },
+        id: {
+            type: 'number'
+        },
+        status: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/itemStatus'
+                }
+            ]
+        }
+    },
+    required: ['id', 'status']
 } as const;
 
 export const $UpdateItemDto = {
@@ -711,19 +889,6 @@ export const $UpdateItemDto = {
     required: ['description', 'basketOptions', 'seo', 'name', 'fields', 'countryOfOrigin', 'article', 'brand', 'box', 'images']
 } as const;
 
-export const $FileResponse = {
-    type: 'object',
-    properties: {
-        message: {
-            type: 'string'
-        },
-        imagePath: {
-            type: 'string'
-        }
-    },
-    required: ['message', 'imagePath']
-} as const;
-
 export const $SuggestionType = {
     type: 'string',
     enum: ['card', 'category', 'subCategory', 'shop']
@@ -747,6 +912,48 @@ export const $SearchEntityResponse = {
         }
     },
     required: ['id', 'name', 'suggestionType']
+} as const;
+
+export const $FilesResponse = {
+    type: 'object',
+    properties: {
+        message: {
+            type: 'string'
+        },
+        paths: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        }
+    },
+    required: ['message', 'paths']
+} as const;
+
+export const $FileResponse = {
+    type: 'object',
+    properties: {
+        message: {
+            type: 'string'
+        },
+        imagePath: {
+            type: 'string'
+        }
+    },
+    required: ['message', 'imagePath']
+} as const;
+
+export const $ExportExcelResponse = {
+    type: 'object',
+    properties: {
+        fileName: {
+            type: 'string'
+        },
+        fileData: {
+            type: 'string'
+        }
+    },
+    required: ['fileName', 'fileData']
 } as const;
 
 export const $OrganizationResponse = {

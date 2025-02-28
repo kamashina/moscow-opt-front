@@ -32,7 +32,6 @@ const Providers: FC<PropsWithChildren> = ({ children }) => {
           vertical: "top",
           horizontal: "left",
         }}
-        maxSnack={1}
         Components={{ success: SuccessSnackbar, error: ErrorSnackbar }}
         autoHideDuration={2000}
       >

@@ -13,16 +13,16 @@ const NAV_OPTIONS: Array<{
     label: "Товары",
     options: [
       {
-        label: "Карточка товара",
-        link: "items",
+        label: "Все товары",
+        link: "/items",
       },
       {
         label: "Добавить товар",
-        link: "items/create",
+        link: "/items/bulk",
       },
       {
         label: "Отзывы",
-        link: "items/reviews",
+        link: "/items/reviews",
       },
     ],
   },
@@ -31,19 +31,19 @@ const NAV_OPTIONS: Array<{
     options: [
       {
         label: "Профиль",
-        link: "shop",
+        link: "/shop",
       },
       {
         label: "Редактировать",
-        link: "shop/edit",
+        link: "/shop/edit",
       },
       {
         label: "Отзывы",
-        link: "shop/reviews",
+        link: "/shop/reviews",
       },
       {
         label: "Чат с клиентом",
-        link: "shop/chat",
+        link: "/shop/chat",
       },
     ],
   },
@@ -52,33 +52,33 @@ const NAV_OPTIONS: Array<{
     options: [
       {
         label: "Все заказы",
-        link: "orders",
+        link: "/orders",
       },
       {
         label: "Отзывы",
-        link: "orders/reviews",
+        link: "/orders/reviews",
       },
       {
         label: "Чат с клиентом",
-        link: "orders/chat",
+        link: "/orders/chat",
       },
     ],
   },
   {
     label: "Тарифы",
-    link: "tariffs",
+    link: "/tariffs",
   },
   {
     label: "Аналитика",
-    link: "analytics",
+    link: "/analytics",
   },
   {
     label: "Частые вопросы",
-    link: "faq",
+    link: "/faq",
   },
   {
     label: "Инструкция",
-    link: "guide",
+    link: "/guide",
   },
 ];
 

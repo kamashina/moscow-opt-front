@@ -84,23 +84,18 @@ const config: Config = {
     function ({ addUtilities }) {
       addUtilities({
         ".no-scrollbar": {
-          /* IE and Edge */
           "-ms-overflow-style": "none",
-          /* Firefox */
           "scrollbar-width": "none",
-          /* Safari and Chrome */
           "&::-webkit-scrollbar": {
             display: "none",
           },
         },
         ".bg-main": {
           background: "#FFFFFF",
-          // "backdrop-filter": "blur(25px)",
         },
       });
     },
     require("tailwind-scrollbar"),
-    require("@tailwindcss/line-clamp"),
   ],
 };
 export default config;

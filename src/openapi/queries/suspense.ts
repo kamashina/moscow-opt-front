@@ -26,6 +26,15 @@ export const useCategoriesServiceGetSubCategoryByIdSuspense = <TData = Common.Ca
   id: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetSubCategoryByIdKeyFn({ id }, queryKey), queryFn: () => CategoriesService.getSubCategoryById({ id }) as TData, ...options });
 export const useItemServiceGetAllItemsSuspense = <TData = Common.ItemServiceGetAllItemsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseItemServiceGetAllItemsKeyFn(queryKey), queryFn: () => ItemService.getAllItems() as TData, ...options });
+export const useItemServiceGetItemsByMyShopSuspense = <TData = Common.ItemServiceGetItemsByMyShopDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ limit, offset, q, status }: {
+  limit?: number;
+  offset?: number;
+  q?: string;
+  status?: "all" | "active" | "reject" | "draft";
+} = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseItemServiceGetItemsByMyShopKeyFn({ limit, offset, q, status }, queryKey), queryFn: () => ItemService.getItemsByMyShop({ limit, offset, q, status }) as TData, ...options });
+export const useItemServiceGetItemsByIdsSuspense = <TData = Common.ItemServiceGetItemsByIdsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ ids }: {
+  ids: number[];
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseItemServiceGetItemsByIdsKeyFn({ ids }, queryKey), queryFn: () => ItemService.getItemsByIds({ ids }) as TData, ...options });
 export const useItemServiceGetByIdSuspense = <TData = Common.ItemServiceGetByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseItemServiceGetByIdKeyFn(queryKey), queryFn: () => ItemService.getById() as TData, ...options });
 export const useMeilisearchServiceSearchSuspense = <TData = Common.MeilisearchServiceSearchDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ query }: {
   query?: string;
@@ -38,9 +47,11 @@ export const useDaDataServiceGetPartySuspense = <TData = Common.DaDataServiceGet
 export const useDaDataServiceGetAddressSuspense = <TData = Common.DaDataServiceGetAddressDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
   q: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseDaDataServiceGetAddressKeyFn({ q }, queryKey), queryFn: () => DaDataService.getAddress({ q }) as TData, ...options });
-export const useCardsServiceGetAllCardsSuspense = <TData = Common.CardsServiceGetAllCardsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
+export const useCardsServiceGetAllCardsSuspense = <TData = Common.CardsServiceGetAllCardsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q, status }: {
   q?: string;
-} = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q }, queryKey), queryFn: () => CardsService.getAllCards({ q }) as TData, ...options });
+  status?: "active" | "reject" | "draft" | "in_confirmation";
+} = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q, status }, queryKey), queryFn: () => CardsService.getAllCards({ q, status }) as TData, ...options });
+export const useCardsServiceGetNewCardsSuspense = <TData = Common.CardsServiceGetNewCardsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseCardsServiceGetNewCardsKeyFn(queryKey), queryFn: () => CardsService.getNewCards() as TData, ...options });
 export const useBrandsServiceGetBrandsSuspense = <TData = Common.BrandsServiceGetBrandsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseBrandsServiceGetBrandsKeyFn(queryKey), queryFn: () => BrandsService.getBrands() as TData, ...options });
 export const useBrandsServiceGetBrandByIdSuspense = <TData = Common.BrandsServiceGetBrandByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;

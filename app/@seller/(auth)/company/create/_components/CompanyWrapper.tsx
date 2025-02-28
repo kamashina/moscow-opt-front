@@ -33,7 +33,7 @@ const CompanyWrapper: FC<PropsWithChildren<Props>> = ({ children, label }) => {
           {label}
         </AppText>
       </div>
-      <div className="flex flex-col gap-3 py-4 px-5 max-h-[740px] overflow-y-scroll bg-white rounded-[25px]">
+      <div className="flex flex-col gap-3 py-4 px-5 max-h-[740px]  bg-white rounded-[25px]">
         {children}
       </div>
     </div>

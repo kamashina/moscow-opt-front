@@ -20,7 +20,7 @@ const Page = async () => {
   const { categories, banners, shops } = await fetchPageData(queryClient);
 
   return (
-    <div className="mt-2 flex flex-col gap-2">
+    <div className="mt-2 flex flex-col gap-4">
       <h1 className="sr-only">Товары оптом по выгодным ценам</h1>
 
       <Banners initialData={banners} />

@@ -49,7 +49,7 @@ const PopularWrapper = <T extends any[]>({
           <Link
             key={item.id}
             className="flex flex-col gap-2 items-center"
-            href={`/categories/${item.id}`}
+            href={`/shops/${item.id}`}
           >
             <div
               className={twMerge(

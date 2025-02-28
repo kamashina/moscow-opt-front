@@ -16,7 +16,7 @@ const Page = () => {
   }, [company]);
 
   return (
-    <CompanyWrapper label="Создание компании">
+    <CompanyWrapper label="Создание компании ">
       {isPending && <Loader style={{ width: "40px", height: "40px" }} />}
       {!company && !isPending && <CreateCompanyForm />}
       {company?.status === "pending" && <CompanyInfo company={company} />}

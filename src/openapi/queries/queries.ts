@@ -2,7 +2,7 @@
 
 import { UseMutationOptions, UseQueryOptions, useMutation, useQuery } from "@tanstack/react-query";
 import { AuthService, BannersService, BasketService, BrandsService, CardsService, CategoriesService, CompaniesService, DaDataService, FavoritesService, FileUploadService, FiltersService, GeolocationService, ItemService, MeilisearchService, ShopService, UsersService } from "../requests/services.gen";
-import { CompaniesDto, CreateBrandDto, CreateCategoryDto, CreateItemDto, CreateShopDto, CreateSubCategoryDto, RegisterUserDto, SendSmsDto, UpdateItemDto, UpdateShopDto, UsersPatchDto, VerifyCodeDto } from "../requests/types.gen";
+import { CompaniesDto, CreateBrandDto, CreateCategoryDto, CreateItemDto, CreateShopDto, CreateSubCategoryDto, ExportExcelRequestDto, RegisterUserDto, SendSmsDto, UpdateItemDto, UpdateShopDto, UsersPatchDto, VerifyCodeDto } from "../requests/types.gen";
 import * as Common from "./common";
 export const useAuthServiceGetSmsTimer = <TData = Common.AuthServiceGetSmsTimerDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ phone }: {
   phone: string;
@@ -27,6 +27,15 @@ export const useCategoriesServiceGetSubCategoryById = <TData = Common.Categories
   id: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetSubCategoryByIdKeyFn({ id }, queryKey), queryFn: () => CategoriesService.getSubCategoryById({ id }) as TData, ...options });
 export const useItemServiceGetAllItems = <TData = Common.ItemServiceGetAllItemsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseItemServiceGetAllItemsKeyFn(queryKey), queryFn: () => ItemService.getAllItems() as TData, ...options });
+export const useItemServiceGetItemsByMyShop = <TData = Common.ItemServiceGetItemsByMyShopDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ limit, offset, q, status }: {
+  limit?: number;
+  offset?: number;
+  q?: string;
+  status?: "all" | "active" | "reject" | "draft";
+} = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseItemServiceGetItemsByMyShopKeyFn({ limit, offset, q, status }, queryKey), queryFn: () => ItemService.getItemsByMyShop({ limit, offset, q, status }) as TData, ...options });
+export const useItemServiceGetItemsByIds = <TData = Common.ItemServiceGetItemsByIdsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ ids }: {
+  ids: number[];
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseItemServiceGetItemsByIdsKeyFn({ ids }, queryKey), queryFn: () => ItemService.getItemsByIds({ ids }) as TData, ...options });
 export const useItemServiceGetById = <TData = Common.ItemServiceGetByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseItemServiceGetByIdKeyFn(queryKey), queryFn: () => ItemService.getById() as TData, ...options });
 export const useMeilisearchServiceSearch = <TData = Common.MeilisearchServiceSearchDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ query }: {
   query?: string;
@@ -39,9 +48,11 @@ export const useDaDataServiceGetParty = <TData = Common.DaDataServiceGetPartyDef
 export const useDaDataServiceGetAddress = <TData = Common.DaDataServiceGetAddressDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
   q: string;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseDaDataServiceGetAddressKeyFn({ q }, queryKey), queryFn: () => DaDataService.getAddress({ q }) as TData, ...options });
-export const useCardsServiceGetAllCards = <TData = Common.CardsServiceGetAllCardsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q }: {
+export const useCardsServiceGetAllCards = <TData = Common.CardsServiceGetAllCardsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ q, status }: {
   q?: string;
-} = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q }, queryKey), queryFn: () => CardsService.getAllCards({ q }) as TData, ...options });
+  status?: "active" | "reject" | "draft" | "in_confirmation";
+} = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q, status }, queryKey), queryFn: () => CardsService.getAllCards({ q, status }) as TData, ...options });
+export const useCardsServiceGetNewCards = <TData = Common.CardsServiceGetNewCardsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCardsServiceGetNewCardsKeyFn(queryKey), queryFn: () => CardsService.getNewCards() as TData, ...options });
 export const useBrandsServiceGetBrands = <TData = Common.BrandsServiceGetBrandsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseBrandsServiceGetBrandsKeyFn(queryKey), queryFn: () => BrandsService.getBrands() as TData, ...options });
 export const useBrandsServiceGetBrandById = <TData = Common.BrandsServiceGetBrandByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;
@@ -91,6 +102,13 @@ export const useCategoriesServiceCreateSubCategory = <TData = Common.CategoriesS
   parentId: number;
   requestBody: CreateSubCategoryDto;
 }, TContext>({ mutationFn: ({ parentId, requestBody }) => CategoriesService.createSubCategory({ parentId, requestBody }) as unknown as Promise<TData>, ...options });
+export const useItemServiceCreateItemsBulk = <TData = Common.ItemServiceCreateItemsBulkMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  requestBody: ExportExcelRequestDto;
+  subCategoryId: number;
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+  requestBody: ExportExcelRequestDto;
+  subCategoryId: number;
+}, TContext>({ mutationFn: ({ requestBody, subCategoryId }) => ItemService.createItemsBulk({ requestBody, subCategoryId }) as unknown as Promise<TData>, ...options });
 export const useItemServiceCreateItem = <TData = Common.ItemServiceCreateItemMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   brandId: number;
   cardId: number;
@@ -102,11 +120,11 @@ export const useItemServiceCreateItem = <TData = Common.ItemServiceCreateItemMut
   requestBody: CreateItemDto;
   subCategoryId: number;
 }, TContext>({ mutationFn: ({ brandId, cardId, requestBody, subCategoryId }) => ItemService.createItem({ brandId, cardId, requestBody, subCategoryId }) as unknown as Promise<TData>, ...options });
-export const useFileUploadServiceUploadItemsImages = <TData = Common.FileUploadServiceUploadItemsImagesMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
-  formData: { images?: (Blob | File)[]; };
+export const useFileUploadServiceUploadItemsMedia = <TData = Common.FileUploadServiceUploadItemsMediaMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  formData: { media?: (Blob | File)[]; };
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
-  formData: { images?: (Blob | File)[]; };
-}, TContext>({ mutationFn: ({ formData }) => FileUploadService.uploadItemsImages({ formData }) as unknown as Promise<TData>, ...options });
+  formData: { media?: (Blob | File)[]; };
+}, TContext>({ mutationFn: ({ formData }) => FileUploadService.uploadItemsMedia({ formData }) as unknown as Promise<TData>, ...options });
 export const useFileUploadServiceUploadBanner = <TData = Common.FileUploadServiceUploadBannerMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   formData: { file?: Blob | File; };
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
@@ -122,13 +140,18 @@ export const useFileUploadServiceUploadShopImages = <TData = Common.FileUploadSe
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
   formData: { image?: Blob | File; };
 }, TContext>({ mutationFn: ({ formData }) => FileUploadService.uploadShopImages({ formData }) as unknown as Promise<TData>, ...options });
-export const useFileUploadServiceUploadItemsexcel = <TData = Common.FileUploadServiceUploadItemsexcelMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+export const useFileUploadServiceImportItemsExcel = <TData = Common.FileUploadServiceImportItemsExcelMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   formData: { file?: Blob | File; };
   subCategoryId: number;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
   formData: { file?: Blob | File; };
   subCategoryId: number;
-}, TContext>({ mutationFn: ({ formData, subCategoryId }) => FileUploadService.uploadItemsexcel({ formData, subCategoryId }) as unknown as Promise<TData>, ...options });
+}, TContext>({ mutationFn: ({ formData, subCategoryId }) => FileUploadService.importItemsExcel({ formData, subCategoryId }) as unknown as Promise<TData>, ...options });
+export const useFileUploadServiceExportItemsExcel = <TData = Common.FileUploadServiceExportItemsExcelMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  requestBody: ExportExcelRequestDto;
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+  requestBody: ExportExcelRequestDto;
+}, TContext>({ mutationFn: ({ requestBody }) => FileUploadService.exportItemsExcel({ requestBody }) as unknown as Promise<TData>, ...options });
 export const useBasketServiceAddItemToBasket = <TData = Common.BasketServiceAddItemToBasketMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   itemId: number;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {

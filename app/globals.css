@@ -10,7 +10,12 @@
   height: 100%;
 }
 
-input[type="text"] {
+/* input[type="text"] {
+  border: 1px solid #14a2b8;
+  border-radius: 20px;
+  height: 45px;
+}
+input[type="number"] {
   border: 1px solid #14a2b8;
   border-radius: 20px;
   height: 45px;
@@ -24,6 +29,10 @@ input[type="password"] {
   border: 1px solid #14a2b8;
   border-radius: 20px;
   height: 45px;
+} */
+
+revogr-attribution {
+  display: none !important;
 }
 
 .ql-container {
@@ -43,7 +52,7 @@ input[type="password"] {
 }
 
 body {
-  background: #c7d1de;
+  background: #f5f7fa;
   scroll-behavior: smooth;
   height: 100%;
   text-rendering: optimizeSpeed;
@@ -51,5 +60,19 @@ body {
 }
 
 ::-webkit-scrollbar {
-  display: none;
+  width: 4px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: #d2ebf0; /* primary-light */
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #14a2b8; /* primary */
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #118a9f; /* чуть темнее primary */
 }

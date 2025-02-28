@@ -1,5 +1,7 @@
-import { taxation, type } from "./openapi/requests";
+import { itemStatus, taxation, type } from "./openapi/requests";
 import { BoxTypes, CompanyTaxations, IETaxations } from "./types";
+
+export const LIMIT = 20;
 
 export const getFromLocalStorage = (key: string) => {
   if (!key || typeof window === "undefined") {
@@ -78,4 +80,10 @@ export const TAB_VARIANT_LOGIN = {
   hidden: { opacity: 0, x: 50 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" } },
   exit: { opacity: 0, x: -50, transition: { duration: 0.2, ease: "easeIn" } },
+};
+
+export const ITEM_STATUSES_TRANSLATIONS: Record<itemStatus, string> = {
+  active: "Активно",
+  draft: "Черновик",
+  reject: "Отклоненно",
 };

@@ -5,7 +5,7 @@ const Layout = async ({ children }: PropsWithChildren) => {
   return (
     <div className="">
       <Header />
-      <div className="max-w-[1440px] mx-auto">{children}</div>
+      <div className="w-[calc(100%-80px)] mx-auto">{children}</div>
     </div>
   );
 };

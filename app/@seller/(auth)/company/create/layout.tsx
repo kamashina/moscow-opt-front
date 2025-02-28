@@ -1,7 +1,7 @@
 import React, { FC, PropsWithChildren } from "react";
 import Image from "next/image";
 
-const Layout: FC<PropsWithChildren> = ({ children }) => {
+const Layout: FC<PropsWithChildren> = async ({ children }) => {
   return (
     <div>
       <div className="flex flex-row m-auto h-screen">

@@ -92,11 +92,6 @@ const Register = ({ setStep, step, form, type = "client" }: Props) => {
               value: 3,
               message: "Минимальная длина 3 символа",
             },
-            pattern: {
-              value:
-                /^[А-ЯЁ][а-яё]+(?:-[А-ЯЁ][а-яё]+)?\s[А-ЯЁ][а-яё]+(?:\s[А-ЯЁ][а-яё]+)?$/,
-              message: "Введите корректное ФИО",
-            },
           }}
           render={(inputFields) => (
             <Input

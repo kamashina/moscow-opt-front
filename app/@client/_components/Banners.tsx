@@ -13,9 +13,12 @@ const Banners: FC<Props> = ({ initialData }) => {
   const { data } = useBannersServiceGetBannersSuspense(undefined, {
     initialData,
   });
-  const [bannerId, setBannerId] = useState(1);
+  console.log(data);
+
+  const [bannerId, setBannerId] = useState(data[0].id);
   const [executeScroll, elRef] = useScroll();
   useEffect(executeScroll as any, [bannerId]);
+  console.log(bannerId);
 
   const currentIndex = data?.findIndex((item) => item.id === bannerId);
 
@@ -31,18 +34,11 @@ const Banners: FC<Props> = ({ initialData }) => {
       return;
     }
   };
+  console.log(data?.[currentIndex - 1]?.id);
 
   return (
     <div className="relative w-full">
-      {data?.[currentIndex - 1]?.id && (
-        <div
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 z-2 rounded-r-[25px] bg-primary cursor-pointer hover:bg-white active:opacity-70"
-          onClick={() => handleScroll("left")}
-        >
-          <Icon name="arrow-left" className="w-10 h-10 !text-white" />
-        </div>
-      )}
-      <div className="overflow-x-hidden w-full flex flex-row items-center scrollbar-hide rounded-[25px]">
+      <div className="overflow-x-hidden w-full flex flex-row items-center scrollbar-hide rounded-[30px]">
         {data?.map((item) => (
           <div
             ref={bannerId === item.id ? elRef : null}
@@ -60,9 +56,17 @@ const Banners: FC<Props> = ({ initialData }) => {
           </div>
         ))}
       </div>
+      {data?.[currentIndex - 1]?.id && (
+        <div
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 z-2 rounded-r-[25px] bg-primary cursor-pointer active:opacity-70"
+          onClick={() => handleScroll("left")}
+        >
+          <Icon name="arrow-left" className="w-10 h-10 !text-white" />
+        </div>
+      )}
       {data?.[currentIndex + 1]?.id && (
         <div
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 z-2 rounded-r-[25px] bg-primary rotate-180 cursor-pointer hover:bg-white active:opacity-70"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 z-2 rounded-r-[25px] bg-primary rotate-180 cursor-pointer active:opacity-70"
           onClick={() => handleScroll("right")}
         >
           <Icon name="arrow-left" className="w-10 h-10 !text-white" />

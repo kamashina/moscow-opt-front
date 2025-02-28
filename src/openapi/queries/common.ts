@@ -64,6 +64,21 @@ export type ItemServiceGetAllItemsDefaultResponse = Awaited<ReturnType<typeof It
 export type ItemServiceGetAllItemsQueryResult<TData = ItemServiceGetAllItemsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useItemServiceGetAllItemsKey = "ItemServiceGetAllItems";
 export const UseItemServiceGetAllItemsKeyFn = (queryKey?: Array<unknown>) => [useItemServiceGetAllItemsKey, ...(queryKey ?? [])];
+export type ItemServiceGetItemsByMyShopDefaultResponse = Awaited<ReturnType<typeof ItemService.getItemsByMyShop>>;
+export type ItemServiceGetItemsByMyShopQueryResult<TData = ItemServiceGetItemsByMyShopDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useItemServiceGetItemsByMyShopKey = "ItemServiceGetItemsByMyShop";
+export const UseItemServiceGetItemsByMyShopKeyFn = ({ limit, offset, q, status }: {
+  limit?: number;
+  offset?: number;
+  q?: string;
+  status?: "all" | "active" | "reject" | "draft";
+} = {}, queryKey?: Array<unknown>) => [useItemServiceGetItemsByMyShopKey, ...(queryKey ?? [{ limit, offset, q, status }])];
+export type ItemServiceGetItemsByIdsDefaultResponse = Awaited<ReturnType<typeof ItemService.getItemsByIds>>;
+export type ItemServiceGetItemsByIdsQueryResult<TData = ItemServiceGetItemsByIdsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useItemServiceGetItemsByIdsKey = "ItemServiceGetItemsByIds";
+export const UseItemServiceGetItemsByIdsKeyFn = ({ ids }: {
+  ids: number[];
+}, queryKey?: Array<unknown>) => [useItemServiceGetItemsByIdsKey, ...(queryKey ?? [{ ids }])];
 export type ItemServiceGetByIdDefaultResponse = Awaited<ReturnType<typeof ItemService.getById>>;
 export type ItemServiceGetByIdQueryResult<TData = ItemServiceGetByIdDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useItemServiceGetByIdKey = "ItemServiceGetById";
@@ -97,9 +112,14 @@ export const UseDaDataServiceGetAddressKeyFn = ({ q }: {
 export type CardsServiceGetAllCardsDefaultResponse = Awaited<ReturnType<typeof CardsService.getAllCards>>;
 export type CardsServiceGetAllCardsQueryResult<TData = CardsServiceGetAllCardsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useCardsServiceGetAllCardsKey = "CardsServiceGetAllCards";
-export const UseCardsServiceGetAllCardsKeyFn = ({ q }: {
+export const UseCardsServiceGetAllCardsKeyFn = ({ q, status }: {
   q?: string;
-} = {}, queryKey?: Array<unknown>) => [useCardsServiceGetAllCardsKey, ...(queryKey ?? [{ q }])];
+  status?: "active" | "reject" | "draft" | "in_confirmation";
+} = {}, queryKey?: Array<unknown>) => [useCardsServiceGetAllCardsKey, ...(queryKey ?? [{ q, status }])];
+export type CardsServiceGetNewCardsDefaultResponse = Awaited<ReturnType<typeof CardsService.getNewCards>>;
+export type CardsServiceGetNewCardsQueryResult<TData = CardsServiceGetNewCardsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useCardsServiceGetNewCardsKey = "CardsServiceGetNewCards";
+export const UseCardsServiceGetNewCardsKeyFn = (queryKey?: Array<unknown>) => [useCardsServiceGetNewCardsKey, ...(queryKey ?? [])];
 export type BrandsServiceGetBrandsDefaultResponse = Awaited<ReturnType<typeof BrandsService.getBrands>>;
 export type BrandsServiceGetBrandsQueryResult<TData = BrandsServiceGetBrandsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useBrandsServiceGetBrandsKey = "BrandsServiceGetBrands";
@@ -134,12 +154,14 @@ export type CompaniesServiceCreateMutationResult = Awaited<ReturnType<typeof Com
 export type ShopServiceCreateShopMutationResult = Awaited<ReturnType<typeof ShopService.createShop>>;
 export type CategoriesServiceCreateCategoryMutationResult = Awaited<ReturnType<typeof CategoriesService.createCategory>>;
 export type CategoriesServiceCreateSubCategoryMutationResult = Awaited<ReturnType<typeof CategoriesService.createSubCategory>>;
+export type ItemServiceCreateItemsBulkMutationResult = Awaited<ReturnType<typeof ItemService.createItemsBulk>>;
 export type ItemServiceCreateItemMutationResult = Awaited<ReturnType<typeof ItemService.createItem>>;
-export type FileUploadServiceUploadItemsImagesMutationResult = Awaited<ReturnType<typeof FileUploadService.uploadItemsImages>>;
+export type FileUploadServiceUploadItemsMediaMutationResult = Awaited<ReturnType<typeof FileUploadService.uploadItemsMedia>>;
 export type FileUploadServiceUploadBannerMutationResult = Awaited<ReturnType<typeof FileUploadService.uploadBanner>>;
 export type FileUploadServiceUploadShopBannerMutationResult = Awaited<ReturnType<typeof FileUploadService.uploadShopBanner>>;
 export type FileUploadServiceUploadShopImagesMutationResult = Awaited<ReturnType<typeof FileUploadService.uploadShopImages>>;
-export type FileUploadServiceUploadItemsexcelMutationResult = Awaited<ReturnType<typeof FileUploadService.uploadItemsexcel>>;
+export type FileUploadServiceImportItemsExcelMutationResult = Awaited<ReturnType<typeof FileUploadService.importItemsExcel>>;
+export type FileUploadServiceExportItemsExcelMutationResult = Awaited<ReturnType<typeof FileUploadService.exportItemsExcel>>;
 export type BasketServiceAddItemToBasketMutationResult = Awaited<ReturnType<typeof BasketService.addItemToBasket>>;
 export type BrandsServiceCreateBrandMutationResult = Awaited<ReturnType<typeof BrandsService.createBrand>>;
 export type FavoritesServiceChangeFavoriteMutationResult = Awaited<ReturnType<typeof FavoritesService.changeFavorite>>;

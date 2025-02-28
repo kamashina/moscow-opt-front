@@ -80,7 +80,7 @@ const CategoriesDrawer: FC<Props> = () => {
               className={`bg-white h-full relative shadow-lg max-w-[520px] flex flex-row`}
             >
               <div
-                className={`${modalHeight} flex w-1/2 mt-11 flex-col gap-1 px-2 border-r-[1px] border-r-light-gray border-r-solid overflow-scroll`}
+                className={`${modalHeight} flex w-1/2 mt-11 flex-col gap-1 px-2 border-r-[1px] border-r-light-gray border-r-solid overflow-y-scroll`}
               >
                 {categories?.map((category) => (
                   <motion.div
@@ -109,7 +109,7 @@ const CategoriesDrawer: FC<Props> = () => {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.2 }}
-                    className={`${modalHeight} mt-11 flex w-1/2 flex-col gap-1 px-2 border-1 border-light-gray border-solid overflow-scroll`}
+                    className={`${modalHeight} mt-11 flex w-1/2 flex-col gap-1 px-2 border-1 border-light-gray border-solid overflow-y-scroll`}
                   >
                     {categories
                       ?.find((item) => item.id === categoryId)

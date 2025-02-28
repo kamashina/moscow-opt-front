@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { RegisterSmsData, RegisterSmsResponse, LoginSmsData, LoginSmsResponse, GetSmsTimerData, GetSmsTimerResponse2, VerifyCodeData, VerifyCodeResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetFiltersBySubCategoryIdData, GetFiltersBySubCategoryIdResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, UploadItemsImagesData, UploadItemsImagesResponse, UploadBannerData, UploadBannerResponse, UploadShopBannerData, UploadShopBannerResponse, UploadShopImagesData, UploadShopImagesResponse, UploadItemsexcelData, UploadItemsexcelResponse, SearchData, SearchResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAddressData, GetAddressResponse, GetAllCardsData, GetAllCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse, GetFavoritesResponse, ChangeFavoriteData, ChangeFavoriteResponse } from './types.gen';
+import type { RegisterSmsData, RegisterSmsResponse, LoginSmsData, LoginSmsResponse, GetSmsTimerData, GetSmsTimerResponse2, VerifyCodeData, VerifyCodeResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetFiltersBySubCategoryIdData, GetFiltersBySubCategoryIdResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemsBulkData, CreateItemsBulkResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, GetItemsByMyShopData, GetItemsByMyShopResponse, GetItemsByIdsData, GetItemsByIdsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, SearchData, SearchResponse, UploadItemsMediaData, UploadItemsMediaResponse, UploadBannerData, UploadBannerResponse, UploadShopBannerData, UploadShopBannerResponse, UploadShopImagesData, UploadShopImagesResponse, ImportItemsExcelData, ImportItemsExcelResponse, ExportItemsExcelData, ExportItemsExcelResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAddressData, GetAddressResponse, GetAllCardsData, GetAllCardsResponse, GetNewCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse, GetFavoritesResponse, ChangeFavoriteData, ChangeFavoriteResponse } from './types.gen';
 
 export class AuthService {
     /**
@@ -332,7 +332,7 @@ export class CategoriesService {
      * @param data The data for the request.
      * @param data.parentId
      * @param data.requestBody
-     * @returns SubCategoryResponse
+     * @returns unknown
      * @throws ApiError
      */
     public static createSubCategory(data: CreateSubCategoryData): CancelablePromise<CreateSubCategoryResponse> {
@@ -385,6 +385,25 @@ export class ItemService {
     /**
      * @param data The data for the request.
      * @param data.subCategoryId
+     * @param data.requestBody
+     * @returns unknown
+     * @throws ApiError
+     */
+    public static createItemsBulk(data: CreateItemsBulkData): CancelablePromise<CreateItemsBulkResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/items/bulk/{sub_category_id}',
+            path: {
+                sub_category_id: data.subCategoryId
+            },
+            body: data.requestBody,
+            mediaType: 'application/json'
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.subCategoryId
      * @param data.brandId
      * @param data.cardId
      * @param data.requestBody
@@ -413,6 +432,44 @@ export class ItemService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/items'
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.status
+     * @param data.q
+     * @param data.limit
+     * @param data.offset
+     * @returns ItemsEntityMinInfoByShop
+     * @throws ApiError
+     */
+    public static getItemsByMyShop(data: GetItemsByMyShopData = {}): CancelablePromise<GetItemsByMyShopResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/items/my_shop',
+            query: {
+                status: data.status,
+                q: data.q,
+                limit: data.limit,
+                offset: data.offset
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.ids
+     * @returns ItemsEntityBulkData
+     * @throws ApiError
+     */
+    public static getItemsByIds(data: GetItemsByIdsData): CancelablePromise<GetItemsByIdsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/items/items/by-ids',
+            query: {
+                ids: data.ids
+            }
         });
     }
     
@@ -464,14 +521,33 @@ export class ItemService {
     
 }
 
+export class MeilisearchService {
+    /**
+     * @param data The data for the request.
+     * @param data.query
+     * @returns SearchEntityResponse
+     * @throws ApiError
+     */
+    public static search(data: SearchData = {}): CancelablePromise<SearchResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/search/{query}',
+            path: {
+                query: data.query
+            }
+        });
+    }
+    
+}
+
 export class FileUploadService {
     /**
      * @param data The data for the request.
      * @param data.formData
-     * @returns unknown
+     * @returns FilesResponse
      * @throws ApiError
      */
-    public static uploadItemsImages(data: UploadItemsImagesData): CancelablePromise<UploadItemsImagesResponse> {
+    public static uploadItemsMedia(data: UploadItemsMediaData): CancelablePromise<UploadItemsMediaResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/file-upload/items',
@@ -532,10 +608,10 @@ export class FileUploadService {
      * @returns unknown
      * @throws ApiError
      */
-    public static uploadItemsexcel(data: UploadItemsexcelData): CancelablePromise<UploadItemsexcelResponse> {
+    public static importItemsExcel(data: ImportItemsExcelData): CancelablePromise<ImportItemsExcelResponse> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/file-upload/excel',
+            url: '/file-upload/import/excel',
             query: {
                 subCategoryId: data.subCategoryId
             },
@@ -544,22 +620,18 @@ export class FileUploadService {
         });
     }
     
-}
-
-export class MeilisearchService {
     /**
      * @param data The data for the request.
-     * @param data.query
-     * @returns SearchEntityResponse
+     * @param data.requestBody
+     * @returns ExportExcelResponse
      * @throws ApiError
      */
-    public static search(data: SearchData = {}): CancelablePromise<SearchResponse> {
+    public static exportItemsExcel(data: ExportItemsExcelData): CancelablePromise<ExportItemsExcelResponse> {
         return __request(OpenAPI, {
-            method: 'GET',
-            url: '/search/{query}',
-            path: {
-                query: data.query
-            }
+            method: 'POST',
+            url: '/file-upload/export/excel',
+            body: data.requestBody,
+            mediaType: 'application/json'
         });
     }
     
@@ -645,6 +717,7 @@ export class CardsService {
     /**
      * @param data The data for the request.
      * @param data.q
+     * @param data.status
      * @returns CardResponse
      * @throws ApiError
      */
@@ -653,8 +726,20 @@ export class CardsService {
             method: 'GET',
             url: '/cards',
             query: {
-                q: data.q
+                q: data.q,
+                status: data.status
             }
+        });
+    }
+    
+    /**
+     * @returns CardResponse
+     * @throws ApiError
+     */
+    public static getNewCards(): CancelablePromise<GetNewCardsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/cards/new'
         });
     }
     

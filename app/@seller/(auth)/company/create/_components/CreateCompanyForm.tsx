@@ -67,8 +67,9 @@ const CreateCompanyForm = () => {
       enqueueSnackbar((e as Exception).message, { variant: "error" });
     }
   };
+
   return (
-    <div className="flex flex-col gap-3 py-4 lg:px-5 max-h-[740px] overflow-y-scroll bg-white rounded-[25px]">
+    <div className="flex flex-col gap-3 py-4 lg:px-5 max-h-[740px] overflow-y-auto bg-white rounded-[25px]">
       <Controller
         name="itn"
         rules={{ required: "Заполните поле" }}

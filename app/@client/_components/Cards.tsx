@@ -1,7 +1,10 @@
 "use client";
 import AppText from "@/src/components/AppText/AppText";
 import CardItem from "@/src/components/CardItem/CardItem";
-import { useCardsServiceGetAllCards } from "@/src/openapi/queries";
+import {
+  useCardsServiceGetAllCards,
+  useCardsServiceGetNewCards,
+} from "@/src/openapi/queries";
 import { Icon, Wrapper } from "@mossoft/ui-kit";
 import Link from "next/link";
 import { FC } from "react";
@@ -9,7 +12,7 @@ import { FC } from "react";
 type Props = {};
 
 const Card: FC<Props> = () => {
-  const { data: cards } = useCardsServiceGetAllCards();
+  const { data: cards } = useCardsServiceGetNewCards();
 
   return (
     <Wrapper className="rounded-[25px] w-full">

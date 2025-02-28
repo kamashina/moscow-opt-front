@@ -26,6 +26,15 @@ export const prefetchUseCategoriesServiceGetSubCategoryById = (queryClient: Quer
   id: number;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseCategoriesServiceGetSubCategoryByIdKeyFn({ id }), queryFn: () => CategoriesService.getSubCategoryById({ id }) });
 export const prefetchUseItemServiceGetAllItems = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseItemServiceGetAllItemsKeyFn(), queryFn: () => ItemService.getAllItems() });
+export const prefetchUseItemServiceGetItemsByMyShop = (queryClient: QueryClient, { limit, offset, q, status }: {
+  limit?: number;
+  offset?: number;
+  q?: string;
+  status?: "all" | "active" | "reject" | "draft";
+} = {}) => queryClient.prefetchQuery({ queryKey: Common.UseItemServiceGetItemsByMyShopKeyFn({ limit, offset, q, status }), queryFn: () => ItemService.getItemsByMyShop({ limit, offset, q, status }) });
+export const prefetchUseItemServiceGetItemsByIds = (queryClient: QueryClient, { ids }: {
+  ids: number[];
+}) => queryClient.prefetchQuery({ queryKey: Common.UseItemServiceGetItemsByIdsKeyFn({ ids }), queryFn: () => ItemService.getItemsByIds({ ids }) });
 export const prefetchUseItemServiceGetById = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseItemServiceGetByIdKeyFn(), queryFn: () => ItemService.getById() });
 export const prefetchUseMeilisearchServiceSearch = (queryClient: QueryClient, { query }: {
   query?: string;
@@ -38,9 +47,11 @@ export const prefetchUseDaDataServiceGetParty = (queryClient: QueryClient, { inn
 export const prefetchUseDaDataServiceGetAddress = (queryClient: QueryClient, { q }: {
   q: string;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseDaDataServiceGetAddressKeyFn({ q }), queryFn: () => DaDataService.getAddress({ q }) });
-export const prefetchUseCardsServiceGetAllCards = (queryClient: QueryClient, { q }: {
+export const prefetchUseCardsServiceGetAllCards = (queryClient: QueryClient, { q, status }: {
   q?: string;
-} = {}) => queryClient.prefetchQuery({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q }), queryFn: () => CardsService.getAllCards({ q }) });
+  status?: "active" | "reject" | "draft" | "in_confirmation";
+} = {}) => queryClient.prefetchQuery({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q, status }), queryFn: () => CardsService.getAllCards({ q, status }) });
+export const prefetchUseCardsServiceGetNewCards = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseCardsServiceGetNewCardsKeyFn(), queryFn: () => CardsService.getNewCards() });
 export const prefetchUseBrandsServiceGetBrands = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseBrandsServiceGetBrandsKeyFn(), queryFn: () => BrandsService.getBrands() });
 export const prefetchUseBrandsServiceGetBrandById = (queryClient: QueryClient, { id }: {
   id: number;

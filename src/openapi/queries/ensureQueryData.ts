@@ -26,6 +26,15 @@ export const ensureUseCategoriesServiceGetSubCategoryByIdData = (queryClient: Qu
   id: number;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseCategoriesServiceGetSubCategoryByIdKeyFn({ id }), queryFn: () => CategoriesService.getSubCategoryById({ id }) });
 export const ensureUseItemServiceGetAllItemsData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseItemServiceGetAllItemsKeyFn(), queryFn: () => ItemService.getAllItems() });
+export const ensureUseItemServiceGetItemsByMyShopData = (queryClient: QueryClient, { limit, offset, q, status }: {
+  limit?: number;
+  offset?: number;
+  q?: string;
+  status?: "all" | "active" | "reject" | "draft";
+} = {}) => queryClient.ensureQueryData({ queryKey: Common.UseItemServiceGetItemsByMyShopKeyFn({ limit, offset, q, status }), queryFn: () => ItemService.getItemsByMyShop({ limit, offset, q, status }) });
+export const ensureUseItemServiceGetItemsByIdsData = (queryClient: QueryClient, { ids }: {
+  ids: number[];
+}) => queryClient.ensureQueryData({ queryKey: Common.UseItemServiceGetItemsByIdsKeyFn({ ids }), queryFn: () => ItemService.getItemsByIds({ ids }) });
 export const ensureUseItemServiceGetByIdData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseItemServiceGetByIdKeyFn(), queryFn: () => ItemService.getById() });
 export const ensureUseMeilisearchServiceSearchData = (queryClient: QueryClient, { query }: {
   query?: string;
@@ -38,9 +47,11 @@ export const ensureUseDaDataServiceGetPartyData = (queryClient: QueryClient, { i
 export const ensureUseDaDataServiceGetAddressData = (queryClient: QueryClient, { q }: {
   q: string;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseDaDataServiceGetAddressKeyFn({ q }), queryFn: () => DaDataService.getAddress({ q }) });
-export const ensureUseCardsServiceGetAllCardsData = (queryClient: QueryClient, { q }: {
+export const ensureUseCardsServiceGetAllCardsData = (queryClient: QueryClient, { q, status }: {
   q?: string;
-} = {}) => queryClient.ensureQueryData({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q }), queryFn: () => CardsService.getAllCards({ q }) });
+  status?: "active" | "reject" | "draft" | "in_confirmation";
+} = {}) => queryClient.ensureQueryData({ queryKey: Common.UseCardsServiceGetAllCardsKeyFn({ q, status }), queryFn: () => CardsService.getAllCards({ q, status }) });
+export const ensureUseCardsServiceGetNewCardsData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseCardsServiceGetNewCardsKeyFn(), queryFn: () => CardsService.getNewCards() });
 export const ensureUseBrandsServiceGetBrandsData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseBrandsServiceGetBrandsKeyFn(), queryFn: () => BrandsService.getBrands() });
 export const ensureUseBrandsServiceGetBrandByIdData = (queryClient: QueryClient, { id }: {
   id: number;

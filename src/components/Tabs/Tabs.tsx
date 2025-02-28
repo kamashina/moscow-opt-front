@@ -53,7 +53,7 @@ const Tabs = <
             initial={{ scale: 1 }}
             whileTap={{ scale: 0.95 }}
             animate={{
-              backgroundColor: item.value === field?.value ? "#007bff" : "#fff",
+              backgroundColor: item.value === field?.value ? "#14A2B8" : "#fff",
               color: item.value === field?.value ? "#fff" : "#000",
             }}
             transition={{ duration: 0.2 }}

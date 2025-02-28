@@ -1,15 +1,15 @@
 import {
-  ensureUseCategoriesServiceGetPopularCategoriesData,
-  ensureUseCardsServiceGetAllCardsData,
   ensureUseBannersServiceGetBannersData,
+  ensureUseCardsServiceGetNewCardsData,
+  ensureUseCategoriesServiceGetPopularCategoriesData,
   ensureUseShopServiceGetAllShopsData,
 } from "@/src/openapi/queries/ensureQueryData";
 import {
+  prefetchUseBannersServiceGetBanners,
+  prefetchUseCardsServiceGetNewCards,
+  prefetchUseCategoriesServiceGetAllCategories,
   prefetchUseCategoriesServiceGetPopularCategories,
   prefetchUseShopServiceGetAllShops,
-  prefetchUseBannersServiceGetBanners,
-  prefetchUseCardsServiceGetAllCards,
-  prefetchUseCategoriesServiceGetAllCategories,
 } from "@/src/openapi/queries/prefetch";
 import { QueryClient } from "@tanstack/react-query";
 
@@ -17,12 +17,12 @@ export async function fetchPageData(queryClient: QueryClient) {
   await prefetchUseCategoriesServiceGetPopularCategories(queryClient);
   await prefetchUseShopServiceGetAllShops(queryClient);
   await prefetchUseBannersServiceGetBanners(queryClient);
-  await prefetchUseCardsServiceGetAllCards(queryClient);
+  await prefetchUseCardsServiceGetNewCards(queryClient);
   await prefetchUseCategoriesServiceGetAllCategories(queryClient);
 
   const [categories, cards, banners, shops] = await Promise.all([
     ensureUseCategoriesServiceGetPopularCategoriesData(queryClient),
-    ensureUseCardsServiceGetAllCardsData(queryClient),
+    ensureUseCardsServiceGetNewCardsData(queryClient),
     ensureUseBannersServiceGetBannersData(queryClient),
     ensureUseShopServiceGetAllShopsData(queryClient),
   ]);

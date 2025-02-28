@@ -48,6 +48,14 @@ export type RefreshReponse = {
 
 export type Role = 'user' | 'seller';
 
+export type rate = 'no' | 'low' | 'medium' | 'hight';
+
+export type ShopEntityToken = {
+    rate: rate;
+    id: number;
+    name: string;
+};
+
 export type UserEntityWithoutPassword = {
     role: Role;
     id: number;
@@ -55,9 +63,7 @@ export type UserEntityWithoutPassword = {
     email: string;
     phone: string;
     photo: string | null;
-    shop?: {
-        [key: string]: unknown;
-    };
+    shop?: ShopEntityToken;
     companies?: {
         [key: string]: unknown;
     };
@@ -85,8 +91,6 @@ export type CompaniesDto = {
     psrnsp: string;
     kpp: string;
 };
-
-export type rate = 'no' | 'low' | 'medium' | 'hight';
 
 export type ShopEntityMinInfo = {
     rate: rate;
@@ -183,13 +187,27 @@ export type CreateSubCategoryDto = {
     seo: string;
 };
 
+export type FieldsSchema = {
+    key: string;
+    type: string;
+};
+
 export type SubCategoryResponse = {
     parentId: number;
     id: number;
     name: string;
     excelTemplatePath: string;
-    fieldsSchema: Array<(string)>;
+    fieldsSchema: Array<FieldsSchema>;
     seo: string;
+};
+
+export type ExportExcelRequestDto = {
+    /**
+     * Данные для экспорта
+     */
+    data: Array<{
+        [key: string]: (string);
+    }>;
 };
 
 export type CreateItemDto = {
@@ -212,6 +230,8 @@ export type BasketOptions = {
     [key: string]: unknown;
 };
 
+export type itemStatus = 'draft' | 'active' | 'reject';
+
 export type ItemsEntityMinInfo = {
     description: string;
     countryOfOrigin: string;
@@ -219,9 +239,44 @@ export type ItemsEntityMinInfo = {
     article: number;
     cardId: number;
     id: number;
+    rating: number;
+    price: number;
+    discountStepQuantity: number;
+    discountPerStep: number;
+    maxDiscount: number;
     name: string;
+    brand: string;
+    sellerArticle: string;
     images: Array<(string)>;
+    status: itemStatus;
     createdAt: string;
+};
+
+export type ItemsEntityMinInfoByShop = {
+    description: string;
+    countryOfOrigin: string;
+    article: number;
+    cardId: number;
+    id: number;
+    rating: number;
+    price: number;
+    discountStepQuantity: number;
+    discountPerStep: number;
+    maxDiscount: number;
+    name: string;
+    brand: string;
+    sellerArticle: string;
+    images: Array<(string)>;
+    status: itemStatus;
+    createdAt: string;
+};
+
+export type ItemsEntityBulkData = {
+    tableData?: {
+        [key: string]: unknown;
+    };
+    id: number;
+    status: itemStatus;
 };
 
 export type UpdateItemDto = {
@@ -243,17 +298,27 @@ export type UpdateItemDto = {
     images: Array<(string)>;
 };
 
-export type FileResponse = {
-    message: string;
-    imagePath: string;
-};
-
 export type SuggestionType = 'card' | 'category' | 'subCategory' | 'shop';
 
 export type SearchEntityResponse = {
     id: number;
     name: string;
     suggestionType: SuggestionType;
+};
+
+export type FilesResponse = {
+    message: string;
+    paths: Array<(string)>;
+};
+
+export type FileResponse = {
+    message: string;
+    imagePath: string;
+};
+
+export type ExportExcelResponse = {
+    fileName: string;
+    fileData: string;
 };
 
 export type OrganizationResponse = {
@@ -431,7 +496,7 @@ export type CreateSubCategoryData = {
     requestBody: CreateSubCategoryDto;
 };
 
-export type CreateSubCategoryResponse = SubCategoryResponse;
+export type CreateSubCategoryResponse = unknown;
 
 export type GetSubCategoryByIdData = {
     id: number;
@@ -445,6 +510,15 @@ export type DeleteCategoryByIdData = {
 
 export type DeleteCategoryByIdResponse = unknown;
 
+export type CreateItemsBulkData = {
+    requestBody: ExportExcelRequestDto;
+    subCategoryId: number;
+};
+
+export type CreateItemsBulkResponse = {
+    [key: string]: unknown;
+};
+
 export type CreateItemData = {
     brandId: number;
     cardId: number;
@@ -455,6 +529,21 @@ export type CreateItemData = {
 export type CreateItemResponse = unknown;
 
 export type GetAllItemsResponse = Array<ItemsEntityMinInfo>;
+
+export type GetItemsByMyShopData = {
+    limit?: number;
+    offset?: number;
+    q?: string;
+    status?: 'all' | 'active' | 'reject' | 'draft';
+};
+
+export type GetItemsByMyShopResponse = Array<ItemsEntityMinInfoByShop>;
+
+export type GetItemsByIdsData = {
+    ids: Array<(number)>;
+};
+
+export type GetItemsByIdsResponse = Array<ItemsEntityBulkData>;
 
 export type UpdateItemData = {
     id: number;
@@ -469,13 +558,19 @@ export type DeleteByIdData = {
 
 export type DeleteByIdResponse = unknown;
 
-export type UploadItemsImagesData = {
+export type SearchData = {
+    query?: string;
+};
+
+export type SearchResponse = Array<SearchEntityResponse>;
+
+export type UploadItemsMediaData = {
     formData: {
-        images?: Array<((Blob | File))>;
+        media?: Array<((Blob | File))>;
     };
 };
 
-export type UploadItemsImagesResponse = unknown;
+export type UploadItemsMediaResponse = FilesResponse;
 
 export type UploadBannerData = {
     formData: {
@@ -501,20 +596,22 @@ export type UploadShopImagesData = {
 
 export type UploadShopImagesResponse = FileResponse;
 
-export type UploadItemsexcelData = {
+export type ImportItemsExcelData = {
     formData: {
         file?: (Blob | File);
     };
     subCategoryId: number;
 };
 
-export type UploadItemsexcelResponse = unknown;
+export type ImportItemsExcelResponse = Array<{
+    [key: string]: unknown;
+}>;
 
-export type SearchData = {
-    query?: string;
+export type ExportItemsExcelData = {
+    requestBody: ExportExcelRequestDto;
 };
 
-export type SearchResponse = Array<SearchEntityResponse>;
+export type ExportItemsExcelResponse = ExportExcelResponse;
 
 export type GetMyBasketResponse = {
     [key: string]: unknown;
@@ -544,9 +641,12 @@ export type GetAddressResponse = Array<AddressResponse>;
 
 export type GetAllCardsData = {
     q?: string;
+    status?: 'draft' | 'active' | 'reject' | 'in_confirmation';
 };
 
 export type GetAllCardsResponse = Array<CardResponse>;
+
+export type GetNewCardsResponse = Array<CardResponse>;
 
 export type CreateBrandData = {
     requestBody: CreateBrandDto;
@@ -753,7 +853,7 @@ export type $OpenApiTs = {
         post: {
             req: CreateSubCategoryData;
             res: {
-                201: SubCategoryResponse;
+                201: unknown;
             };
         };
     };
@@ -773,6 +873,16 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/items/bulk/{sub_category_id}': {
+        post: {
+            req: CreateItemsBulkData;
+            res: {
+                201: {
+                    [key: string]: unknown;
+                };
+            };
+        };
+    };
     '/items': {
         post: {
             req: CreateItemData;
@@ -783,6 +893,22 @@ export type $OpenApiTs = {
         get: {
             res: {
                 200: Array<ItemsEntityMinInfo>;
+            };
+        };
+    };
+    '/items/my_shop': {
+        get: {
+            req: GetItemsByMyShopData;
+            res: {
+                200: Array<ItemsEntityMinInfoByShop>;
+            };
+        };
+    };
+    '/items/items/by-ids': {
+        get: {
+            req: GetItemsByIdsData;
+            res: {
+                200: Array<ItemsEntityBulkData>;
             };
         };
     };
@@ -805,11 +931,19 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/search/{query}': {
+        get: {
+            req: SearchData;
+            res: {
+                200: Array<SearchEntityResponse>;
+            };
+        };
+    };
     '/file-upload/items': {
         post: {
-            req: UploadItemsImagesData;
+            req: UploadItemsMediaData;
             res: {
-                201: unknown;
+                201: FilesResponse;
             };
         };
     };
@@ -837,19 +971,21 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/file-upload/excel': {
+    '/file-upload/import/excel': {
         post: {
-            req: UploadItemsexcelData;
+            req: ImportItemsExcelData;
             res: {
-                201: unknown;
+                201: Array<{
+                    [key: string]: unknown;
+                }>;
             };
         };
     };
-    '/search/{query}': {
-        get: {
-            req: SearchData;
+    '/file-upload/export/excel': {
+        post: {
+            req: ExportItemsExcelData;
             res: {
-                200: Array<SearchEntityResponse>;
+                201: ExportExcelResponse;
             };
         };
     };
@@ -898,6 +1034,13 @@ export type $OpenApiTs = {
     '/cards': {
         get: {
             req: GetAllCardsData;
+            res: {
+                200: Array<CardResponse>;
+            };
+        };
+    };
+    '/cards/new': {
+        get: {
             res: {
                 200: Array<CardResponse>;
             };
