@@ -29,9 +29,10 @@ export const getServerFile = (file: string) => {
   return process.env.NEXT_PUBLIC_FILES_URL + file;
 };
 
-export const BOX_TYPES_TRANlSATIONS: Record<BoxTypes, string> = {
-  box_characteristics: "Коробка",
-  box_single: "Поштучно",
+export const BOX_TYPES_TRANlSATIONS: Record<string, string> = {
+  box: "Коробка",
+  customBox: "Кастомная коробка",
+  dropshipping: "Поштучно",
 };
 
 export const createOptionsFromTranslations = (translation: {
@@ -44,7 +45,7 @@ export const createOptionsFromTranslations = (translation: {
 };
 
 export const priceSeparator = (price: number) =>
-  price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  price?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
 export type AuthTabsTypes = "register" | "login";
 
@@ -85,5 +86,5 @@ export const TAB_VARIANT_LOGIN = {
 export const ITEM_STATUSES_TRANSLATIONS: Record<itemStatus, string> = {
   active: "Активно",
   draft: "Черновик",
-  reject: "Отклоненно",
+  reject: "Отклонено",
 };

@@ -8,12 +8,14 @@ import {
   ItemService,
   itemStatus,
 } from "@/src/openapi/requests";
-import { Button, Wrapper } from "@mossoft/ui-kit";
+import { Wrapper } from "@mossoft/ui-kit";
 import {
   DefaultError,
   InfiniteData,
   useInfiniteQuery,
 } from "@tanstack/react-query";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import SellerItemCard from "./_components/SellerItemCard";
 
@@ -40,6 +42,7 @@ const SORT_OPTIONS: Array<{ label: string; value: itemStatus | null }> = [
 
 const Page = (props: Props) => {
   const [sort, setSort] = useQueryState("by");
+  const router = useRouter();
 
   const [search, setSearch] = useQueryState("q");
   const infiniteData = useInfiniteQuery<
@@ -68,42 +71,42 @@ const Page = (props: Props) => {
   });
 
   return (
-    <Wrapper className="mt-4">
-      <div className="flex flex-row gap-2 my-4">
-        <Button
-          onClick={() => {}}
-          className="!px-2 !py-1 bg-primary rounded-[25px] text-white"
-          variant="link"
+    <>
+      <div className="flex flex-row gap-6 my-4 px-8 pt-4 pb-2">
+        <Link
+          href="items/categories"
+          className="!px-3 !py-2 bg-primary rounded-[25px] text-white"
         >
           Добавить товар
-        </Button>
-        {SORT_OPTIONS.map((item) => (
-          <div
-            onClick={() => setSort(item.value)}
-            key={item.label}
-            className="px-2 py-1 cursor-pointer bg-primary-light rounded-[25px]"
-          >
-            <AppText>{item.label}</AppText>
-          </div>
-        ))}
+        </Link>
+        <div className="flex flex-row gap-4 items-center">
+          {SORT_OPTIONS.map((item) => (
+            <div
+              onClick={() => setSort(item.value)}
+              key={item.label}
+              className={`px-3 py-2 cursor-pointer rounded-[25px] ${
+                item.value === sort ? "bg-primary-light text-white" : ""
+              }`}
+            >
+              <AppText>{item.label}</AppText>
+            </div>
+          ))}
+        </div>
       </div>
-
-      <InfiniteTable
-        search={search}
-        setSearch={setSearch}
-        className="mt-2 overflow-y-auto h-[calc(100vh-300px)]"
-        infiniteData={infiniteData}
-        isScrollTopButton
-        renderItem={(item, _, isChecked, setCheckedItems) => (
-          <SellerItemCard
-            key={item.id}
-            item={item}
-            isChecked={isChecked}
-            setCheckedItems={setCheckedItems}
-          />
-        )}
-      />
-    </Wrapper>
+      <Wrapper className="!px-0 !py-0 rounded-lg">
+        <InfiniteTable
+          infiniteData={infiniteData}
+          renderItem={(item, _, isChecked, setCheckedItems) => (
+            <SellerItemCard
+              key={item.id}
+              item={item}
+              isChecked={isChecked}
+              setCheckedItems={setCheckedItems}
+            />
+          )}
+        />
+      </Wrapper>
+    </>
   );
 };
 

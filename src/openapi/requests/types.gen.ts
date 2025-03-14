@@ -248,6 +248,7 @@ export type ItemsEntityMinInfo = {
     brand: string;
     sellerArticle: string;
     images: Array<(string)>;
+    quantity: number;
     status: itemStatus;
     createdAt: string;
 };
@@ -267,6 +268,7 @@ export type ItemsEntityMinInfoByShop = {
     brand: string;
     sellerArticle: string;
     images: Array<(string)>;
+    quantity: number;
     status: itemStatus;
     createdAt: string;
 };
@@ -276,6 +278,7 @@ export type ItemsEntityBulkData = {
         [key: string]: unknown;
     };
     id: number;
+    subCategoryId: number;
     status: itemStatus;
 };
 
@@ -498,6 +501,12 @@ export type CreateSubCategoryData = {
 
 export type CreateSubCategoryResponse = unknown;
 
+export type GetSubCategoriesByIdsData = {
+    ids: Array<(number)>;
+};
+
+export type GetSubCategoriesByIdsResponse = Array<SubCategoryResponse>;
+
 export type GetSubCategoryByIdData = {
     id: number;
 };
@@ -518,6 +527,13 @@ export type CreateItemsBulkData = {
 export type CreateItemsBulkResponse = {
     [key: string]: unknown;
 };
+
+export type EditItemsBulkData = {
+    requestBody: ExportExcelRequestDto;
+    subCategoryId: number;
+};
+
+export type EditItemsBulkResponse = unknown;
 
 export type CreateItemData = {
     brandId: number;
@@ -544,6 +560,12 @@ export type GetItemsByIdsData = {
 };
 
 export type GetItemsByIdsResponse = Array<ItemsEntityBulkData>;
+
+export type DeleteItemsByIdsData = {
+    ids: Array<(number)>;
+};
+
+export type DeleteItemsByIdsResponse = unknown;
 
 export type UpdateItemData = {
     id: number;
@@ -857,6 +879,14 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/categories/sub/by-ids': {
+        get: {
+            req: GetSubCategoriesByIdsData;
+            res: {
+                200: Array<SubCategoryResponse>;
+            };
+        };
+    };
     '/categories/sub/{id}': {
         get: {
             req: GetSubCategoryByIdData;
@@ -880,6 +910,12 @@ export type $OpenApiTs = {
                 201: {
                     [key: string]: unknown;
                 };
+            };
+        };
+        patch: {
+            req: EditItemsBulkData;
+            res: {
+                200: unknown;
             };
         };
     };
@@ -909,6 +945,12 @@ export type $OpenApiTs = {
             req: GetItemsByIdsData;
             res: {
                 200: Array<ItemsEntityBulkData>;
+            };
+        };
+        delete: {
+            req: DeleteItemsByIdsData;
+            res: {
+                200: unknown;
             };
         };
     };

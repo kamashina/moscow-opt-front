@@ -18,7 +18,7 @@ const HoverImageSlider = ({ images }: Props) => {
 
   return (
     <div
-      className="relative h-[300px] w-full overflow-hidden rounded-[25px]"
+      className="relative h-[300px] w-full overflow-hidden rounded-lg"
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setCurrentIndex(0)}
     >
@@ -26,10 +26,10 @@ const HoverImageSlider = ({ images }: Props) => {
         src={
           getServerFile(images[currentIndex]) || "/images/itemsPlaceholder.png"
         }
-        alt={`Preview ${currentIndex + 1}`}
+        alt={`Preview ${currentIndex}`}
         fill
         sizes="100%"
-        className="rounded-[25px] transition-opacity duration-300"
+        className="object-cover bg-white duration-300 rounded-lg"
       />
     </div>
   );

@@ -22,6 +22,9 @@ export const ensureUseCategoriesServiceGetAllCategoriesData = (queryClient: Quer
   isPopular?: boolean;
 } = {}) => queryClient.ensureQueryData({ queryKey: Common.UseCategoriesServiceGetAllCategoriesKeyFn({ isPopular }), queryFn: () => CategoriesService.getAllCategories({ isPopular }) });
 export const ensureUseCategoriesServiceGetPopularCategoriesData = (queryClient: QueryClient) => queryClient.ensureQueryData({ queryKey: Common.UseCategoriesServiceGetPopularCategoriesKeyFn(), queryFn: () => CategoriesService.getPopularCategories() });
+export const ensureUseCategoriesServiceGetSubCategoriesByIdsData = (queryClient: QueryClient, { ids }: {
+  ids: number[];
+}) => queryClient.ensureQueryData({ queryKey: Common.UseCategoriesServiceGetSubCategoriesByIdsKeyFn({ ids }), queryFn: () => CategoriesService.getSubCategoriesByIds({ ids }) });
 export const ensureUseCategoriesServiceGetSubCategoryByIdData = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.ensureQueryData({ queryKey: Common.UseCategoriesServiceGetSubCategoryByIdKeyFn({ id }), queryFn: () => CategoriesService.getSubCategoryById({ id }) });

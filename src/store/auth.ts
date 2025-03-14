@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { UserEntityWithoutPassword } from "../openapi/requests";
 
 type User = {
   access_token: string;

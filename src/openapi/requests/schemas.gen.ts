@@ -745,6 +745,9 @@ export const $ItemsEntityMinInfo = {
                 type: 'string'
             }
         },
+        quantity: {
+            type: 'number'
+        },
         status: {
             allOf: [
                 {
@@ -757,7 +760,7 @@ export const $ItemsEntityMinInfo = {
             type: 'string'
         }
     },
-    required: ['description', 'countryOfOrigin', 'basketOptions', 'article', 'cardId', 'id', 'rating', 'price', 'discountStepQuantity', 'discountPerStep', 'maxDiscount', 'name', 'brand', 'sellerArticle', 'images', 'status', 'createdAt']
+    required: ['description', 'countryOfOrigin', 'basketOptions', 'article', 'cardId', 'id', 'rating', 'price', 'discountStepQuantity', 'discountPerStep', 'maxDiscount', 'name', 'brand', 'sellerArticle', 'images', 'quantity', 'status', 'createdAt']
 } as const;
 
 export const $ItemsEntityMinInfoByShop = {
@@ -808,6 +811,9 @@ export const $ItemsEntityMinInfoByShop = {
                 type: 'string'
             }
         },
+        quantity: {
+            type: 'number'
+        },
         status: {
             allOf: [
                 {
@@ -820,7 +826,7 @@ export const $ItemsEntityMinInfoByShop = {
             type: 'string'
         }
     },
-    required: ['description', 'countryOfOrigin', 'article', 'cardId', 'id', 'rating', 'price', 'discountStepQuantity', 'discountPerStep', 'maxDiscount', 'name', 'brand', 'sellerArticle', 'images', 'status', 'createdAt']
+    required: ['description', 'countryOfOrigin', 'article', 'cardId', 'id', 'rating', 'price', 'discountStepQuantity', 'discountPerStep', 'maxDiscount', 'name', 'brand', 'sellerArticle', 'images', 'quantity', 'status', 'createdAt']
 } as const;
 
 export const $ItemsEntityBulkData = {
@@ -832,6 +838,9 @@ export const $ItemsEntityBulkData = {
         id: {
             type: 'number'
         },
+        subCategoryId: {
+            type: 'number'
+        },
         status: {
             allOf: [
                 {
@@ -840,7 +849,7 @@ export const $ItemsEntityBulkData = {
             ]
         }
     },
-    required: ['id', 'status']
+    required: ['id', 'subCategoryId', 'status']
 } as const;
 
 export const $UpdateItemDto = {

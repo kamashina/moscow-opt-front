@@ -22,6 +22,9 @@ export const useCategoriesServiceGetAllCategoriesSuspense = <TData = Common.Cate
   isPopular?: boolean;
 } = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetAllCategoriesKeyFn({ isPopular }, queryKey), queryFn: () => CategoriesService.getAllCategories({ isPopular }) as TData, ...options });
 export const useCategoriesServiceGetPopularCategoriesSuspense = <TData = Common.CategoriesServiceGetPopularCategoriesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetPopularCategoriesKeyFn(queryKey), queryFn: () => CategoriesService.getPopularCategories() as TData, ...options });
+export const useCategoriesServiceGetSubCategoriesByIdsSuspense = <TData = Common.CategoriesServiceGetSubCategoriesByIdsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ ids }: {
+  ids: number[];
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetSubCategoriesByIdsKeyFn({ ids }, queryKey), queryFn: () => CategoriesService.getSubCategoriesByIds({ ids }) as TData, ...options });
 export const useCategoriesServiceGetSubCategoryByIdSuspense = <TData = Common.CategoriesServiceGetSubCategoryByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetSubCategoryByIdKeyFn({ id }, queryKey), queryFn: () => CategoriesService.getSubCategoryById({ id }) as TData, ...options });

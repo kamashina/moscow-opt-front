@@ -41,19 +41,19 @@ const PopularWrapper = <T extends any[]>({
 
       <div
         className={twMerge(
-          "flex flex-row gap-4 mt-4 w-full overflow-x-auto",
+          "flex flex-row justify-between mt-4 w-full overflow-x-auto",
           imageWrapperClassName
         )}
       >
         {data.map((item) => (
           <Link
             key={item.id}
-            className="flex flex-col gap-2 items-center"
+            className="flex flex-col justify-between items-center"
             href={`/shops/${item.id}`}
           >
             <div
               className={twMerge(
-                "relative  w-[260px] h-[260px]",
+                "relative  w-[250px] h-[250px]",
                 imageClassName
               )}
             >

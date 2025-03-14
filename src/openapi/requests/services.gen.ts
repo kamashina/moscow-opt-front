@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { RegisterSmsData, RegisterSmsResponse, LoginSmsData, LoginSmsResponse, GetSmsTimerData, GetSmsTimerResponse2, VerifyCodeData, VerifyCodeResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetFiltersBySubCategoryIdData, GetFiltersBySubCategoryIdResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemsBulkData, CreateItemsBulkResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, GetItemsByMyShopData, GetItemsByMyShopResponse, GetItemsByIdsData, GetItemsByIdsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, SearchData, SearchResponse, UploadItemsMediaData, UploadItemsMediaResponse, UploadBannerData, UploadBannerResponse, UploadShopBannerData, UploadShopBannerResponse, UploadShopImagesData, UploadShopImagesResponse, ImportItemsExcelData, ImportItemsExcelResponse, ExportItemsExcelData, ExportItemsExcelResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAddressData, GetAddressResponse, GetAllCardsData, GetAllCardsResponse, GetNewCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse, GetFavoritesResponse, ChangeFavoriteData, ChangeFavoriteResponse } from './types.gen';
+import type { RegisterSmsData, RegisterSmsResponse, LoginSmsData, LoginSmsResponse, GetSmsTimerData, GetSmsTimerResponse2, VerifyCodeData, VerifyCodeResponse, RefreshTokenResponse, LogoutResponse, FindAllResponse, ChangeUserRoleData, ChangeUserRoleResponse, GetMeResponse, GetByIdData, GetByIdResponse, CreateData, CreateResponse, GetAllCompaniesResponse, DeleteMyCompanyResponse, GetMyCompanyResponse, GetFiltersBySubCategoryIdData, GetFiltersBySubCategoryIdResponse, GetMyShopResponse, GetAllShopsResponse, CreateShopData, CreateShopResponse, UpdateShopData, UpdateShopResponse, GetAllCategoriesData, GetAllCategoriesResponse, CreateCategoryData, CreateCategoryResponse, DeleteAllCategoriesResponse, GetPopularCategoriesResponse, CreateSubCategoryData, CreateSubCategoryResponse, GetSubCategoriesByIdsData, GetSubCategoriesByIdsResponse, GetSubCategoryByIdData, GetSubCategoryByIdResponse, DeleteCategoryByIdData, DeleteCategoryByIdResponse, CreateItemsBulkData, CreateItemsBulkResponse, EditItemsBulkData, EditItemsBulkResponse, CreateItemData, CreateItemResponse, GetAllItemsResponse, GetItemsByMyShopData, GetItemsByMyShopResponse, GetItemsByIdsData, GetItemsByIdsResponse, DeleteItemsByIdsData, DeleteItemsByIdsResponse, UpdateItemData, UpdateItemResponse, DeleteByIdData, DeleteByIdResponse, SearchData, SearchResponse, UploadItemsMediaData, UploadItemsMediaResponse, UploadBannerData, UploadBannerResponse, UploadShopBannerData, UploadShopBannerResponse, UploadShopImagesData, UploadShopImagesResponse, ImportItemsExcelData, ImportItemsExcelResponse, ExportItemsExcelData, ExportItemsExcelResponse, GetMyBasketResponse, GetTotalItemsInBasketResponse, AddItemToBasketData, AddItemToBasketResponse, GetPartyData, GetPartyResponse, GetAddressData, GetAddressResponse, GetAllCardsData, GetAllCardsResponse, GetNewCardsResponse, CreateBrandData, CreateBrandResponse, GetBrandsResponse, DeleteBrandResponse, GetBrandByIdData, GetBrandByIdResponse, GetCityByCoordinatesData, GetCityByCoordinatesResponse, GetBannersResponse, GetFavoritesResponse, ChangeFavoriteData, ChangeFavoriteResponse } from './types.gen';
 
 export class AuthService {
     /**
@@ -349,6 +349,22 @@ export class CategoriesService {
     
     /**
      * @param data The data for the request.
+     * @param data.ids
+     * @returns SubCategoryResponse
+     * @throws ApiError
+     */
+    public static getSubCategoriesByIds(data: GetSubCategoriesByIdsData): CancelablePromise<GetSubCategoriesByIdsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/categories/sub/by-ids',
+            query: {
+                ids: data.ids
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
      * @param data.id
      * @returns SubCategoryResponse
      * @throws ApiError
@@ -392,6 +408,25 @@ export class ItemService {
     public static createItemsBulk(data: CreateItemsBulkData): CancelablePromise<CreateItemsBulkResponse> {
         return __request(OpenAPI, {
             method: 'POST',
+            url: '/items/bulk/{sub_category_id}',
+            path: {
+                sub_category_id: data.subCategoryId
+            },
+            body: data.requestBody,
+            mediaType: 'application/json'
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.subCategoryId
+     * @param data.requestBody
+     * @returns unknown
+     * @throws ApiError
+     */
+    public static editItemsBulk(data: EditItemsBulkData): CancelablePromise<EditItemsBulkResponse> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
             url: '/items/bulk/{sub_category_id}',
             path: {
                 sub_category_id: data.subCategoryId
@@ -466,6 +501,22 @@ export class ItemService {
     public static getItemsByIds(data: GetItemsByIdsData): CancelablePromise<GetItemsByIdsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
+            url: '/items/items/by-ids',
+            query: {
+                ids: data.ids
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.ids
+     * @returns unknown
+     * @throws ApiError
+     */
+    public static deleteItemsByIds(data: DeleteItemsByIdsData): CancelablePromise<DeleteItemsByIdsResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
             url: '/items/items/by-ids',
             query: {
                 ids: data.ids

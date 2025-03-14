@@ -13,12 +13,10 @@ const Banners: FC<Props> = ({ initialData }) => {
   const { data } = useBannersServiceGetBannersSuspense(undefined, {
     initialData,
   });
-  console.log(data);
 
   const [bannerId, setBannerId] = useState(data[0].id);
   const [executeScroll, elRef] = useScroll();
   useEffect(executeScroll as any, [bannerId]);
-  console.log(bannerId);
 
   const currentIndex = data?.findIndex((item) => item.id === bannerId);
 
@@ -34,7 +32,6 @@ const Banners: FC<Props> = ({ initialData }) => {
       return;
     }
   };
-  console.log(data?.[currentIndex - 1]?.id);
 
   return (
     <div className="relative w-full">

@@ -5,7 +5,7 @@ type Props = {};
 
 const Page = async () => {
   return (
-    <div>
+    <div className="w-[calc(100%-80px)] mx-auto">
       <ItemsTable />
     </div>
   );

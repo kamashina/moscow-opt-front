@@ -18,7 +18,7 @@ const NAV_OPTIONS: Array<{
       },
       {
         label: "Добавить товар",
-        link: "/items/bulk",
+        link: "/items/categories",
       },
       {
         label: "Отзывы",
@@ -100,7 +100,7 @@ const TooltipNav = () => {
   };
 
   return (
-    <div className="flex flex-row items-center gap-2 overflow-visible">
+    <div className="flex flex-row items-center gap-2 overflow-visible z-20 ">
       {NAV_OPTIONS.map((item) => (
         <div key={item.label} className="relative">
           <Link

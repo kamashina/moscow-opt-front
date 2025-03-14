@@ -22,6 +22,9 @@ export const prefetchUseCategoriesServiceGetAllCategories = (queryClient: QueryC
   isPopular?: boolean;
 } = {}) => queryClient.prefetchQuery({ queryKey: Common.UseCategoriesServiceGetAllCategoriesKeyFn({ isPopular }), queryFn: () => CategoriesService.getAllCategories({ isPopular }) });
 export const prefetchUseCategoriesServiceGetPopularCategories = (queryClient: QueryClient) => queryClient.prefetchQuery({ queryKey: Common.UseCategoriesServiceGetPopularCategoriesKeyFn(), queryFn: () => CategoriesService.getPopularCategories() });
+export const prefetchUseCategoriesServiceGetSubCategoriesByIds = (queryClient: QueryClient, { ids }: {
+  ids: number[];
+}) => queryClient.prefetchQuery({ queryKey: Common.UseCategoriesServiceGetSubCategoriesByIdsKeyFn({ ids }), queryFn: () => CategoriesService.getSubCategoriesByIds({ ids }) });
 export const prefetchUseCategoriesServiceGetSubCategoryById = (queryClient: QueryClient, { id }: {
   id: number;
 }) => queryClient.prefetchQuery({ queryKey: Common.UseCategoriesServiceGetSubCategoryByIdKeyFn({ id }), queryFn: () => CategoriesService.getSubCategoryById({ id }) });

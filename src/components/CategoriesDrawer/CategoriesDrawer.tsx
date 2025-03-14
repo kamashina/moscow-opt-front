@@ -2,10 +2,11 @@
 import { Icon } from "@mossoft/ui-kit";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useMemo, useRef, useState } from "react";
 import Modal from "react-modal";
 import { useCategoriesServiceGetAllCategories } from "../../openapi/queries/queries";
 import AppText from "../AppText/AppText";
+import React from "react";
 
 type Props = {};
 
@@ -17,10 +18,14 @@ const CategoriesDrawer: FC<Props> = () => {
   const { data: categories } = useCategoriesServiceGetAllCategories();
 
   useEffect(() => {
-    setCategoryId(null);
-    document.body.style.overflow = isOpen ? "hidden" : "auto";
+    if (!isOpen) return;
+
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.cssText = `overflow: hidden; padding-right: ${scrollbarWidth}px`;
+
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.cssText = "";
     };
   }, [isOpen]);
 
@@ -32,8 +37,14 @@ const CategoriesDrawer: FC<Props> = () => {
       }
     };
     window.addEventListener("scroll", handleScroll);
+    setCategoryId(null);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isOpen]);
+
+  const subCategories = useMemo(
+    () => categories?.find((item) => item.id === categoryId)?.subCategories,
+    [categories, categoryId]
+  );
 
   const modalHeight = `h-[calc(100vh-${prevHeaderOffset.current ? 40 : 0}px)]`;
 
@@ -64,8 +75,8 @@ const CategoriesDrawer: FC<Props> = () => {
         {isOpen && (
           <Modal
             isOpen={isOpen}
-            className="z-20 border-none w-full h-full max-w-[520px] overflow-hidden"
-            overlayClassName={`fixed inset-0 bg-[#0000004D] backdrop-blur-[1px] flex items-start`}
+            className="relative border-none w-fit h-full max-w-[520px] overflow-hidden"
+            overlayClassName="fixed z-50 inset-0 bg-[#0000004D] backdrop-blur-[1px] flex items-start"
             shouldCloseOnOverlayClick={true}
             ariaHideApp={false}
             shouldCloseOnEsc
@@ -77,10 +88,12 @@ const CategoriesDrawer: FC<Props> = () => {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className={`bg-white h-full relative shadow-lg max-w-[520px] flex flex-row`}
+              className={`bg-white ${
+                categoryId && subCategories?.length ? "min-w-fit" : "w-fit"
+              } h-full shadow-lg  flex flex-row`}
             >
               <div
-                className={`${modalHeight} flex w-1/2 mt-11 flex-col gap-1 px-2 border-r-[1px] border-r-light-gray border-r-solid overflow-y-scroll`}
+                className={`${modalHeight} flex mt-11 w-[280px] px-2 flex-col gap-1 border-r-[1px] border-r-light-gray border-r-solid overflow-y-scroll`}
               >
                 {categories?.map((category) => (
                   <motion.div
@@ -94,39 +107,42 @@ const CategoriesDrawer: FC<Props> = () => {
                     } flex px-2 items-center py-2 flex-row gap-2 hover:bg-primary-light cursor-pointer rounded-[10px]`}
                   >
                     <Icon name="category" className="w-6 h-6 !text-primary" />
-                    <AppText className="hover:border-primary font-normal text-base">
+                    <AppText className="hover:border-primary font-normal">
                       {category.name}
                     </AppText>
                   </motion.div>
                 ))}
               </div>
 
-              <AnimatePresence>
-                {categoryId && (
+              {categoryId && subCategories?.length ? (
+                <AnimatePresence>
                   <motion.div
                     key="subcategory-panel"
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.2 }}
-                    className={`${modalHeight} mt-11 flex w-1/2 flex-col gap-1 px-2 border-1 border-light-gray border-solid overflow-y-scroll`}
+                    className={`${modalHeight} mt-11 flex w-[240px] flex-col gap-1 px-2 border-1 border-light-gray border-solid overflow-y-scroll`}
                   >
-                    {categories
-                      ?.find((item) => item.id === categoryId)
-                      ?.subCategories?.map((item) => (
-                        <Link
-                          href={`/categories/sub/${item.id}`}
-                          key={item.id}
-                          className="flex px-2 items-center py-2 flex-row gap-2 hover:bg-primary-light cursor-pointer rounded-[10px]"
-                        >
-                          <AppText className="hover:border-primary font-normal text-base">
-                            {item.name}
-                          </AppText>
-                        </Link>
-                      ))}
+                    <AppText className="font-semibold text-lg items-center flex px-2 py-2">
+                      {categories?.find(({ id }) => id === categoryId)?.name}
+                    </AppText>
+                    {subCategories.map((item) => (
+                      <Link
+                        href={`/categories/sub/${item.id}`}
+                        key={item.id}
+                        className="px-2 items-center py-2 hover:bg-primary-light cursor-pointer rounded-[10px]"
+                      >
+                        <AppText className="hover:border-primary font-normal">
+                          {item.name}
+                        </AppText>
+                      </Link>
+                    ))}
                   </motion.div>
-                )}
-              </AnimatePresence>
+                </AnimatePresence>
+              ) : (
+                <></>
+              )}
             </motion.div>
           </Modal>
         )}
@@ -135,4 +151,4 @@ const CategoriesDrawer: FC<Props> = () => {
   );
 };
 
-export default CategoriesDrawer;
+export default React.memo(CategoriesDrawer);

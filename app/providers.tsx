@@ -1,8 +1,6 @@
 "use client";
 import { getQueryClient } from "@/src/api/api";
 import { createIDBPersister } from "@/src/api/persister";
-import ErrorSnackbar from "@/src/components/Snackbars/ErrorSnackbar";
-import SuccessSnackbar from "@/src/components/Snackbars/SuccessSnackbar";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
@@ -32,7 +30,7 @@ const Providers: FC<PropsWithChildren> = ({ children }) => {
           vertical: "top",
           horizontal: "left",
         }}
-        Components={{ success: SuccessSnackbar, error: ErrorSnackbar }}
+        // Components={{ success: SuccessSnackbar, error: ErrorSnackbar }}
         autoHideDuration={2000}
       >
         <NuqsAdapter>

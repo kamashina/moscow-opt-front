@@ -1,17 +1,17 @@
 import { getQueryClient } from "@/src/api/api";
 import { BOX_TYPES_TRANlSATIONS, priceSeparator } from "@/src/constants";
 import {
-  useCardsServiceGetAllCardsKey,
+  useCardsServiceGetNewCardsKey,
   useFavoritesServiceChangeFavorite,
 } from "@/src/openapi/queries";
 import { CardResponse } from "@/src/openapi/requests";
+import { useAuthStore } from "@/src/store/auth";
 import { Icon } from "@mossoft/ui-kit";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import AppText from "../AppText/AppText";
 import HoverSlider from "../HoverSlider/HoverSlider";
 import ProductSchema from "../SEO/ProductSchema";
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/src/store/auth";
 
 type Props = {
   item: CardResponse;
@@ -20,11 +20,11 @@ type Props = {
 const CardItem = ({ item }: Props) => {
   const router = useRouter();
   const queryClient = getQueryClient();
-  const { isAuthenticated, clearUser } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
   const { mutateAsync: changeIsFavorite } = useFavoritesServiceChangeFavorite({
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: [useCardsServiceGetAllCardsKey],
+        queryKey: [useCardsServiceGetNewCardsKey],
       });
     },
   });
@@ -66,7 +66,7 @@ const CardItem = ({ item }: Props) => {
             />
           </div>
           <HoverSlider
-            images={previewItem.images || ["/images/itemsPlaceholder.png"]}
+            images={previewItem?.images || ["/images/itemsPlaceholder.png"]}
           />
         </div>
 
@@ -74,8 +74,14 @@ const CardItem = ({ item }: Props) => {
           <div className="flex flex-row justify-between">
             <div className="px-2 py-1 bg-primary-light rounded-3xl flex items-center">
               <AppText className="text-primary text-xs">
-                {previewItem.box?.type &&
-                  BOX_TYPES_TRANlSATIONS[previewItem.box?.type]}
+                {Object.keys(previewItem)
+                  .map(
+                    (key) =>
+                      previewItem[key as keyof typeof previewItem] &&
+                      BOX_TYPES_TRANlSATIONS[key]
+                  )
+                  .filter((item) => item)
+                  .join(", ")}
               </AppText>
             </div>
 

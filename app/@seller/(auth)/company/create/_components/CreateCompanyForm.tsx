@@ -90,10 +90,7 @@ const CreateCompanyForm = () => {
               })) || []
             }
             onSearch={onSearchCompany}
-            onChange={(value) => {
-              onChange(value);
-              console.log(value);
-            }}
+            onChange={onChange}
             value={value?.toString()}
           />
         )}

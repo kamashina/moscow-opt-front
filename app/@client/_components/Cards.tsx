@@ -1,10 +1,7 @@
 "use client";
 import AppText from "@/src/components/AppText/AppText";
 import CardItem from "@/src/components/CardItem/CardItem";
-import {
-  useCardsServiceGetAllCards,
-  useCardsServiceGetNewCards,
-} from "@/src/openapi/queries";
+import { useCardsServiceGetNewCards } from "@/src/openapi/queries";
 import { Icon, Wrapper } from "@mossoft/ui-kit";
 import Link from "next/link";
 import { FC } from "react";

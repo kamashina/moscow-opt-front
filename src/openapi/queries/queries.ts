@@ -23,6 +23,9 @@ export const useCategoriesServiceGetAllCategories = <TData = Common.CategoriesSe
   isPopular?: boolean;
 } = {}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetAllCategoriesKeyFn({ isPopular }, queryKey), queryFn: () => CategoriesService.getAllCategories({ isPopular }) as TData, ...options });
 export const useCategoriesServiceGetPopularCategories = <TData = Common.CategoriesServiceGetPopularCategoriesDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>(queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetPopularCategoriesKeyFn(queryKey), queryFn: () => CategoriesService.getPopularCategories() as TData, ...options });
+export const useCategoriesServiceGetSubCategoriesByIds = <TData = Common.CategoriesServiceGetSubCategoriesByIdsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ ids }: {
+  ids: number[];
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetSubCategoriesByIdsKeyFn({ ids }, queryKey), queryFn: () => CategoriesService.getSubCategoriesByIds({ ids }) as TData, ...options });
 export const useCategoriesServiceGetSubCategoryById = <TData = Common.CategoriesServiceGetSubCategoryByIdDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ id }: {
   id: number;
 }, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseCategoriesServiceGetSubCategoryByIdKeyFn({ id }, queryKey), queryFn: () => CategoriesService.getSubCategoryById({ id }) as TData, ...options });
@@ -177,6 +180,13 @@ export const useShopServiceUpdateShop = <TData = Common.ShopServiceUpdateShopMut
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
   requestBody: UpdateShopDto;
 }, TContext>({ mutationFn: ({ requestBody }) => ShopService.updateShop({ requestBody }) as unknown as Promise<TData>, ...options });
+export const useItemServiceEditItemsBulk = <TData = Common.ItemServiceEditItemsBulkMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  requestBody: ExportExcelRequestDto;
+  subCategoryId: number;
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+  requestBody: ExportExcelRequestDto;
+  subCategoryId: number;
+}, TContext>({ mutationFn: ({ requestBody, subCategoryId }) => ItemService.editItemsBulk({ requestBody, subCategoryId }) as unknown as Promise<TData>, ...options });
 export const useItemServiceUpdateItem = <TData = Common.ItemServiceUpdateItemMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   id: number;
   requestBody: UpdateItemDto;
@@ -191,6 +201,11 @@ export const useCategoriesServiceDeleteCategoryById = <TData = Common.Categories
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
   id: number;
 }, TContext>({ mutationFn: ({ id }) => CategoriesService.deleteCategoryById({ id }) as unknown as Promise<TData>, ...options });
+export const useItemServiceDeleteItemsByIds = <TData = Common.ItemServiceDeleteItemsByIdsMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+  ids: number[];
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+  ids: number[];
+}, TContext>({ mutationFn: ({ ids }) => ItemService.deleteItemsByIds({ ids }) as unknown as Promise<TData>, ...options });
 export const useItemServiceDeleteById = <TData = Common.ItemServiceDeleteByIdMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   id: number;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {

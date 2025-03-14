@@ -13,18 +13,17 @@ export async function generatePageMetadata({
 }: Props): Promise<Metadata> {
   const queryClient = getQueryClient();
   const { categories, cards, shops } = await fetchPageData(queryClient);
-
   const categoriesKeywords = categories.map(({ name }) => name).join(", ");
   const cardsKeywords = cards
-    .map(({ preview }) => preview.name)
+    .map(({ preview }) => preview?.name)
     .join(", ")
     .substring(0, 150)
     .trim();
 
   return {
+    keywords: `${categoriesKeywords}, ${cardsKeywords}, оптом купить, маркетплейс, оптом`,
     title,
     description,
-    keywords: `${categoriesKeywords}, ${cardsKeywords}`,
     openGraph: {
       title,
       description,

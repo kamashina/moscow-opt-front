@@ -1,18 +1,18 @@
 "use client";
-import { Icon } from "@mossoft/ui-kit";
-import Image from "next/image";
 import { FC, PropsWithChildren, useEffect } from "react";
 import Modal from "react-modal";
 
 type Props = {
   isOpen: boolean;
   handleClose: () => void;
+  className?: string;
 };
 
 Modal.setAppElement("body");
 
 const ModalWindow: FC<PropsWithChildren<Props>> = ({
   isOpen,
+  className,
   handleClose,
   children,
 }) => {
@@ -39,8 +39,9 @@ const ModalWindow: FC<PropsWithChildren<Props>> = ({
       <Modal
         isOpen={isOpen}
         preventScroll
-        className="static border-none w-full lg:max-w-[400px]"
-        overlayClassName="fixed z-[1000] top-0 bg-[#DDD] left-0 w-full h-full lg:backdrop-blur-[5px] lg:bg-[#36363652] flex lg:py-5 md:py-0 overflow-y-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-transparent lg:items-center lg:justify-center lg:px-3 md:p-4"
+        shouldFocusAfterRender={false}
+        className={`static border-none w-full lg:max-w-[400px] ${className}`}
+        overlayClassName="fixed z-[1000] top-0 bg-[#DDD] left-0 w-full h-full lg:bg-[#0a0a0a52] flex lg:py-5 md:py-0 overflow-y-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-transparent lg:items-center lg:justify-center lg:px-3 md:p-4"
         onRequestClose={startClose}
         ariaHideApp={false}
       >

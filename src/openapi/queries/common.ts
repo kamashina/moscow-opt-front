@@ -54,6 +54,12 @@ export type CategoriesServiceGetPopularCategoriesDefaultResponse = Awaited<Retur
 export type CategoriesServiceGetPopularCategoriesQueryResult<TData = CategoriesServiceGetPopularCategoriesDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useCategoriesServiceGetPopularCategoriesKey = "CategoriesServiceGetPopularCategories";
 export const UseCategoriesServiceGetPopularCategoriesKeyFn = (queryKey?: Array<unknown>) => [useCategoriesServiceGetPopularCategoriesKey, ...(queryKey ?? [])];
+export type CategoriesServiceGetSubCategoriesByIdsDefaultResponse = Awaited<ReturnType<typeof CategoriesService.getSubCategoriesByIds>>;
+export type CategoriesServiceGetSubCategoriesByIdsQueryResult<TData = CategoriesServiceGetSubCategoriesByIdsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const useCategoriesServiceGetSubCategoriesByIdsKey = "CategoriesServiceGetSubCategoriesByIds";
+export const UseCategoriesServiceGetSubCategoriesByIdsKeyFn = ({ ids }: {
+  ids: number[];
+}, queryKey?: Array<unknown>) => [useCategoriesServiceGetSubCategoriesByIdsKey, ...(queryKey ?? [{ ids }])];
 export type CategoriesServiceGetSubCategoryByIdDefaultResponse = Awaited<ReturnType<typeof CategoriesService.getSubCategoryById>>;
 export type CategoriesServiceGetSubCategoryByIdQueryResult<TData = CategoriesServiceGetSubCategoryByIdDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useCategoriesServiceGetSubCategoryByIdKey = "CategoriesServiceGetSubCategoryById";
@@ -167,9 +173,11 @@ export type BrandsServiceCreateBrandMutationResult = Awaited<ReturnType<typeof B
 export type FavoritesServiceChangeFavoriteMutationResult = Awaited<ReturnType<typeof FavoritesService.changeFavorite>>;
 export type UsersServiceChangeUserRoleMutationResult = Awaited<ReturnType<typeof UsersService.changeUserRole>>;
 export type ShopServiceUpdateShopMutationResult = Awaited<ReturnType<typeof ShopService.updateShop>>;
+export type ItemServiceEditItemsBulkMutationResult = Awaited<ReturnType<typeof ItemService.editItemsBulk>>;
 export type ItemServiceUpdateItemMutationResult = Awaited<ReturnType<typeof ItemService.updateItem>>;
 export type CompaniesServiceDeleteMyCompanyMutationResult = Awaited<ReturnType<typeof CompaniesService.deleteMyCompany>>;
 export type CategoriesServiceDeleteAllCategoriesMutationResult = Awaited<ReturnType<typeof CategoriesService.deleteAllCategories>>;
 export type CategoriesServiceDeleteCategoryByIdMutationResult = Awaited<ReturnType<typeof CategoriesService.deleteCategoryById>>;
+export type ItemServiceDeleteItemsByIdsMutationResult = Awaited<ReturnType<typeof ItemService.deleteItemsByIds>>;
 export type ItemServiceDeleteByIdMutationResult = Awaited<ReturnType<typeof ItemService.deleteById>>;
 export type BrandsServiceDeleteBrandMutationResult = Awaited<ReturnType<typeof BrandsService.deleteBrand>>;
