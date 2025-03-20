@@ -7,21 +7,27 @@ import React, { Dispatch, FC } from "react";
 import { format, parseISO } from "date-fns";
 import { ru } from "date-fns/locale";
 
+type ItemCard = { id: number; subCategoryId: number };
+
 type Props = {
   item: ItemsEntityMinInfoByShop;
   isChecked: boolean;
-  setCheckedItems: Dispatch<React.SetStateAction<number[]>>;
+  setCheckedItems: Dispatch<React.SetStateAction<ItemCard[]>>;
 };
 
 const SellerItemCard: FC<Props> = ({ item, isChecked, setCheckedItems }) => {
   const handleCkeckItem = () => {
     if (isChecked) {
-      setCheckedItems((prev: number[]) => [
-        ...prev.filter((id) => id !== item.id),
+      setCheckedItems((prev: ItemCard[]) => [
+        ...prev.filter((card) => card.id !== item.id),
       ]);
       return;
     }
-    setCheckedItems((prev) => [...prev, item.id]);
+    setCheckedItems((prev) =>
+      prev.length >= 100
+        ? prev
+        : [...prev, { id: item.id, subCategoryId: item.subCategory.id }]
+    );
   };
 
   const tdStyle = "px-2 py-2 min-w-full text-center align-middle";
@@ -57,9 +63,8 @@ const SellerItemCard: FC<Props> = ({ item, isChecked, setCheckedItems }) => {
 
           <div className="flex flex-col">
             <AppText className="font-semibold text-sm">{item.name}</AppText>
-
-            <AppText className="text-xs text-dark-gray">
-              Артикул: {item.sellerArticle}
+            <AppText className="text-xs text-dark-gray whitespace-nowrap">
+              Артикул поставщика: {item.sellerArticle}
             </AppText>
             <AppText className="text-xs text-dark-gray">
               Бренд: {item.brand}
@@ -67,9 +72,17 @@ const SellerItemCard: FC<Props> = ({ item, isChecked, setCheckedItems }) => {
             <AppText className="text-xs text-dark-gray">
               Категория: {item.subCategory.name}
             </AppText>
-            <AppText className="text-xs text-dark-gray">
-              Статус: {ITEM_STATUSES_TRANSLATIONS[item.status]}
-            </AppText>
+            <div className="w-fit items-center mt-auto">
+              <AppText
+                className={`text-xs px-2 py-1 rounded-lg text-white ${
+                  (item.status === "active" && "bg-success") ||
+                  (item.status === "reject" && "bg-danger") ||
+                  (item.status === "draft" && "bg-[#ADD8E6]")
+                }`}
+              >
+                {ITEM_STATUSES_TRANSLATIONS[item.status]}
+              </AppText>
+            </div>
           </div>
         </div>
       </td>
@@ -106,15 +119,15 @@ const SellerItemCard: FC<Props> = ({ item, isChecked, setCheckedItems }) => {
       <td className={tdStyle}>
         <div className="w-fit px-10 flex justify-center">
           <AppText className={textStyle}>
-            {item?.box?.options?.name}/{item?.box?.options?.quantity}
+            {item?.box?.options.name}/{item?.box?.options?.quantity}
           </AppText>
         </div>
       </td>
       <td className={tdStyle}>
         <div className="w-fit px-10 flex justify-center">
           <AppText className={textStyle}>
-            {item?.customBox?.options?.fields?.length
-              ? item.customBox.options.fields
+            {item?.customBox?.fields?.length
+              ? item.customBox?.fields
                   .map((item) => [item.name, item.quantity].join("-"))
                   .join(", ")
               : ""}

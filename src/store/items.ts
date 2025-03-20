@@ -10,7 +10,7 @@ type StoreItemsState = {
     selectedSubCategoryId?: number[]
   ) => void;
   type: "edit" | "new";
-  selectedSubCategoryId: number[];
+  selectedSubCategoryIds: number[];
 };
 
 export const useItemsStore = create<StoreItemsState>()(
@@ -18,11 +18,11 @@ export const useItemsStore = create<StoreItemsState>()(
     (set) => ({
       selectedIds: [],
       type: "new",
-      selectedSubCategoryId: [],
-      setSelectedIds: (ids, type, selectedSubCategoryId) =>
-        set({ selectedIds: ids, type, selectedSubCategoryId }),
+      selectedSubCategoryIds: [],
+      setSelectedIds: (ids, type, selectedSubCategoryIds) =>
+        set({ selectedIds: ids, type, selectedSubCategoryIds }),
       resetItems: () =>
-        set({ selectedIds: [], type: "new", selectedSubCategoryId: [] }),
+        set({ selectedIds: [], type: "new", selectedSubCategoryIds: [] }),
     }),
     { name: "IDS" }
   )

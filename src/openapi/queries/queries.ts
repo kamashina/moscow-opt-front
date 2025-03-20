@@ -113,16 +113,10 @@ export const useItemServiceCreateItemsBulk = <TData = Common.ItemServiceCreateIt
   subCategoryId: number;
 }, TContext>({ mutationFn: ({ requestBody, subCategoryId }) => ItemService.createItemsBulk({ requestBody, subCategoryId }) as unknown as Promise<TData>, ...options });
 export const useItemServiceCreateItem = <TData = Common.ItemServiceCreateItemMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
-  brandId: number;
-  cardId: number;
   requestBody: CreateItemDto;
-  subCategoryId: number;
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
-  brandId: number;
-  cardId: number;
   requestBody: CreateItemDto;
-  subCategoryId: number;
-}, TContext>({ mutationFn: ({ brandId, cardId, requestBody, subCategoryId }) => ItemService.createItem({ brandId, cardId, requestBody, subCategoryId }) as unknown as Promise<TData>, ...options });
+}, TContext>({ mutationFn: ({ requestBody }) => ItemService.createItem({ requestBody }) as unknown as Promise<TData>, ...options });
 export const useFileUploadServiceUploadItemsMedia = <TData = Common.FileUploadServiceUploadItemsMediaMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
   formData: { media?: (Blob | File)[]; };
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {

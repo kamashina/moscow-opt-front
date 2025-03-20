@@ -1,5 +1,5 @@
-import { itemStatus, taxation, type } from "./openapi/requests";
-import { BoxTypes, CompanyTaxations, IETaxations } from "./types";
+import { itemStatus, type } from "./openapi/requests";
+import { CompanyTaxations, IETaxations } from "./types";
 
 export const LIMIT = 20;
 

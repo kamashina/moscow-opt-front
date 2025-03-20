@@ -1,11 +1,4 @@
 "use client";
-import { Button, Loader, Search, useDebounce } from "@mossoft/ui-kit";
-import { InfiniteData, UseInfiniteQueryResult } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { useQueryState } from "nuqs";
-import { Dispatch, ReactNode, useCallback, useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
-import plural from "plural-ru";
 import { getQueryClient } from "@/src/api/api";
 import {
   useItemServiceDeleteItemsByIds,
@@ -13,8 +6,17 @@ import {
 } from "@/src/openapi/queries";
 import { useItemsStore } from "@/src/store/items";
 import { Exception } from "@/src/types";
+import { Button, Loader, Search } from "@mossoft/ui-kit";
+import { InfiniteData, UseInfiniteQueryResult } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
+import { useQueryState } from "nuqs";
+import plural from "plural-ru";
+import { Dispatch, ReactNode, useCallback, useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import AppText from "../AppText/AppText";
+
+type ItemCard = { id: number; subCategoryId: number };
 
 type Props<T> = {
   infiniteData: UseInfiniteQueryResult<InfiniteData<T[], unknown>, Error>;
@@ -22,7 +24,7 @@ type Props<T> = {
     item: T,
     index: number,
     isChecked: boolean,
-    setCheckedItems: Dispatch<React.SetStateAction<number[]>>
+    setCheckedItems: Dispatch<React.SetStateAction<ItemCard[]>>
   ) => ReactNode;
 };
 
@@ -41,7 +43,7 @@ const HEADER_OPTIONS_LABEL = [
   "Дата создания",
 ];
 
-const InfiniteTable = <T extends { id: number }>({
+const InfiniteTable = <T extends { id: number; subCategory: { id: number } }>({
   infiniteData,
   renderItem,
 }: Props<T>) => {
@@ -57,15 +59,13 @@ const InfiniteTable = <T extends { id: number }>({
   const { hasNextPage, fetchNextPage, isFetchingNextPage, isLoading, data } =
     infiniteData;
 
-  const [checkedItems, setCheckedItems] = useState<number[]>([]);
+  const [checkedItems, setCheckedItems] = useState<
+    { id: number; subCategoryId: number }[]
+  >([]);
+
   const [search, setSearch] = useQueryState("q");
-  const debounce = useDebounce(search!, 500);
   const router = useRouter();
   const { ref, inView } = useInView();
-
-  useEffect(() => {
-    setSearch(debounce);
-  }, [search]);
 
   const flattenPages = data?.pages.flatMap((page) => page);
 
@@ -75,17 +75,25 @@ const InfiniteTable = <T extends { id: number }>({
     }
   }, [fetchNextPage, inView, hasNextPage]);
 
-  const handleCheckItems = useCallback(() => {
+  const handleCheckItems = () => {
     if (!flattenPages?.length) return;
-    setCheckedItems((prev) =>
-      prev.length === flattenPages.length
+
+    setCheckedItems((prev) => {
+      console.log(prev.length === flattenPages.length);
+
+      return prev.length === flattenPages.length || prev.length >= 100
         ? []
-        : flattenPages.map((item) => item.id)
-    );
-  }, [flattenPages]);
+        : flattenPages
+            .map((item) => ({
+              id: item.id,
+              subCategoryId: item.subCategory.id,
+            }))
+            .splice(0, 100);
+    });
+  };
 
   const memoizedSetCheckedItems = useCallback(
-    (value: number[] | ((prev: number[]) => number[])) => {
+    (value: ItemCard[] | ((prev: ItemCard[]) => ItemCard[])) => {
       setCheckedItems(value);
     },
     []
@@ -96,7 +104,7 @@ const InfiniteTable = <T extends { id: number }>({
       renderItem(
         item,
         index,
-        checkedItems.includes(item.id),
+        checkedItems.map((item) => item.id).includes(item.id),
         memoizedSetCheckedItems
       ),
     [checkedItems, renderItem]
@@ -105,7 +113,9 @@ const InfiniteTable = <T extends { id: number }>({
   const handleDelete = async () => {
     try {
       if (window.confirm("Вы действительно хотите удалить выбранные товары?")) {
-        const res = await deleteItems({ ids: checkedItems });
+        const res = await deleteItems({
+          ids: checkedItems.map(({ id }) => id),
+        });
         enqueueSnackbar(
           `${plural(checkedItems.length, "Удален", "Удалено")} ${
             checkedItems.length
@@ -120,28 +130,23 @@ const InfiniteTable = <T extends { id: number }>({
   };
 
   const handleEdit = () => {
-    setSelectedIds(checkedItems, "edit");
+    const ids = checkedItems.map(({ id }) => id);
+    const subCategoryIds = checkedItems.map(
+      ({ subCategoryId }) => subCategoryId
+    );
+
+    setSelectedIds(ids, "edit", subCategoryIds);
+
     router.push("/items/bulk");
   };
 
-  if (isLoading) {
-    return (
-      <div className="h-[calc(100vh-200px)]">
-        <div className="flex justify-center items-center h-full">
-          <Loader style={{ width: "60px", height: "60px" }} />
-        </div>
-      </div>
-    );
-  }
-  if (!flattenPages?.length) {
-    return (
-      <div className="h-[calc(100vh-200px)]">
-        <div className="flex justify-center items-center h-full">
-          <AppText>Ничего не найдено</AppText>
-        </div>
-      </div>
-    );
-  }
+  const handleSearch = (search: string) => {
+    if (!search) {
+      setSearch(null);
+      return;
+    }
+    setSearch(search);
+  };
 
   return (
     <div className="h-[calc(100vh-200px)]">
@@ -149,7 +154,7 @@ const InfiniteTable = <T extends { id: number }>({
         <table className="border-collapse table-auto w-full">
           <thead className="sticky top-0 bg-white w-full">
             <tr>
-              <th className="px-2 py-4 min-w-full">
+              <th className="p-4 w-full min-w-max">
                 <input
                   type="checkbox"
                   onChange={handleCheckItems}
@@ -157,40 +162,61 @@ const InfiniteTable = <T extends { id: number }>({
                   className="w-5 h-5 border border-gray-400 rounded-md transition-all duration-300 bg-primary checked:bg-primary checked:ring-primary focus:outline-none"
                 />
               </th>
-              <th className="min-w-max">
+              <th>
                 <Search
-                  setValue={setSearch}
-                  value={search ?? ""}
-                  className="!rounded-xl !max-w-[300px]"
+                  setValue={handleSearch}
+                  value={search ? search : ""}
+                  className="!rounded-xl !w-[330px] px-10"
                   placeholder="Артикул, название, бренд"
                 />
               </th>
               {HEADER_OPTIONS_LABEL.map((label) => (
                 <th key={label} className="min-w-full whitespace-nowrap">
-                  <AppText className="font-semibold">{label}</AppText>
+                  <div className="w-[250px]">
+                    <AppText className="font-semibold">{label}</AppText>
+                  </div>
                 </th>
               ))}
             </tr>
           </thead>
 
-          {!!flattenPages?.length && (
-            <tbody>
-              {flattenPages.map((item, index) =>
-                memoizedRenderItem(item, index)
-              )}
-              <tr ref={ref} className="h-4"></tr>
-            </tbody>
-          )}
+          <tbody>
+            {!!flattenPages?.length ? (
+              <>
+                {flattenPages.map((item, index) =>
+                  memoizedRenderItem(item, index)
+                )}
+                <tr ref={ref} className="h-4"></tr>
+              </>
+            ) : isLoading ? (
+              <tr>
+                <td colSpan={7}>
+                  <Loader style={{ width: "60px", height: "60px" }} />
+                </td>
+              </tr>
+            ) : (
+              <tr>
+                <td
+                  colSpan={20}
+                  className="px-2 py-2 min-w-full text-center align-middle"
+                >
+                  <div className="w-[300px] font-semibold">
+                    <AppText className="w-[300px]">Ничего не найдено</AppText>
+                  </div>
+                </td>
+              </tr>
+            )}
+          </tbody>
         </table>
       </div>
 
       {!!checkedItems.length && (
         <div className="fixed bottom-12 left-1/2 transform -translate-x-1/2 bg-white p-4 rounded-lg shadow-2xl flex justify-between items-center z-50 flex-col">
-          <span className="text-lg font-medium">
+          <AppText className="text-lg font-medium">
             {plural(checkedItems.length, "Выбран", "Выбрано")}{" "}
             {checkedItems.length}{" "}
             {plural(checkedItems.length, "товар", "товара", "товаров")}
-          </span>
+          </AppText>
           <div className="flex flex-riw gap-4">
             <Button
               variant="link"

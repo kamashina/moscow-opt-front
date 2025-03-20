@@ -650,40 +650,74 @@ export const $CreateItemDto = {
         fields: {
             type: 'object'
         },
+        subCategoryId: {
+            type: 'number'
+        },
+        quantity: {
+            type: 'number'
+        },
         countryOfOrigin: {
             type: 'string'
         },
-        article: {
+        sellerArticle: {
             type: 'number'
         },
         brand: {
             type: 'string'
         },
+        dropshipping: {
+            type: 'string'
+        },
         box: {
-            type: 'array',
-            items: {
-                type: 'object'
-            }
+            type: 'string'
+        },
+        description: {
+            type: 'string'
         },
         price: {
             type: 'number'
         },
-        sellerArticle: {
+        discountPerStep: {
+            type: 'number'
+        },
+        discountStepQuantity: {
+            type: 'number'
+        },
+        type: {
             type: 'string'
+        },
+        maxDiscount: {
+            type: 'number'
         },
         images: {
             type: 'array',
             items: {
                 type: 'string'
             }
+        },
+        cardIndex: {
+            type: 'number'
         }
     },
-    required: ['name', 'fields', 'countryOfOrigin', 'article', 'brand', 'box', 'price', 'sellerArticle', 'images']
+    required: ['name', 'fields', 'subCategoryId', 'quantity', 'countryOfOrigin', 'sellerArticle', 'brand', 'dropshipping', 'box', 'description', 'price', 'discountPerStep', 'discountStepQuantity', 'type', 'maxDiscount', 'images', 'cardIndex']
 } as const;
 
 export const $BasketOptions = {
     type: 'object',
     properties: {}
+} as const;
+
+export const $SubCategoryDto = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'number'
+        },
+        name: {
+            type: 'string'
+        }
+    },
+    required: ['id', 'name']
 } as const;
 
 export const $itemStatus = {
@@ -748,6 +782,9 @@ export const $ItemsEntityMinInfo = {
         quantity: {
             type: 'number'
         },
+        subCategory: {
+            '$ref': '#/components/schemas/SubCategoryDto'
+        },
         status: {
             allOf: [
                 {
@@ -760,7 +797,89 @@ export const $ItemsEntityMinInfo = {
             type: 'string'
         }
     },
-    required: ['description', 'countryOfOrigin', 'basketOptions', 'article', 'cardId', 'id', 'rating', 'price', 'discountStepQuantity', 'discountPerStep', 'maxDiscount', 'name', 'brand', 'sellerArticle', 'images', 'quantity', 'status', 'createdAt']
+    required: ['description', 'countryOfOrigin', 'basketOptions', 'article', 'cardId', 'id', 'rating', 'price', 'discountStepQuantity', 'discountPerStep', 'maxDiscount', 'name', 'brand', 'sellerArticle', 'images', 'quantity', 'subCategory', 'status', 'createdAt']
+} as const;
+
+export const $OptionsDto = {
+    type: 'object',
+    properties: {
+        name: {
+            type: 'string',
+            example: 'шт'
+        },
+        quantity: {
+            type: 'number',
+            example: 1
+        }
+    },
+    required: ['name', 'quantity']
+} as const;
+
+export const $BoxDto = {
+    type: 'object',
+    properties: {
+        type: {
+            type: 'string',
+            example: 'box'
+        },
+        options: {
+            example: {
+                name: 'шт',
+                quantity: '5'
+            },
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/OptionsDto'
+                }
+            ]
+        }
+    },
+    required: ['type', 'options']
+} as const;
+
+export const $BoxCharacteristicsOptionsDto = {
+    type: 'object',
+    properties: {
+        name: {
+            type: 'string',
+            example: 'box_characteristics'
+        },
+        fields: {
+            example: [
+                {
+                    name: 'A',
+                    quantity: '5'
+                }
+            ],
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/OptionsDto'
+            }
+        }
+    },
+    required: ['name', 'fields']
+} as const;
+
+export const $DropshippingDto = {
+    type: 'object',
+    properties: {
+        type: {
+            type: 'string',
+            example: 'dropshipping'
+        },
+        options: {
+            example: {
+                name: 'шт',
+                quantity: '1'
+            },
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/OptionsDto'
+                }
+            ]
+        }
+    },
+    required: ['type', 'options']
 } as const;
 
 export const $ItemsEntityMinInfoByShop = {
@@ -805,6 +924,30 @@ export const $ItemsEntityMinInfoByShop = {
         sellerArticle: {
             type: 'string'
         },
+        box: {
+            nullable: true,
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/BoxDto'
+                }
+            ]
+        },
+        customBox: {
+            nullable: true,
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/BoxCharacteristicsOptionsDto'
+                }
+            ]
+        },
+        dropshipping: {
+            nullable: true,
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/DropshippingDto'
+                }
+            ]
+        },
         images: {
             type: 'array',
             items: {
@@ -813,6 +956,9 @@ export const $ItemsEntityMinInfoByShop = {
         },
         quantity: {
             type: 'number'
+        },
+        subCategory: {
+            '$ref': '#/components/schemas/SubCategoryDto'
         },
         status: {
             allOf: [
@@ -826,7 +972,7 @@ export const $ItemsEntityMinInfoByShop = {
             type: 'string'
         }
     },
-    required: ['description', 'countryOfOrigin', 'article', 'cardId', 'id', 'rating', 'price', 'discountStepQuantity', 'discountPerStep', 'maxDiscount', 'name', 'brand', 'sellerArticle', 'images', 'quantity', 'status', 'createdAt']
+    required: ['description', 'countryOfOrigin', 'article', 'cardId', 'id', 'rating', 'price', 'discountStepQuantity', 'discountPerStep', 'maxDiscount', 'name', 'brand', 'sellerArticle', 'box', 'customBox', 'dropshipping', 'images', 'quantity', 'subCategory', 'status', 'createdAt']
 } as const;
 
 export const $ItemsEntityBulkData = {
@@ -838,9 +984,6 @@ export const $ItemsEntityBulkData = {
         id: {
             type: 'number'
         },
-        subCategoryId: {
-            type: 'number'
-        },
         status: {
             allOf: [
                 {
@@ -849,7 +992,7 @@ export const $ItemsEntityBulkData = {
             ]
         }
     },
-    required: ['id', 'subCategoryId', 'status']
+    required: ['id', 'status']
 } as const;
 
 export const $UpdateItemDto = {

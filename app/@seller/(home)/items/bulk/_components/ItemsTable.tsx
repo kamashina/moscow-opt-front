@@ -53,13 +53,8 @@ const ItemsTable = () => {
   const queryClient = getQueryClient();
 
   const addRowsRef = useRef(1);
-  const {
-    selectedIds,
-    type,
-    setSelectedIds,
-    resetItems,
-    selectedSubCategoryId,
-  } = useItemsStore();
+  const { selectedIds, type, setSelectedIds, selectedSubCategoryIds } =
+    useItemsStore();
 
   const { mutateAsync: updateItemsBulk, isPending: isPendingEditBulk } =
     useItemServiceEditItemsBulk({
@@ -80,9 +75,9 @@ const ItemsTable = () => {
     });
   const { data: subCategories, isPending: isPendingSchema } =
     useCategoriesServiceGetSubCategoriesByIds(
-      { ids: selectedSubCategoryId! },
+      { ids: selectedSubCategoryIds! },
       undefined,
-      { enabled: !!selectedSubCategoryId }
+      { enabled: !!selectedSubCategoryIds?.length }
     );
   const { mutateAsync: uploadItems, isPending: isPendingImport } =
     useFileUploadServiceImportItemsExcel();
@@ -147,12 +142,11 @@ const ItemsTable = () => {
     }
     replace(data.map((item) => ({ id: item.id, ...item.tableData })));
     return () => {
-      resetItems();
       replace([
         columns?.reduce((acc, item) => ({ ...acc, [item.prop]: null }), {}),
       ]);
     };
-  }, [data]);
+  }, [data, selectedIds, subCategory?.fieldsSchema]);
 
   useEffect(() => {
     const blockExit = (event: Event) => {

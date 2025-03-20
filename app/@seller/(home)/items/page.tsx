@@ -1,6 +1,7 @@
 "use client";
 import AppText from "@/src/components/AppText/AppText";
 import InfiniteTable from "@/src/components/InfiniteTable/InfiniteTable";
+import Select from "@/src/components/Select/Select";
 import { LIMIT } from "@/src/constants";
 import { useItemServiceGetItemsByMyShopKey } from "@/src/openapi/queries";
 import {
@@ -14,12 +15,9 @@ import {
   InfiniteData,
   useInfiniteQuery,
 } from "@tanstack/react-query";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import SellerItemCard from "./_components/SellerItemCard";
-
-type Props = {};
 
 const SORT_OPTIONS: Array<{ label: string; value: itemStatus | null }> = [
   {
@@ -40,9 +38,9 @@ const SORT_OPTIONS: Array<{ label: string; value: itemStatus | null }> = [
   },
 ];
 
-const Page = (props: Props) => {
-  const [sort, setSort] = useQueryState("by");
+const Page = () => {
   const router = useRouter();
+  const [sort, setSort] = useQueryState("by");
 
   const [search, setSearch] = useQueryState("q");
   const infiniteData = useInfiniteQuery<
@@ -54,7 +52,7 @@ const Page = (props: Props) => {
   >({
     queryKey: [
       useItemServiceGetItemsByMyShopKey,
-      { limit: LIMIT, status: sort },
+      { limit: LIMIT, status: sort, search },
     ],
     initialPageParam: 0,
     queryFn: async ({ queryKey, pageParam }) =>
@@ -69,16 +67,25 @@ const Page = (props: Props) => {
         ? (allPages.length - 1) * LIMIT + LIMIT
         : undefined,
   });
-
   return (
     <>
       <div className="flex flex-row gap-6 my-4 px-8 pt-4 pb-2">
-        <Link
-          href="items/categories"
-          className="!px-3 !py-2 bg-primary rounded-[25px] text-white"
-        >
-          Добавить товар
-        </Link>
+        <Select
+          label="Добавить товар"
+          options={[
+            {
+              label: "Один товар",
+              onClick: () => router.push("/items/create"),
+              iconName: "singleBox",
+            },
+            {
+              label: "Товар списком",
+              onClick: () => router.push("/items/categories"),
+              iconName: "bulkBox",
+            },
+          ]}
+        />
+
         <div className="flex flex-row gap-4 items-center">
           {SORT_OPTIONS.map((item) => (
             <div

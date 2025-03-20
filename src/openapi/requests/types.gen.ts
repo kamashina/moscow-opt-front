@@ -215,19 +215,30 @@ export type CreateItemDto = {
     fields: {
         [key: string]: unknown;
     };
+    subCategoryId: number;
+    quantity: number;
     countryOfOrigin: string;
-    article: number;
+    sellerArticle: number;
     brand: string;
-    box: Array<{
-        [key: string]: unknown;
-    }>;
+    dropshipping: string;
+    box: string;
+    description: string;
     price: number;
-    sellerArticle: string;
+    discountPerStep: number;
+    discountStepQuantity: number;
+    type: string;
+    maxDiscount: number;
     images: Array<(string)>;
+    cardIndex: number;
 };
 
 export type BasketOptions = {
     [key: string]: unknown;
+};
+
+export type SubCategoryDto = {
+    id: number;
+    name: string;
 };
 
 export type itemStatus = 'draft' | 'active' | 'reject';
@@ -249,8 +260,29 @@ export type ItemsEntityMinInfo = {
     sellerArticle: string;
     images: Array<(string)>;
     quantity: number;
+    subCategory: SubCategoryDto;
     status: itemStatus;
     createdAt: string;
+};
+
+export type OptionsDto = {
+    name: string;
+    quantity: number;
+};
+
+export type BoxDto = {
+    type: string;
+    options: OptionsDto;
+};
+
+export type BoxCharacteristicsOptionsDto = {
+    name: string;
+    fields: Array<OptionsDto>;
+};
+
+export type DropshippingDto = {
+    type: string;
+    options: OptionsDto;
 };
 
 export type ItemsEntityMinInfoByShop = {
@@ -267,8 +299,12 @@ export type ItemsEntityMinInfoByShop = {
     name: string;
     brand: string;
     sellerArticle: string;
+    box: (BoxDto) | null;
+    customBox: (BoxCharacteristicsOptionsDto) | null;
+    dropshipping: (DropshippingDto) | null;
     images: Array<(string)>;
     quantity: number;
+    subCategory: SubCategoryDto;
     status: itemStatus;
     createdAt: string;
 };
@@ -278,7 +314,6 @@ export type ItemsEntityBulkData = {
         [key: string]: unknown;
     };
     id: number;
-    subCategoryId: number;
     status: itemStatus;
 };
 
@@ -536,10 +571,7 @@ export type EditItemsBulkData = {
 export type EditItemsBulkResponse = unknown;
 
 export type CreateItemData = {
-    brandId: number;
-    cardId: number;
     requestBody: CreateItemDto;
-    subCategoryId: number;
 };
 
 export type CreateItemResponse = unknown;

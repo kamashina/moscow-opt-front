@@ -194,9 +194,7 @@ const ShopForm = () => {
             name="address"
             defaultValue=""
             control={control}
-            rules={{
-              required: "Заполните поле",
-            }}
+            rules={{ required: "Заполните поле" }}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <SelectSearch
                 label="Адрес"

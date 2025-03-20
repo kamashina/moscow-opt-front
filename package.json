@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.2",
-    "@mossoft/ui-kit": "^1.0.52",
+    "@mossoft/ui-kit": "^1.0.56",
     "@revolist/react-datagrid": "^4.12.9",
     "@revolist/revogrid": "^4.12.9",
     "@revolist/revogrid-column-numeral": "^2.0.8",

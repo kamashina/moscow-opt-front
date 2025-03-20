@@ -17,10 +17,6 @@ const NAV_OPTIONS: Array<{
         link: "/items",
       },
       {
-        label: "Добавить товар",
-        link: "/items/categories",
-      },
-      {
         label: "Отзывы",
         link: "/items/reviews",
       },

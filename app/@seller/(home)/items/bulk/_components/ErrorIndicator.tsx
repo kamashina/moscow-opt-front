@@ -13,12 +13,12 @@ const ErrorMessage = ({
   if (!errors?.rows || !Array.isArray(errors.rows)) return null;
 
   const errorMap = new Map<string, string>();
-  console.log(errors);
 
   errors.rows.forEach((row) => {
     Object.keys(row).forEach((key) => {
+      if (key === "type" || key === "ref") return;
       if (!errorMap.has(key)) {
-        errorMap.set(key, row[key]?.message || "Неизвестная ошибка");
+        errorMap.set(key, row[key]?.message || row.message);
       }
     });
   });

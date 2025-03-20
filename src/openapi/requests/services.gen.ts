@@ -438,9 +438,6 @@ export class ItemService {
     
     /**
      * @param data The data for the request.
-     * @param data.subCategoryId
-     * @param data.brandId
-     * @param data.cardId
      * @param data.requestBody
      * @returns unknown
      * @throws ApiError
@@ -449,11 +446,6 @@ export class ItemService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/items',
-            query: {
-                sub_category_id: data.subCategoryId,
-                brand_id: data.brandId,
-                card_id: data.cardId
-            },
             body: data.requestBody,
             mediaType: 'application/json'
         });
