@@ -1,5 +1,4 @@
 "use client";
-import AppText from "@/src/components/AppText/AppText";
 import AuthTabs from "@/src/components/Auth/AuthTabs";
 import Login from "@/src/components/Auth/Login";
 import Register from "@/src/components/Auth/Register";
@@ -11,12 +10,10 @@ import {
 } from "@/src/constants";
 import { SendSmsDto } from "@/src/openapi/requests";
 import { RegisterForm } from "@/src/types";
-import { Icon } from "@mossoft/ui-kit";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQueryState } from "nuqs";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { AUTH_TABS_TRANSLATIONS } from "../../../src/constants";
 
 const Page = () => {
   const registerForm = useForm<RegisterForm>();

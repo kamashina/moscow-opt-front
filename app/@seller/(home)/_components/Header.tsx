@@ -4,9 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import TooltipNav from "./TooltipNav";
 
-type Props = {};
-
-const Header = async ({}: Props) => {
+const Header = async () => {
   return (
     <div className="relative bg-white z-10 top-0 rounded-b-[25px] w-screen lg:px-2 backdrop-blur-[1px] shadow-lg">
       <div className="h-20 flex flex-row items-center lg:max-w-[1440px] mx-auto">

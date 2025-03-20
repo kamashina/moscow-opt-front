@@ -5,7 +5,6 @@ type Props = {};
 const ItemsList = (props: Props) => {
   return (
     <div>
-      {" "}
       <div>ItemsList</div>
     </div>
   );
